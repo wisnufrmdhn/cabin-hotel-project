@@ -17,12 +17,14 @@ use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('login');
-});
+})->name('login');
 
 Route::post('/loginCheck', [AuthController::class, 'loginCheck'])->name('login.post'); 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // This is admin route access
-Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
-    Route::get('/', [AdminController::class, 'index'])->name('index');
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['loginCheck:admin']], function () {
+        Route::get('/', [AdminController::class, 'index'])->name('index');
+    });
 });

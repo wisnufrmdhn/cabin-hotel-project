@@ -36,7 +36,9 @@ class AuthController extends Controller
                 return redirect()->intended('/');
             }
 
-        return redirect('/')->withInput()->withErrors(['login_failed' => 'Login failed email or password invalid']);
+        return redirect('/')->with('error', 'Login gagal karena akses login salah')->withInput();
+
+        return redirect('/')->withInput()->withErrors('error', 'Worker failed to add cause password and confirm password not same');
     }    
     
     public function dashboard()
