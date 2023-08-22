@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,8 @@ Route::get('/', function () {
 
 Route::post('/loginCheck', [AuthController::class, 'loginCheck'])->name('login.post'); 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// This is admin route access
+Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+});
