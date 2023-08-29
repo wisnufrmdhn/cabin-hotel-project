@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ReservationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,5 +27,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['loginCheck:admin']], function () {
         Route::get('/', [AdminController::class, 'index'])->name('index');
+
+        Route::group(['as' => 'reservation.', 'prefix' => 'reservation'], function () {
+            Route::get('/', [ReservationController::class, 'index'])->name('index');
+        });
     });
 });
