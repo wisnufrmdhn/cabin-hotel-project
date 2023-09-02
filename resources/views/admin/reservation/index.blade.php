@@ -101,6 +101,7 @@
                                             <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
                                                 <option value="AL">Weekday</option>
                                                 <option value="AL">Weekend</option>
+                                                <option value="AL">High Season</option>
                                             </select>
                                         </div>
                                         </br></br>
@@ -115,7 +116,7 @@
                                         </br></br>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                                                    <input type="email" class="form-control" id="email" placeholder="Booking Number" aria-describedby="emailHelp">
                                             </div>
                                         </div>
                                         <h1 class="h5"><u>Guest Detail</u></h1>
