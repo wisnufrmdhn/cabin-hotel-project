@@ -5,6 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // baru
+use App\Models\User;
+use App\Models\Role;
 
 class LoginCheck
 {
@@ -22,11 +24,12 @@ class LoginCheck
         }
         
         $user = Auth::user();
+        $role = Role::where('role_name', $roles)->first();
 
-        if($user->role == $roles){
+        if($user->role_id == $role->id){
             return $next($request);
         }
 
-        return redirect('login')->with('error',"you dont have access");
+        return redirect('/')->with('error',"you dont have access");
     }
 }

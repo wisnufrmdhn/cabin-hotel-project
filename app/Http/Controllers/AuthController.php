@@ -28,10 +28,10 @@ class AuthController extends Controller
 
             if($loginCheck){
                 $user = Auth::user();
-                if ($user->role == 'admin') {
-                    return redirect()->intended('admin');
-                } elseif ($user->role == 'superadmin') {
+                if ($user->role_id == '1') {
                     return redirect()->intended('superadmin');
+                } elseif ($user->role_id == '2') {
+                    return redirect()->intended('admin');
                 }
                 return redirect()->intended('/');
             }
