@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\ReservationType;
+use App\Models\ReservationMethod;
 
-class ReservationMethod extends Seeder
+class ReservationMethodSeeder extends Seeder
 {
     /**
      * Run the database seeds.

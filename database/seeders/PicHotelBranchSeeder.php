@@ -15,14 +15,14 @@ class PicHotelBranchSeeder extends Seeder
      */
     public function run()
     {
-        $roles = [
+        $pic = [
             [
                 'hotel_branch_id' => 1,
                 'user_id' => 2,
             ]
         ];
 
-        foreach ($roles as $key => $value) {
+        foreach ($pic as $key => $value) {
             PicHotelBranch::create($value);
         }
     }

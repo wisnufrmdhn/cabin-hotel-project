@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PaymentMethod extends Model
+class HotelRoomDetail extends Model
 {
     use HasFactory;
 
-    protected $table = 'payment_methods';
+    protected $table = 'hotel_room_details';
 
     protected $guarded = ['
         id

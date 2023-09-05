@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('customer_id')->constrained('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->datetime('reservation_start_date');
             $table->datetime('reservation_end_date');
+            $table->enum('status', ['Booking', 'Checkin', 'Checkout', 'Canceled']);
             $table->timestamps();
         });
     }

@@ -18,6 +18,9 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(HotelBranchSeeder::class);
         $this->call(PicHotelBranchSeeder::class);
+        $this->call(ReservationMethodSeeder::class);
+        $this->call(HotelRoomSeeder::class);
+        $this->call(HotelRoomDetailSeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->foreignId('reservation_id')->constrained('reservations')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('reservation_method_id')->constrained('reservation_methods');
             $table->enum('reservation_day_category', ['Weekday', 'Weekend', 'High Season']);
-            $table->foreignId('hotel_room_detail_id')->constrained('hotel_room_details');
             $table->foreignId('payment_id')->constrained('payments')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('booking_number')->nullable();
             $table->timestamps();
         });
     }

@@ -35,13 +35,13 @@
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                                 <label for="email">Check In</label>
-                                                <input type="date" class="form-control" id="email" aria-describedby="emailHelp">
+                                                <input type="date" class="form-control" id="reservation_start_date" aria-describedby="emailHelp">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                                 <label for="email">Check Out</label>
-                                                <input type="date" class="form-control" id="email" aria-describedby="emailHelp">
+                                                <input type="date" class="form-control" id="reservation_end_date" aria-describedby="emailHelp">
                                             </div>
                                         </div>
 
@@ -88,13 +88,21 @@
                                         <div class="col-lg-6 col-sm-6">
                                             <div class="mb-4">
                                                 <label for="email">Hari</label>
-                                                <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                                                <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
+                                                    @for ($i = 1; $i <= 30; $i++)
+                                                        <option value="{{ $i }}">{{ $i }}</option>
+                                                    @endfor
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6">
                                             <div class="mb-4">
                                                 <label for="email">Jam</label>
-                                                <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                                                <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
+                                                    @for ($i = 1; $i <= 24; $i++)
+                                                        <option value="{{ $i }}">{{ $i }}</option>
+                                                    @endfor
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
@@ -110,7 +118,9 @@
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
-                                                <option value="AL">Walkin</option>
+                                                @foreach ($reservationMethod as $methods)
+                                                    <option value="{{ $methods->id }}">{{ $methods->reservation_method }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                         </br></br>
@@ -140,7 +150,7 @@
                                         </div>
                                         <div class="col-lg-8 col-sm-8">
                                             <div class="mb-4">
-                                                    <input type="email" class="form-control" id="email" placeholder="No Identitas" aria-describedby="emailHelp">
+                                                <input class="form-control" type="file" placeholder="Foto" id="formFile">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
@@ -159,11 +169,6 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                    <input type="email" class="form-control" id="email" placeholder="Lama Menginap" aria-describedby="emailHelp">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12">
                                         <label for="exampleInputIconLeft">Foto</label>
                                             <div class="mb-4">
                                                 <input class="form-control" type="file" placeholder="Foto" id="formFile">
@@ -175,6 +180,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    </br></br></br>
                                     <!-- End of Form -->
                                 </div>
                             </div>
@@ -194,18 +200,10 @@
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                                 <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
-                                                    <option selected>Jenis Kamar</option>
-                                                    <option value="AL">Standard</option>
-                                                    <option value="AL">Deluxe</option>
-                                                    <option value="AL">Superior</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
-                                                        <option selected>Nomor Kamar</option>
-                                                        <option value="AL">102</option>
+                                                <option selected>Tipe Kamar</option>
+                                                @foreach ($hotelRooms as $roomType)
+                                                    <option value="{{ $roomType->id }}">{{ $roomType->room_type }}</option>
+                                                @endforeach
                                                 </select>
                                             </div>
                                         </div>
