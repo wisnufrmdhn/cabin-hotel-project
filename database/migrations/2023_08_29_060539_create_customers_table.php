@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->enum('customer_identity_type', ['KTP', 'SIM', 'Lainnya']);
-            $table->string('customer_identity_number');
             $table->string('customer_name');
             $table->string('customer_email');
             $table->string('customer_phone');
             $table->string('customer_address');
             $table->string('customer_photo');
+            $table->string('customer_identity_photo');
             $table->timestamps();
         });
     }

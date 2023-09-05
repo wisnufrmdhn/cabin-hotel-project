@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('payments', function (Blueprint $table) {
+        Schema::create('reservation_methods', function (Blueprint $table) {
             $table->id();
-            $table->integer('down_payment');
-            $table->integer('discount');
-            $table->integer('total_price');
-            $table->integer('total_price_amenities');
-            $table->integer('total_payment');
-            $table->integer('change');
+            $table->string('reservation_method');
             $table->timestamps();
         });
     }
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('reservation_methods');
     }
 };
