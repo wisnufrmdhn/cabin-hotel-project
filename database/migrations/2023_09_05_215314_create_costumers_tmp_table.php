@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('customers_tmp', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->id();
-            $table->enum('customer_title', ['Mr', 'Mrs']);
             $table->enum('customer_identity_type', ['KTP', 'SIM', 'Lainnya']);
             $table->string('customer_name');
             $table->string('customer_email');
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('costumers_tmp');
     }
 };
