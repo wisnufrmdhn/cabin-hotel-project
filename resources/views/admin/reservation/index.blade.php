@@ -17,38 +17,74 @@
                                 <div class="col-lg-12 col-sm-6">
                                 <h1 class="h5"><u>Room Order</u></h1>
                                 </br>
+                                <form method="POST" action="{{route('admin.reservation.store-customer')}}" enctype="multipart/form-data">
+                                {{ csrf_field() }}
                                     <!-- Form -->
                                     <div class="row mb-4">
+                                    <div class="col-lg-12 col-sm-12">
+                                            <div class="mb-4">
+                                                <label for="email">Check In</label>
+                                                <input type="datetime-local" class="form-control" name="reservation_start_date_daily" id="reservation_start_date" aria-describedby="emailHelp">
+                                            </div>
+                                        </div>
                                         <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                <input class="form-check-input" type="checkbox" name="daily" id="flexSwitchCheckDefault">
                                             </div>
                                             </div>
                                         </div>
             
                                         <div class="col-lg-8 col-sm-12">
                                             <div class="mb-4">
-                                                <p>Harian</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                <label for="email">Check In</label>
-                                                <input type="date" class="form-control" id="reservation_start_date" aria-describedby="emailHelp">
+                                                <p>Checkout dengan pilih tanggal & jam</p>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                                 <label for="email">Check Out</label>
-                                                <input type="date" class="form-control" id="reservation_end_date" aria-describedby="emailHelp">
+                                                <input type="datetime-local" class="form-control" name="reservation_end_date_daily" id="reservation_end_date" aria-describedby="emailHelp">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-2 col-sm-2">
+                                            <div class="mb-4">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" name="mixed" id="flexSwitchCheckDefault">
+                                            </div>
+                                            </div>
+                                        </div>
+            
+                                        <div class="col-lg-8 col-sm-12">
+                                            <div class="mb-4">
+                                                <p>Checkout dengan pilih hari & jam</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="mb-4">
+                                                <label for="email">Hari</label>
+                                                <select class="form-select w-100 mb-0" id="state" name="mixed_day" aria-label="State select example">
+                                                    @for ($i = 0; $i <= 30; $i++)
+                                                        <option value="{{ $i }}">{{ $i }}</option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="mb-4">
+                                                <label for="email">Jam</label>
+                                                <select class="form-select w-100 mb-0" id="state" name="mixed_hour" aria-label="State select example">
+                                                    @for ($i = 0; $i <= 24; $i++)
+                                                        <option value="{{ $i }}">{{ $i }}</option>
+                                                    @endfor
+                                                </select>
                                             </div>
                                         </div>
 
                                         <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                <input class="form-check-input" type="checkbox" name="hourly" id="flexSwitchCheckDefault">
                                             </div>
                                             </div>
                                         </div>
@@ -62,54 +98,22 @@
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                                 <label for="email">Check In</label>
-                                                <input type="time" class="form-control" id="email" aria-describedby="emailHelp">
+                                                <input type="time" class="form-control" name="reservation_start_date_hourly" aria-describedby="emailHelp">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                                 <label for="email">Check Out</label>
-                                                <input type="time" class="form-control" id="email" aria-describedby="emailHelp">
+                                                <input type="time" name="reservation_end_date_hourly" class="form-control" aria-describedby="emailHelp">
                                             </div>
                                         </div>
-                                        
-                                        <div class="col-lg-2 col-sm-2">
-                                            <div class="mb-4">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                                            </div>
-                                            </div>
-                                        </div>
-            
-                                        <div class="col-lg-8 col-sm-12">
-                                            <div class="mb-4">
-                                                <p>Durasi Campuran</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6">
-                                            <div class="mb-4">
-                                                <label for="email">Hari</label>
-                                                <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
-                                                    @for ($i = 1; $i <= 30; $i++)
-                                                        <option value="{{ $i }}">{{ $i }}</option>
-                                                    @endfor
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 col-sm-6">
-                                            <div class="mb-4">
-                                                <label for="email">Jam</label>
-                                                <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
-                                                    @for ($i = 1; $i <= 24; $i++)
-                                                        <option value="{{ $i }}">{{ $i }}</option>
-                                                    @endfor
-                                                </select>
-                                            </div>
-                                        </div>
+
+
                                         <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
-                                                <option value="AL">Weekday</option>
-                                                <option value="AL">Weekend</option>
-                                                <option value="AL">High Season</option>
+                                            <select class="form-select w-100 mb-0" id="reservation_day_category" name="reservation_day_category" aria-label="reservation_day_category">
+                                                <option value="Weekday">Weekday</option>
+                                                <option value="Weekend">Weekend</option>
+                                                <option value="High Season">High Season</option>
                                             </select>
                                         </div>
                                         </br></br>
@@ -117,7 +121,7 @@
                                             <label for="exampleInputIconLeft">Jenis Tamu</label>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
+                                            <select class="form-select w-100 mb-0" id="state" name="reservation_method_id" aria-label="State select example">
                                                 @foreach ($reservationMethod as $methods)
                                                     <option value="{{ $methods->id }}">{{ $methods->reservation_method }}</option>
                                                 @endforeach
@@ -126,59 +130,60 @@
                                         </br></br>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                    <input type="email" class="form-control" id="email" placeholder="Booking Number" aria-describedby="emailHelp">
+                                                    <input type="booking_number" class="form-control" id="booking_number" placeholder="Booking Number" aria-describedby="booking_number">
                                             </div>
                                         </div>
                                         <h1 class="h5"><u>Guest Detail</u></h1>
                                         </br></br>
                                         <div class="col-lg-4 col-sm-4">
-                                            <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
-                                                <option value="AL">Mr</option>
-                                                <option value="AL">Mrs</option>
+                                            <select class="form-select w-100 mb-0" id="customer_title" name="customer_title" aria-label="customer_title">
+                                                <option value="Mr">Mr</option>
+                                                <option value="Mrs">Mrs</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-8 col-sm-8">
                                             <div class="mb-4">
-                                                    <input type="email" class="form-control" placeholder="Nama" id="email" aria-describedby="emailHelp">
+                                                    <input type="text" class="form-control" placeholder="Nama" id="customer_name" name="customer_name" aria-describedby="customer_name">
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-sm-4">
-                                            <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
-                                                <option value="AL">KTP</option>
-                                                <option value="AL">SIM</option>
+                                            <select class="form-select w-100 mb-0" id="state" name="customer_identity_type" aria-label="State select example">
+                                                <option value="KTP">KTP</option>
+                                                <option value="SIM">SIM</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-8 col-sm-8">
                                             <div class="mb-4">
-                                                <input class="form-control" type="file" placeholder="Foto" id="formFile">
+                                                <input class="form-control" name="customer_identity_photo" type="file" placeholder="Foto" id="formFile">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                    <input type="email" class="form-control" id="email" placeholder="Domisili" aria-describedby="emailHelp">
+                                                    <input type="text" name="customer_address" class="form-control" id="customer_address" placeholder="Domisili" aria-describedby="customer_address">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                    <input type="email" class="form-control" id="email" placeholder="Telepon" aria-describedby="emailHelp">
+                                                    <input type="text" class="form-control" name="customer_phone" id="customer_phone" placeholder="Nomor Handphone" aria-describedby="customer_phone">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                    <input type="email" class="form-control" id="email" placeholder="Email" aria-describedby="emailHelp">
+                                                    <input type="text" name="customer_email" class="form-control" id="customer_email" placeholder="Email" aria-describedby="customer_email">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                         <label for="exampleInputIconLeft">Foto</label>
                                             <div class="mb-4">
-                                                <input class="form-control" type="file" placeholder="Foto" id="formFile">
+                                                <input class="form-control" name="customer_photo" type="file" placeholder="Foto" id="formFile">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <button class="btn w-100 btn-secondary" type="button">Tambah Tamu</button>
+                                                <button class="btn w-100 btn-secondary" type="submit">Tambah Tamu</button>
                                             </div>
                                         </div>
+                                        </form>
                                     </div>
                                     </br></br></br>
                                     <!-- End of Form -->
@@ -211,11 +216,9 @@
                                             <div class="mb-4">
                                                 <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
                                                         <option selected>Jumlah Orang</option>
-                                                        <option value="AL">1</option>
-                                                        <option value="AL">2</option>
-                                                        <option value="AL">3</option>
-                                                        <option value="AL">4</option>
-                                                        <option value="AL">5</option>
+                                                        @for ($i = 1; $i <= 10; $i++)
+                                                            <option value="{{ $i }}">{{ $i }}</option>
+                                                        @endfor
                                                 </select>
                                             </div>
                                         </div>
@@ -229,37 +232,23 @@
                                         </br></br>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
+                                                <label for="email">Breakfast</label>
                                                 <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
-                                                            <option selected>Include Breakfast</option>
-                                                            <option value="AL">1</option>
-                                                            <option value="AL">2</option>
-                                                            <option value="AL">3</option>
-                                                            <option value="AL">4</option>
-                                                            <option value="AL">5</option>
+                                                <option selected>Breakfast</option>
+                                                    @for ($i = 0; $i <= 10; $i++)
+                                                        <option value="{{ $i }}">{{ $i }}</option>
+                                                    @endfor
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
+                                            <label for="email">Extra Bed</label>
                                                 <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
-                                                            <option selected>Extra Bed</option>
-                                                            <option value="AL">1</option>
-                                                            <option value="AL">2</option>
-                                                            <option value="AL">3</option>
-                                                            <option value="AL">4</option>
-                                                            <option value="AL">5</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
-                                                            <option selected>Extra Person</option>
-                                                            <option value="AL">1</option>
-                                                            <option value="AL">2</option>
-                                                            <option value="AL">3</option>
-                                                            <option value="AL">4</option>
-                                                            <option value="AL">5</option>
+                                                    <option selected>Extra Bed</option>
+                                                    @for ($i = 0; $i <= 10; $i++)
+                                                        <option value="{{ $i }}">{{ $i }}</option>
+                                                    @endfor
                                                 </select>
                                             </div>
                                         </div>
@@ -268,7 +257,7 @@
                                                 <button class="btn w-100 btn-secondary" type="button">Tambah Amenities</button>
                                             </div>
                                         </div>
-                                        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+                                        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
                                     </div>
                                     <!-- End of Form -->
                                 </div>

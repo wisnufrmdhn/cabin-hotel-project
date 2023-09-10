@@ -9,7 +9,7 @@ class ReservationTmp extends Model
 {
     use HasFactory;
 
-    protected $table = 'reservation_tmp';
+    protected $table = 'reservations_tmp';
 
     protected $guarded = [
         'id'

@@ -1,16 +1,23 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\ReservationMethod;
 use App\Models\PicHotelBranch;
 use App\Models\HotelRoom;
 use App\Models\HotelRoomDetail;
+use App\Services\ReservationService;
 
 class ReservationController extends Controller
 {
+    private $service;
+
+    public function __construct(ReservationService $service)
+    {
+        $this->service = $service;
+    }
+
     public function index()
     {
         $user = Auth::user();
@@ -31,6 +38,37 @@ class ReservationController extends Controller
 
     public function store(Request $request)
     {
-        
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+    }
+
+    public function storeCustomer(Request $request)
+    {
+        try{    
+            $store = $this->service->storeCustomer($request);
+        }catch(\Throwable $th){
+            return $th;
+            return redirect()->route('admin.reservation.index')->with('error', 'Customer failed to add');
+        }
+        return $store;
+        return redirect()->route('admin.reservation.index')->with('success', 'Customer added successfully');
+    }
+
+    public function storeRoomOrder(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+    }
+
+    public function storeAmenities(Request $request)
+    {
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
     }
 }

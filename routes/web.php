@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::group(['as' => 'reservation.', 'prefix' => 'reservation'], function () {
             Route::get('/', [ReservationController::class, 'index'])->name('index');
+            Route::post('/store-customer', [ReservationController::class, 'storeCustomer'])->name('store-customer');
         });
     });
 });

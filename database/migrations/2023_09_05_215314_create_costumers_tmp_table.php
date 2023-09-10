@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('customer_email');
             $table->string('customer_phone');
             $table->string('customer_address');
-            $table->string('customer_photo');
-            $table->string('customer_identity_photo');
+            $table->string('customer_photo_url');
+            $table->string('customer_identity_photo_url');
             $table->timestamps();
         });
     }
