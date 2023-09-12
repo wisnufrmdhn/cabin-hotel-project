@@ -55,7 +55,7 @@ class ReservationService
         }else if($request['mixed']){
             $request['reservation_start_date'] = $request['reservation_start_date_daily'];
             //convert day and hour to datetime with carbon
-            $request['reservation_end_date'] = Carbon::parse($request['reservation_end_date_daily'])->addDays($request['mixed_day'])->addHours($request['mixed_hour']);
+            $request['reservation_end_date'] = Carbon::parse($request['reservation_start_date_daily'])->addDays($request['mixed_day'])->addHours($request['mixed_hour']);
         }
 
         //filter request only for reservation data
@@ -74,6 +74,11 @@ class ReservationService
         $storeReservation = ReservationTmp::create($reservation);
 
         return $storeReservation;
+    }
+
+    public function storeRoomOrder($request)
+    {
+        
     }
 
     private function uploadFile($file, $destinationPath)
