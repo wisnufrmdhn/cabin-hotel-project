@@ -1,5 +1,6 @@
 </main>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@stack('scripts')
     <!-- Core -->
 <script src="../../vendor/@popperjs/core/dist/umd/popper.min.js"></script>
 <script src="../../vendor/bootstrap/dist/js/bootstrap.min.js"></script>

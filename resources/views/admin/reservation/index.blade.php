@@ -200,11 +200,13 @@
                                 <div class="col-lg-12 col-sm-6">
                                 <h1 class="h5"><u>Room Order</u></h1>
                                 </br>
+                                <form method="POST" action="{{route('admin.reservation.store-room-order')}}" enctype="multipart/form-data">
+                                {{ csrf_field() }}
                                     <!-- Form -->
                                     <div class="row mb-4">
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
+                                                <select class="form-select w-100 mb-0" id="hotel_room_id" name="hotel_room_id" aria-label="State select example">
                                                 <option selected>Tipe Kamar</option>
                                                 @foreach ($hotelRooms as $roomType)
                                                     <option value="{{ $roomType->id }}">{{ $roomType->room_type }}</option>
@@ -214,9 +216,16 @@
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <select class="form-select w-100 mb-0" id="state" name="state" aria-label="State select example">
+                                                <select class="form-select w-100 mb-0" id="hotel_room_number_id" name="hotel_room_number_id" aria-label="State select example" disabled>
+                                                        <option value="">Pilih Nomer Kamar</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="mb-4">
+                                                <select class="form-select w-100 mb-0" id="total_guest" name="total_guest" aria-label="State select example">
                                                         <option selected>Jumlah Orang</option>
-                                                        @for ($i = 1; $i <= 10; $i++)
+                                                        @for ($i = 1; $i <= 4; $i++)
                                                             <option value="{{ $i }}">{{ $i }}</option>
                                                         @endfor
                                                 </select>
@@ -227,7 +236,7 @@
                                                 <button class="btn w-100 btn-secondary" type="button">Tambah Kamar</button>
                                             </div>
                                         </div>
-                                        
+                                        </form>
                                         <h1 class="h5"><u>Tambahan Amenities</u></h1>
                                         </br></br>
                                         <div class="col-lg-12 col-sm-12">
@@ -471,3 +480,33 @@
     </div>
 </div>
 @endsection
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        $('#hotel_room_id').change(function () {
+            const hotelRoom = $(this).val();
+            const hotelRoomNumberSelect = $('#hotel_room_number_id');
+
+            hotelRoomNumberSelect.empty().prop('disabled', true);
+            if (hotelRoom) {
+                $.ajax({
+                    url: `/ajax/getRoomNumbers/${hotelRoom}`,
+                    method: 'GET',
+                    success: function (data) {
+                        data.forEach(function (hotelRoomNumber) {
+                            hotelRoomNumberSelect.append($('<option>', {
+                                value: hotelRoomNumber.id,
+                                text: hotelRoomNumber.room_number
+                            }));
+                        });
+                        hotelRoomNumberSelect.prop('disabled', false);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        });
+    });
+</script>
+@endpush

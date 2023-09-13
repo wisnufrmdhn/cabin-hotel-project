@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\CustomerTmp;
 use App\Models\ReservationTmp;
+use App\Models\HotelRoomNumber;
+use App\Models\PicHotelBranch;
 use Carbon\Carbon;
 
 class ReservationService
@@ -36,17 +38,18 @@ class ReservationService
         
         //get admin data for know who input this data and from where hotel branches
         $user = Auth::user();
+        $picHotelBranch = PicHotelBranch::where('user_id', $user->id)->first();
         $request->merge([
             'user_id' => $user->id,
-            'hotel_branch_id' => 1,
+            'hotel_branch_id' => $picHotelBranch->hotel_branch_id,
             'customer_id' => $storeCustomer->id
         ]);
 
         //check reservation status type if method id 1 then the value is checkin, for another id the value is booking
         $request['status'] = $request['reservation_method_id'] == 1 ? 'Checkin' : 'Booking';
 
-        //check reservation status type if method id 1 then the value is reservation_start_date_daily add 1 hour
-        $request['reservation_start_date_daily'] = $request['reservation_method_id'] == 1 ? Carbon::parse($request['reservation_end_date_daily'])->addHours(1) : $request['reservation_start_date_daily'];
+        // //check reservation status type if method id 1 then the value is reservation_start_date_daily add 1 hour
+        // $request['reservation_start_date_daily'] = $request['reservation_method_id'] == 1 ? Carbon::parse($request['reservation_end_date_daily'])->addHours(1) : $request['reservation_start_date_daily'];
 
         //check reservation checkout type if type is daily, mixed, and hourly condition
         if($request['daily']){

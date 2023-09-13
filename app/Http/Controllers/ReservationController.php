@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ReservationMethod;
 use App\Models\PicHotelBranch;
 use App\Models\HotelRoom;
-use App\Models\HotelRoomDetail;
+use App\Models\HotelRoomNumber;
 use App\Services\ReservationService;
 
 class ReservationController extends Controller
@@ -23,7 +23,7 @@ class ReservationController extends Controller
         $user = Auth::user();
         $pic = PicHotelBranch::where('user_id', $user->id)->first();
         $reservationMethod = ReservationMethod::all();
-        $hotelRoomDetails = HotelRoomDetail::where('hotel_branch_id', $pic->hotel_branch_id)->get();
+        $hotelRoomDetails = HotelRoomNumber::where('hotel_branch_id', $pic->hotel_branch_id)->get();
         $roomId = [];
         
         foreach($hotelRoomDetails as $hotelRoomDetail){
@@ -58,10 +58,14 @@ class ReservationController extends Controller
 
     public function storeRoomOrder(Request $request)
     {
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required',
-        ]);
+        try{    
+            $store = $this->service->storeRoomOrder($request);
+        }catch(\Throwable $th){
+            return $th;
+            return redirect()->route('admin.reservation.index')->with('error', 'Room order failed to add');
+        }
+        return $store;
+        return redirect()->route('admin.reservation.index')->with('success', 'Room order added successfully');
     }
 
     public function storeAmenities(Request $request)
