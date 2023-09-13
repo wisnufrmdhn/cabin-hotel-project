@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reservations_tmp', function (Blueprint $table) {
+        Schema::create('reservations_details_tmp', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('hotel_branch_id')->constrained('hotel_branches');
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('customer_tmp_id')->constrained('customers_tmp')->onUpdate('cascade')->onDelete('cascade');
-            $table->enum('status', ['Booking', 'Checkin', 'Checkout', 'Canceled']);
+            $table->foreignId('reservation_tmp_id')->constrained('reservations_tmp')->onUpdate('cascade')->onDelete('cascade');
+            $table->datetime('reservation_start_date');
+            $table->datetime('reservation_end_date');
+            $table->enum('reservation_day_category', ['Weekday', 'Weekend', 'High Season']);
             $table->timestamps();
         });
     }

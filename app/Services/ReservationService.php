@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\CustomerTmp;
 use App\Models\ReservationTmp;
+use App\Models\ReservationDetailTmp;
 use App\Models\HotelRoomNumber;
+use App\Models\HotelRoomReservedTmp;
 use App\Models\PicHotelBranch;
 use Carbon\Carbon;
 
@@ -22,31 +24,57 @@ class ReservationService
         $request['customer_identity_photo_url'] = $customerIdentityPhoto;
         $request['customer_photo_url'] = $customerPhoto;
 
+        //define pic hotel branch 
+        $user = Auth::user();
+        $pic = PicHotelBranch::where('user_id', $user->id)->first();
+        $request['hotel_branch_id'] = $pic->hotel_branch_id;
+
         //filter request only for customer data
         $customer = $request->only([
+            'hotel_branch_id',
+            'reservation_method_id',
+            'booking_number',
             'customer_identity_type', 
             'customer_name', 
             'customer_email', 
             'customer_phone', 
             'customer_address', 
             'customer_identity_photo_url', 
-            'customer_photo_url'
+            'customer_photo_url',
         ]);
 
         //store customer tmp data to database
         $storeCustomer = CustomerTmp::create($customer);
         
-        //get admin data for know who input this data and from where hotel branches
+        return $storeCustomer;
+    }
+
+    public function storeRoomOrder($request)
+    {
         $user = Auth::user();
         $picHotelBranch = PicHotelBranch::where('user_id', $user->id)->first();
-        $request->merge([
-            'user_id' => $user->id,
-            'hotel_branch_id' => $picHotelBranch->hotel_branch_id,
-            'customer_id' => $storeCustomer->id
-        ]);
+        $customerTmp = CustomerTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->first();
+        $reservationTmp = ReservationTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('customer_tmp_id', $customerTmp->id)->first();
 
-        //check reservation status type if method id 1 then the value is checkin, for another id the value is booking
-        $request['status'] = $request['reservation_method_id'] == 1 ? 'Checkin' : 'Booking';
+        if(!$reservationTmp){
+            //get admin data for know who input this data and from where hotel branches
+            $request->merge([
+                'user_id' => $user->id,
+                'hotel_branch_id' => $picHotelBranch->hotel_branch_id,
+                'customer_tmp_id' => $customerTmp->id
+            ]);
+
+            //check reservation status type if method id 1 then the value is checkin, for another id the value is booking
+            $request['status'] = $customerTmp->reservation_method_id == 1 ? 'Checkin' : 'Booking';
+                //filter request only for reservation data
+                $reservation = $request->only([
+                    'hotel_branch_id', 
+                    'user_id', 
+                    'customer_tmp_id', 
+                    'status', 
+                ]);
+                $storeReservation = ReservationTmp::create($reservation);
+        }
 
         // //check reservation status type if method id 1 then the value is reservation_start_date_daily add 1 hour
         // $request['reservation_start_date_daily'] = $request['reservation_method_id'] == 1 ? Carbon::parse($request['reservation_end_date_daily'])->addHours(1) : $request['reservation_start_date_daily'];
@@ -61,27 +89,30 @@ class ReservationService
             $request['reservation_end_date'] = Carbon::parse($request['reservation_start_date_daily'])->addDays($request['mixed_day'])->addHours($request['mixed_hour']);
         }
 
+        $reservationTemporary = ReservationTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('customer_tmp_id', $customerTmp->id)->first();
+        $request['reservation_tmp_id'] = $reservationTemporary->id;
+
         //filter request only for reservation data
-        $reservation = $request->only([
-            'hotel_branch_id', 
-            'user_id', 
-            'customer_id', 
+        $reservationDetail = $request->only([
+            'reservation_tmp_id', 
             'reservation_start_date', 
             'reservation_end_date', 
-            'reservation_method_id',
             'reservation_day_category',
-            'status', 
-            'booking_number'
         ]);
 
-        $storeReservation = ReservationTmp::create($reservation);
+        $storeReservationDetail = ReservationDetailTmp::create($reservationDetail);
 
-        return $storeReservation;
-    }
+        $request['reservation_detail_tmp_id'] = $storeReservationDetail->id;
+        $request['hotel_room_number_id'] = (int)$request['hotel_room_number_id'];
+        $request['total_guest'] = (int)$request['hotel_room_number_id'];
 
-    public function storeRoomOrder($request)
-    {
-        
+        $storeHotelRoomReserved = HotelRoomReservedTmp::create([
+            'reservation_detail_tmp_id' => $request['reservation_detail_tmp_id'],
+            'hotel_room_number_id'      => $request['hotel_room_number_id'],
+            'total_guest'               => $request['total_guest']
+        ]);
+
+        return $storeHotelRoomReserved;
     }
 
     private function uploadFile($file, $destinationPath)

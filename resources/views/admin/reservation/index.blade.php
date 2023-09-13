@@ -15,9 +15,117 @@
                         <div class="card-body">     
                             <div class="row mb-4">
                                 <div class="col-lg-12 col-sm-6">
-                                <h1 class="h5"><u>Room Order</u></h1>
+                                <h1 class="h5"><u>Guest Detail</u></h1>
                                 </br>
                                 <form method="POST" action="{{route('admin.reservation.store-customer')}}" enctype="multipart/form-data">
+                                {{ csrf_field() }}
+                                    <!-- Form -->
+                                    <div class="row mb-4">
+                                        </br></br>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <label for="exampleInputIconLeft">Jenis Tamu</label>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <select class="form-select w-100 mb-0" id="state" name="reservation_method_id" aria-label="State select example">
+                                                @foreach ($reservationMethod as $methods)
+                                                    <option value="{{ $methods->id }}">{{ $methods->reservation_method }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        </br></br>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="mb-4">
+                                                    <input type="text" class="form-control" name="booking_number" id="booking_number" placeholder="Booking Number" aria-describedby="booking_number">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2 col-sm-2">
+                                            <div class="mb-4">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" name="daily" id="flexSwitchCheckDefault">
+                                            </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8 col-sm-12">
+                                            <div class="mb-4">
+                                                <label for="exampleInputIconLeft">Pilih Dari Daftar Tamu</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <select class="form-select w-100 mb-0" id="customer_title" name="customer_title" aria-label="customer_title" disabled>
+                                                <option selected>Daftar Tamu</option>
+                                                <option value="Mrs">Mrs</option>
+                                            </select>
+                                        </div>
+                                        </br></br></br>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <label for="exampleInputIconLeft">Isi Data Tamu</label>
+                                        </div>
+                                        <div class="col-lg-4 col-sm-4">
+                                            <select class="form-select w-100 mb-0" id="customer_title" name="customer_title" aria-label="customer_title">
+                                                <option value="Mr">Mr</option>
+                                                <option value="Mrs">Mrs</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-8 col-sm-8">
+                                            <div class="mb-4">
+                                                    <input type="text" class="form-control" placeholder="Nama" id="customer_name" name="customer_name" aria-describedby="customer_name">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4 col-sm-4">
+                                            <select class="form-select w-100 mb-0" id="state" name="customer_identity_type" aria-label="State select example">
+                                                <option value="KTP">KTP</option>
+                                                <option value="SIM">SIM</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-8 col-sm-8">
+                                            <div class="mb-4">
+                                                <input class="form-control" name="customer_identity_photo" type="file" placeholder="Foto" id="formFile">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="mb-4">
+                                                    <input type="text" name="customer_address" class="form-control" id="customer_address" placeholder="Domisili" aria-describedby="customer_address">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="mb-4">
+                                                    <input type="text" class="form-control" name="customer_phone" id="customer_phone" placeholder="Nomor Handphone" aria-describedby="customer_phone">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="mb-4">
+                                                    <input type="text" name="customer_email" class="form-control" id="customer_email" placeholder="Email" aria-describedby="customer_email">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                        <label for="exampleInputIconLeft">Foto</label>
+                                            <div class="mb-4">
+                                                <input class="form-control" name="customer_photo" type="file" placeholder="Foto" id="formFile">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="mb-4">
+                                                <button class="btn w-100 btn-secondary" type="submit">Tambah Tamu</button>
+                                            </div>
+                                        </div>
+                                        </form>
+                                    </div>
+                                    </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+                                    <!-- End of Form -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-4 mb-4">
+                    <div class="card border-0 shadow components-section">
+                        <div class="card-body">     
+                            <div class="row mb-4">
+                                <div class="col-lg-12 col-sm-6">
+                                <h1 class="h5"><u>Room Order</u></h1>
+                                </br>
+                                <form method="POST" action="{{route('admin.reservation.store-room-order')}}" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                     <!-- Form -->
                                     <div class="row mb-4">
@@ -81,15 +189,15 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-2 col-sm-2">
+                                        <!-- <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input" type="checkbox" name="hourly" id="flexSwitchCheckDefault">
                                             </div>
                                             </div>
-                                        </div>
+                                        </div> -->
             
-                                        <div class="col-lg-8 col-sm-12">
+                                        <!-- <div class="col-lg-8 col-sm-12">
                                             <div class="mb-4">
                                                 <p>Transit</p>
                                             </div>
@@ -106,7 +214,7 @@
                                                 <label for="email">Check Out</label>
                                                 <input type="time" name="reservation_end_date_hourly" class="form-control" aria-describedby="emailHelp">
                                             </div>
-                                        </div>
+                                        </div> -->
 
 
                                         <div class="col-lg-12 col-sm-12">
@@ -116,94 +224,10 @@
                                                 <option value="High Season">High Season</option>
                                             </select>
                                         </div>
-                                        </br></br>
+                                        </br></br></br>
                                         <div class="col-lg-12 col-sm-12">
-                                            <label for="exampleInputIconLeft">Jenis Tamu</label>
+                                            <label for="exampleInputIconLeft">Data Kamar</label>
                                         </div>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="state" name="reservation_method_id" aria-label="State select example">
-                                                @foreach ($reservationMethod as $methods)
-                                                    <option value="{{ $methods->id }}">{{ $methods->reservation_method }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        </br></br>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                    <input type="booking_number" class="form-control" id="booking_number" placeholder="Booking Number" aria-describedby="booking_number">
-                                            </div>
-                                        </div>
-                                        <h1 class="h5"><u>Guest Detail</u></h1>
-                                        </br></br>
-                                        <div class="col-lg-4 col-sm-4">
-                                            <select class="form-select w-100 mb-0" id="customer_title" name="customer_title" aria-label="customer_title">
-                                                <option value="Mr">Mr</option>
-                                                <option value="Mrs">Mrs</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-8 col-sm-8">
-                                            <div class="mb-4">
-                                                    <input type="text" class="form-control" placeholder="Nama" id="customer_name" name="customer_name" aria-describedby="customer_name">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-sm-4">
-                                            <select class="form-select w-100 mb-0" id="state" name="customer_identity_type" aria-label="State select example">
-                                                <option value="KTP">KTP</option>
-                                                <option value="SIM">SIM</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-lg-8 col-sm-8">
-                                            <div class="mb-4">
-                                                <input class="form-control" name="customer_identity_photo" type="file" placeholder="Foto" id="formFile">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                    <input type="text" name="customer_address" class="form-control" id="customer_address" placeholder="Domisili" aria-describedby="customer_address">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                    <input type="text" class="form-control" name="customer_phone" id="customer_phone" placeholder="Nomor Handphone" aria-describedby="customer_phone">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                    <input type="text" name="customer_email" class="form-control" id="customer_email" placeholder="Email" aria-describedby="customer_email">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12">
-                                        <label for="exampleInputIconLeft">Foto</label>
-                                            <div class="mb-4">
-                                                <input class="form-control" name="customer_photo" type="file" placeholder="Foto" id="formFile">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                <button class="btn w-100 btn-secondary" type="submit">Tambah Tamu</button>
-                                            </div>
-                                        </div>
-                                        </form>
-                                    </div>
-                                    </br></br></br>
-                                    <!-- End of Form -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-4 mb-4">
-                    <div class="card border-0 shadow components-section">
-                        <div class="card-body">     
-                            <div class="row mb-4">
-                                <div class="col-lg-12 col-sm-6">
-                                <h1 class="h5"><u>Room Order</u></h1>
-                                </br>
-                                <form method="POST" action="{{route('admin.reservation.store-room-order')}}" enctype="multipart/form-data">
-                                {{ csrf_field() }}
-                                    <!-- Form -->
-                                    <div class="row mb-4">
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                                 <select class="form-select w-100 mb-0" id="hotel_room_id" name="hotel_room_id" aria-label="State select example">
@@ -233,7 +257,7 @@
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <button class="btn w-100 btn-secondary" type="button">Tambah Kamar</button>
+                                                <button class="btn w-100 btn-secondary" type="submit">Tambah Kamar</button>
                                             </div>
                                         </div>
                                         </form>
@@ -266,7 +290,7 @@
                                                 <button class="btn w-100 btn-secondary" type="button">Tambah Amenities</button>
                                             </div>
                                         </div>
-                                        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+                                        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
                                     </div>
                                     <!-- End of Form -->
                                 </div>

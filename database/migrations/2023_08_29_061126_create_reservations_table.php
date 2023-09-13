@@ -18,8 +18,9 @@ return new class extends Migration
             $table->foreignId('hotel_branch_id')->constrained('hotel_branches');
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('customer_id')->constrained('customers')->onUpdate('cascade')->onDelete('cascade');
-            $table->datetime('reservation_start_date');
-            $table->datetime('reservation_end_date');
+            $table->foreignId('reservation_method_id')->constrained('reservation_methods');
+            $table->foreignId('payment_id')->constrained('payments')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('booking_number')->nullable();
             $table->enum('status', ['Booking', 'Checkin', 'Checkout', 'Canceled']);
             $table->timestamps();
         });

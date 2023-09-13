@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('hotel_rooms_reserved_tmp', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('reservation_detail_id')->constrained('reservations')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('reservation_detail_tmp_id')->constrained('reservations_details_tmp')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('hotel_room_number_id')->constrained('hotel_room_numbers');
             $table->integer('total_guest');
             $table->timestamps();
