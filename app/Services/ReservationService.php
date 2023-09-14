@@ -115,6 +115,11 @@ class ReservationService
         return $storeHotelRoomReserved;
     }
 
+    public function storeAmenities($request)
+    {
+
+    }
+
     private function uploadFile($file, $destinationPath)
     {
         $fileName = $file->getClientOriginalName();

@@ -431,6 +431,30 @@
                                     </br>
                                         <!-- Form -->
                                         <div class="row mb-4">
+                                        @if($customerTmp)
+                                        <div class="col-lg-12 col-sm-12">
+                                            <label for="email">Data Pelanggan</label>
+                                                <div class="mb-4">
+                                                    <p>Nama : {{ $customerTmp->customer_name }}</p>
+                                                    <p>Email : {{ $customerTmp->customer_email }}</p>
+                                                    <p>No Hp : {{ $customerTmp->customer_phone }}</p>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if($hotelRoomReservedTmp)
+                                        @foreach($hotelRoomReservedTmp as $reservationData)
+                                        <div class="col-lg-2 col-sm-2">
+                                            <label for="email">Data Reservasi Kamar</label>
+                                                <div class="mb-4">
+                                                    <p>Tipe Kamar : {{ $reservationData->hotelRoomNumber->hotelRoom->room_type }} </p>
+                                                    <p>Nomor Kamar : {{ $reservationData->hotelRoomNumber->room_number }} </p>
+                                                    <p>Total Tamu : {{ $reservationData->total_guest }} </p>
+                                                    <p>Checkin : {{ $reservationData->reservationDetailTmp->reservation_start_date }}</p>
+                                                    <p>Checkout : {{ $reservationData->reservationDetailTmp->reservation_end_date }}</p>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        @endif
                                             <div class="col-lg-12 col-sm-12">
                                             <label for="email">Diskon</label>
                                                 <div class="mb-4">
@@ -450,7 +474,7 @@
                                             </div>
                                             <div class="col-lg-12 col-sm-12">
                                                 <div class="mb-4">
-                                                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                                                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" disabled>
                                                 </div>
                                             </div>
                                         </div>

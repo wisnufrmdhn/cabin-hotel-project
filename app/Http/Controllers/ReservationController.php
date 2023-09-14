@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\ReservationMethod;
 use App\Models\PicHotelBranch;
 use App\Models\HotelRoom;
+use App\Models\HotelRoomRate;
 use App\Models\HotelRoomNumber;
 use App\Services\ReservationService;
+use App\Models\CustomerTmp;
+use App\Models\HotelRoomReservedTmp;
+use App\Models\ReservationTmp;
+use App\Models\ReservationDetailTmp;
 
 class ReservationController extends Controller
 {
@@ -32,8 +37,28 @@ class ReservationController extends Controller
 
         $roomId = array_values(array_unique($roomId));
         $hotelRooms = HotelRoom::whereIn('id', $roomId)->get();
+        
+        $customerTmp = CustomerTmp::where('hotel_branch_id', $pic->hotel_branch_id)->first();
+        $reservationTmp = [];
+        $reservationDetailTmp = [];
+        $hotelRoomReservedTmp = [];
+        
+        if($customerTmp){
+            $reservationTmp = ReservationTmp::where('hotel_branch_id', $pic->hotel_branch_id)->where('customer_tmp_id', $customerTmp->id)->first();
 
-        return view('admin.reservation.index', compact('reservationMethod', 'hotelRooms')); 
+            $reservationDetailTmp = ReservationDetailTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationTmp')->get();
+
+            $roomReservedId = [];
+
+            foreach($reservationDetailTmp as $reservationDetailsTmp){
+                $roomReservedId[] = $reservationDetailsTmp->id;
+            }
+            
+            $hotelRoomReservedTmp = HotelRoomReservedTmp::whereIn('reservation_detail_tmp_id', $roomReservedId)->with('reservationDetailTmp', 'hotelRoomNumber.hotelRoom')->get();
+            return view('admin.reservation.index', compact('reservationMethod', 'hotelRooms', 'customerTmp', 'reservationTmp', 'reservationDetailTmp', 'hotelRoomReservedTmp')); 
+        }
+
+        return view('admin.reservation.index', compact('reservationMethod', 'hotelRooms', 'customerTmp', 'reservationTmp', 'reservationDetailTmp', 'hotelRoomReservedTmp')); 
     }
 
     public function store(Request $request)
@@ -70,9 +95,13 @@ class ReservationController extends Controller
 
     public function storeAmenities(Request $request)
     {
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required',
-        ]);
+        try{    
+            $store = $this->service->storeAmenities($request);
+        }catch(\Throwable $th){
+            return $th;
+            return redirect()->route('admin.reservation.index')->with('error', 'Room order failed to add');
+        }
+        return $store;
+        return redirect()->route('admin.reservation.index')->with('success', 'Room order added successfully');
     }
 }

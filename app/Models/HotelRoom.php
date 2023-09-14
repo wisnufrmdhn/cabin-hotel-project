@@ -14,4 +14,9 @@ class HotelRoom extends Model
     protected $guarded = ['
         id
     '];
+
+    public function hotelRoomNumber()
+    {
+        return $this->hasMany(HotelRoomNumber::class);
+    }
 }

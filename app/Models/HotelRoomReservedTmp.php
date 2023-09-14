@@ -14,4 +14,14 @@ class HotelRoomReservedTmp extends Model
     protected $guarded = [
         'id'
     ];
+
+    public function reservationDetailTmp()
+    {
+        return $this->hasOne(ReservationDetailTmp::class, 'id');
+    }
+
+    public function hotelRoomNumber()
+    {
+        return $this->hasOne(hotelRoomNumber::class, 'id');
+    }
 }

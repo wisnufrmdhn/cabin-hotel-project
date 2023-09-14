@@ -14,4 +14,9 @@ class ReservationTmp extends Model
     protected $guarded = [
         'id'
     ];
+
+    public function reservationDetailTmp()
+    {
+        return $this->hasMany(ReservationDetail::class);
+    }
 }

@@ -14,4 +14,14 @@ class ReservationDetailTmp extends Model
     protected $guarded = [
         'id'
     ];
+
+    public function hotelRoomReservedTmp()
+    {
+        return $this->belongsTo(HotelRoomReservedTmp::class);
+    }
+
+    public function reservationTmp()
+    {
+        return $this->belongsTo(ReservationTmp::class);
+    }
 }
