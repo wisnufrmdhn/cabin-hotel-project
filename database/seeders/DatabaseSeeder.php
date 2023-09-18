@@ -14,8 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(AmenitiesSeeder::class);
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(PaymentMethodSeeder::class);
         $this->call(HotelBranchSeeder::class);
         $this->call(PicHotelBranchSeeder::class);
         $this->call(ReservationMethodSeeder::class);
