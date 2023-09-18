@@ -19,22 +19,26 @@ class HotelRoomNumberSeeder extends Seeder
             [
                 'hotel_branch_id' => 1,
                 'hotel_room_id' => 1,
-                'room_number' => 102
+                'room_number' => 102,
+                'room_status_id' => 3
             ],
             [
                 'hotel_branch_id' => 1,
                 'hotel_room_id' => 1,
-                'room_number' => 106
+                'room_number' => 106,
+                'room_status_id' => 3
             ],
             [
                 'hotel_branch_id' => 1,
                 'hotel_room_id' => 2,
-                'room_number' => 107
+                'room_number' => 107,
+                'room_status_id' => 3
             ],
             [
                 'hotel_branch_id' => 1,
                 'hotel_room_id' => 2,
-                'room_number' => 111
+                'room_number' => 111,
+                'room_status_id' => 3
             ],
         ];
 

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('hotel_branch_id')->constrained('hotel_branches')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('hotel_room_id')->constrained('hotel_rooms')->onUpdate('cascade')->onDelete('cascade');
             $table->string('room_number');
+            $table->foreignId('room_status_id')->nullable()->constrained('hotel_room_status');
             $table->timestamps();
         });
     }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('reservation_detail_id')->constrained('reservations')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('hotel_room_number_id')->constrained('hotel_room_numbers');
             $table->integer('total_guest');
+            $table->integer('price');
             $table->timestamps();
         });
     }
