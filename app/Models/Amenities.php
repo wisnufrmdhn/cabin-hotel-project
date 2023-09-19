@@ -14,4 +14,9 @@ class Amenities extends Model
     protected $guarded = [
         'id'
     ];
+
+    public function paymentAmenitiesTmp()
+    {
+        return $this->hasOne(PaymentAmenitiesTmp::class);
+    }
 }

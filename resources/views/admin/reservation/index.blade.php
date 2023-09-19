@@ -13,14 +13,14 @@
                 <div class="col-4 mb-4">
                     <div class="card border-0 shadow components-section">
                         <div class="card-body">     
-                            <div class="row mb-4">
+                            <div class="row">
                                 <div class="col-lg-12 col-sm-6">
                                 <h1 class="h5"><u>Guest Detail</u></h1>
                                 </br>
                                 <form method="POST" action="{{route('admin.reservation.store-customer')}}" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                     <!-- Form -->
-                                    <div class="row mb-4">
+                                    <div class="row">
                                         </br></br>
                                         <div class="col-lg-12 col-sm-12">
                                             <label for="exampleInputIconLeft">Jenis Tamu</label>
@@ -118,17 +118,17 @@
                     </div>
                 </div>
                 
-                <div class="col-4 mb-4">
+                <div class="col-4">
                     <div class="card border-0 shadow components-section">
                         <div class="card-body">     
-                            <div class="row mb-4">
+                            <div class="row">
                                 <div class="col-lg-12 col-sm-6">
                                 <h1 class="h5"><u>Room Order</u></h1>
                                 </br>
                                 <form method="POST" action="{{route('admin.reservation.store-room-order')}}" enctype="multipart/form-data">
                                 {{ csrf_field() }}
                                     <!-- Form -->
-                                    <div class="row mb-4">
+                                    <div class="row">
                                     <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                                 <label for="email">Check In</label>
@@ -261,8 +261,11 @@
                                             </div>
                                         </div>
                                         </form>
-                                        <h1 class="h5"><u>Tambahan Amenities</u></h1>
                                         </br></br>
+                                        <form method="POST" action="{{route('admin.reservation.store-amenities')}}" enctype="multipart/form-data">
+                                        {{ csrf_field() }}
+                                        <h1 class="h5"><u>Tambahan Amenities</u></h1>
+                                        </br>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                                 <label for="email">Breakfast</label>
@@ -287,10 +290,11 @@
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <button class="btn w-100 btn-secondary" type="button">Tambah Amenities</button>
+                                                <button class="btn w-100 btn-secondary" type="submit">Tambah Amenities</button>
                                             </div>
                                         </div>
-                                        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+                                        </br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+                                        </form>
                                     </div>
                                     <!-- End of Form -->
                                 </div>
@@ -299,15 +303,15 @@
                     </div>
                 </div>
                 
-                <div class="col-4 mb-4">
+                <div class="col-4">
                     <div class="card border-0 shadow components-section">
                         <div class="card-body">     
-                            <div class="row mb-4">
+                            <div class="row">
                                 <div class="col-lg-12 col-sm-6">
                                 <h1 class="h5"><u>Payment</u></h1>
                                 </br>
                                     <!-- Form -->
-                                    <div class="row mb-4">
+                                    <div class="row">
                                     <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
@@ -322,9 +326,9 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="customer_title" name="payment_category_ota" aria-label="payment_ota">
+                                            <select class="form-select w-100 mb-0" id="customer_title" name="payment_category_ota" aria-label="payment_category_ota">
                                                 <option selected>Jenis OTA</option>
-                                                @foreach ($paymentOTA as $OTA)
+                                                @foreach($paymentOTA as $OTA)
                                                     <option value="{{ $OTA->id }}">{{ $OTA->payment_method }}</option>
                                                 @endforeach
                                             </select>
@@ -332,10 +336,22 @@
                                         </br></br>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <input type="payment_cash" class="form-control" id="payment_ota_value" placeholder="Nominal Bayar" aria-describedby="emailHelp">
+                                                <input type="text" class="form-control" id="payment_ota_value" name="payment_ota_value" placeholder="Nominal Bayar" aria-describedby="emailHelp">
                                             </div>
                                         </div>
-                                        </br></br></br>
+                                        <hr color="black">
+                                        </br>
+                                        <label>Pay At Hotel </label>
+                                        </br></br>
+                                        <div class="col-lg-12 col-sm-12">
+                                        <label>Tipe Pembayaran</label>
+                                            <select class="form-select w-100 mb-0" id="payment_category_qris" name="payment_category_qris" aria-label="payment_category_qris">
+                                                <option selected>Tipe Pembayaran</option>
+                                                    <option value="Down Payment">Down Payment</option>
+                                                    <option value="Lunas">Lunas</option>
+                                            </select>
+                                        </div>
+                                        </br></br></br></br>
                                         <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
@@ -344,26 +360,26 @@
                                             </div>
                                         </div>
             
-                                        <div class="col-lg-8 col-sm-12">
+                                        <div class="col-lg-10 col-sm-12">
                                             <div class="mb-4">
                                                 <p>Cash</p>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <input type="payment_cash" class="form-control" id="payment_cash" placeholder="Nominal Bayar" aria-describedby="emailHelp">
+                                                <input type="text" name="payment_cash_value" class="form-control" id="payment_cash_value" placeholder="Nominal Bayar" aria-describedby="emailHelp">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <input type="change" class="form-control" id="email" placeholder="Nominal Kembali" aria-describedby="emailHelp">
+                                                <input type="text" name="change" class="form-control" id="email" placeholder="Nominal Kembali" aria-describedby="emailHelp">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="payment_method_card">
                                             </div>
                                             </div>
                                         </div>
@@ -373,7 +389,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="customer_title" name="payment_category_ota" aria-label="payment_ota">
+                                            <select class="form-select w-100 mb-0" id="customer_title" name="payment_category_card" aria-label="payment_category_card">
                                                 <option selected>Jenis Card</option>
                                                 @foreach ($paymentCard as $cards)
                                                     <option value="{{ $cards->id }}">{{ $cards->payment_method }}</option>
@@ -383,19 +399,19 @@
                                         </br></br>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <input type="email" class="form-control" id="email" placeholder="No Kartu" aria-describedby="emailHelp">
+                                                <input type="text" name="card_number" class="form-control" id="email" placeholder="No Kartu" aria-describedby="emailHelp">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <input type="email" class="form-control" id="email" placeholder="Nominal Bayar" aria-describedby="emailHelp">
+                                                <input type="text" name="payment_card_value" class="form-control" id="email" placeholder="Nominal Bayar" aria-describedby="emailHelp">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                <input class="form-check-input" type="checkbox" name="payment_method_qris" id="flexSwitchCheckDefault">
                                             </div>
                                             </div>
                                         </div>
@@ -405,7 +421,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="customer_title" name="payment_category_ota" aria-label="payment_ota">
+                                            <select class="form-select w-100 mb-0" id="payment_category_qris" name="payment_category_qris" aria-label="payment_category_qris">
                                                 <option selected>Jenis Qris</option>
                                                 @foreach ($paymentQris as $qris)
                                                     <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
@@ -415,19 +431,19 @@
                                         </br></br>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <input type="email" class="form-control" id="email" placeholder="No Ref" aria-describedby="emailHelp">
+                                                <input type="text" class="form-control" name="qris_reference_number" id="reference_number" placeholder="Nomor Referensi QRIS" aria-describedby="emailHelp">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <input type="email" class="form-control" id="email" placeholder="Nominal Bayar" aria-describedby="emailHelp">
+                                                <input type="text" name="payment_qris_value" class="form-control" id="payment_qris_value" placeholder="Nominal Bayar" aria-describedby="emailHelp">
                                             </div>
                                         </div>
 
                                         <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                                <input class="form-check-input" name="payment_method_transfer" type="checkbox" id="flexSwitchCheckDefault">
                                             </div>
                                             </div>
                                         </div>
@@ -437,7 +453,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="customer_title" name="payment_category_ota" aria-label="payment_ota">
+                                            <select class="form-select w-100 mb-0" id="payment_method_transfer" name="payment_method_transfer" aria-label="payment_method_transfer">
                                                 <option selected>Jenis Bank Transfer</option>
                                                 @foreach ($paymentQris as $qris)
                                                     <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
@@ -447,18 +463,18 @@
                                         </br></br>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <input type="email" class="form-control" placeholder="Nominal Bayar" id="email" aria-describedby="emailHelp">
+                                                <input type="text" name="payment_transfer_value" class="form-control" placeholder="Nominal Bayar" id="email" aria-describedby="emailHelp">
                                             </div>
                                         </div>
                                         </br></br>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <input type="email" class="form-control" placeholder="No Ref" id="email" aria-describedby="emailHelp">
+                                                <input type="text" name="transfer_reference_number" class="form-control" placeholder="Nomor Referensi Transfer" id="email" aria-describedby="emailHelp">
                                             </div>
                                         </div>
+                                        
 
-                                        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
-                                        </br></br>
+                                        </br></br></br></br></br></br></br></br></br></br></br></br></br>
                                     </div>
                                     <!-- End of Form -->
                                 </div>
@@ -468,15 +484,15 @@
                 </div>
 
                 <div class="row">
-                    <div class="col- mb-4">
+                    <div class="col">
                         <div class="card border-0 shadow components-section">
                             <div class="card-body">     
-                                <div class="row mb-4">
+                                <div class="row">
                                 <div class="col-lg-12 col-sm-6">
                                     <h1 class="h5"><u>Order Summary</u></h1>
                                     </br>
                                         <!-- Form -->
-                                        <div class="row mb-4">
+                                        <div class="row">
                                         @if($customerTmp)
                                         <div class="col-lg-12 col-sm-12">
                                             <label for="email">Data Pelanggan</label>
@@ -495,6 +511,21 @@
                                                     <p>Tipe Kamar : {{ $reservationData->hotelRoomNumber->hotelRoom->room_type }} </p>
                                                     <p>Nomor Kamar : {{ $reservationData->hotelRoomNumber->room_number }} </p>
                                                     <p>Total Tamu : {{ $reservationData->total_guest }} </p>
+                                                    <p>Harga Kamar : Rp. {{ number_format($reservationData->price, 2, ",", ".") }} </p>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        @endif
+                                        <div class="col-lg-12 col-sm-12">
+                                        </div>
+                                        @if($amenitiesTmp)
+                                        @foreach($amenitiesTmp as $amenities)
+                                        <div class="col-lg-2 col-sm-2">
+                                            <label for="email">Data Amenities</label>
+                                                <div class="mb-4">
+                                                    <p>Amenities : {{ $amenities->amenities->amenities }} </p>
+                                                    <p>Kuantitas : {{ $amenities->amount }} </p>
+                                                    <p>Total Harga Amenities : Rp. {{ number_format($amenities->total_price, 2, ",", ".")}} </p>
                                                 </div>
                                             </div>
                                         @endforeach
@@ -502,13 +533,7 @@
                                             <div class="col-lg-12 col-sm-12">
                                             <label for="email">Diskon</label>
                                                 <div class="mb-4">
-                                                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-sm-12">
-                                            <label for="email">DP & Tambahan</label>
-                                                <div class="mb-4">
-                                                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                                                    <input type="text" name="discount" class="form-control" id="discount" aria-describedby="emailHelp">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-sm-12">
@@ -518,8 +543,15 @@
                                             </div>
                                             <div class="col-lg-12 col-sm-12">
                                                 <div class="mb-4">
-                                                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" disabled>
+                                                    @if($totalPrice)
+                                                    <input type="text" name="total_price" class="form-control" id="total_price" value="{{ number_format($totalPrice, 0, ',', '.') }}" aria-describedby="total_price" disabled>
+                                                    @else
+                                                    <input type="text" name="total_price" class="form-control" id="total_price"  aria-describedby="total_price" disabled>
+                                                    @endif
                                                 </div>
+                                            </div>
+                                            <div class="col-lg-12 col-sm-12">
+                                                <button class="btn w-100 btn-default btn-secondary" type="button">Simpan</button>
                                             </div>
                                         </div>
                                         <!-- End of Form -->
@@ -533,14 +565,8 @@
                 </div>
             </div>
         </div>
-    </div>
-                
-                <div class="col-lg-12 col-sm-12">
-                    <div class="mb-4">
-                        <button class="btn w-100 btn-secondary" type="button">Selanjutnya</button>
-                    </div>
-                </div>
-
+            </div>
+            </div>
             </div>
 
             <div class="theme-settings card bg-gray-800 pt-2 collapse" id="theme-settings">
@@ -601,4 +627,30 @@
         });
     });
 </script>
+<script>
+    function formatRupiah(amount) {
+            var formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR'
+            });
+            return formatter.format(amount);
+    }
+    
+    $(document).ready(function () {
+            var input2Value = $('#total_price').val() || 0;
+
+            $('#discount').on('input', function () {
+                calculateResult();
+            });
+
+            function calculateResult() {
+                var input1Value = parseFloat($('#discount').val()) || 0;
+                var totalPrice = parseInt(input2Value.replace(/\./g, ''), 10);
+                console.log(totalPrice);
+                var result = totalPrice - input1Value;
+                var formattedResult = formatRupiah(result.toFixed(2)); // Format with 2 decimal places
+                $('#total_price').val(formattedResult);
+            }
+    });
+    </script>
 @endpush

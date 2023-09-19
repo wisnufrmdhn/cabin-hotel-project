@@ -10,12 +10,20 @@ use App\Models\CustomerTmp;
 use App\Models\ReservationTmp;
 use App\Models\ReservationDetailTmp;
 use App\Models\HotelRoomNumber;
+use App\Models\HotelRoomRate;
 use App\Models\HotelRoomReservedTmp;
+use App\Models\PaymentAmenitiesTmp;
+use App\Models\Amenities;
 use App\Models\PicHotelBranch;
 use Carbon\Carbon;
 
 class ReservationService
 {
+    public function store($request)
+    {
+        
+    }
+
     public function storeCustomer($request)
     {
         // Upload customer photo and identity photo
@@ -103,13 +111,43 @@ class ReservationService
         $storeReservationDetail = ReservationDetailTmp::create($reservationDetail);
 
         $request['reservation_detail_tmp_id'] = $storeReservationDetail->id;
-        $request['hotel_room_number_id'] = (int)$request['hotel_room_number_id'];
-        $request['total_guest'] = (int)$request['hotel_room_number_id'];
+        $hotelRoomNumber = HotelRoomNumber::where('id', $request['hotel_room_number_id'])->first();
+        $hotelRoomId = $hotelRoomNumber->hotel_room_id;
 
+        $checkin = Carbon::parse($request['reservation_start_date']);
+        $checkout = Carbon::parse($request['reservation_end_date']);
+        $diff = $checkin->diffInHours($checkout);
+
+        if($diff <= 8){ //harga kamar dibawah 8 jam dibulatkan ke 8 jam
+            $priceHour = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('room_duration', 8)->first();
+
+            $request['price'] = $priceHour->room_rates;
+        }else if($diff > 24){ //logic perhitungan khusus untuk harga kamar diatas 24 jam
+            $resultDay = intval($diff / 24);
+            $remainsHour = $diff % 24;
+            if($remainsHour !== 0){
+                $remainsHour = $remainsHour < 8 ? 8 : $remainsHour;
+                $priceDay = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('room_duration', 24)->first();
+                $priceHour = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('room_duration', $remainsHour)->first();
+
+                $request['price'] = ($priceDay->room_rates * $resultDay) + $priceHour->room_rates;
+            }else{
+                $priceDay = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('room_duration', 24)->first();
+
+                $request['price'] = $priceDay->room_rates * $resultDay;
+            }
+        }else{
+            $priceHour = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('room_duration', 8)->first();
+
+            $request['price'] = $priceHour->room_rates;
+        }
+
+        
         $storeHotelRoomReserved = HotelRoomReservedTmp::create([
             'reservation_detail_tmp_id' => $request['reservation_detail_tmp_id'],
             'hotel_room_number_id'      => $request['hotel_room_number_id'],
-            'total_guest'               => $request['total_guest']
+            'total_guest'               => $request['total_guest'],
+            'price'                     => $request['price'],
         ]);
 
         return $storeHotelRoomReserved;
@@ -117,7 +155,32 @@ class ReservationService
 
     public function storeAmenities($request)
     {
+        $user = Auth::user();
+        $picHotelBranch = PicHotelBranch::where('user_id', $user->id)->first();
+        $breakfast = Amenities::where('amenities', 'Breakfast')->first();
+        $extraBed = Amenities::where('amenities', 'Extra Bed')->first();
 
+        if($request['amount_breakfast']){
+            $paymentAmenitiesTmp = PaymentAmenitiesTmp::create([
+                'hotel_branch_id' => $picHotelBranch->hotel_branch_id,
+                'amenities_id' => $breakfast->id,
+                'amount' => $request['amount_breakfast'],
+                'price'  => $breakfast->price,
+                'total_price' => $breakfast->price * $request['amount_breakfast']
+            ]);
+        }
+        
+        if($request['amount_extra_bed']){
+            $paymentAmenitiesTmp = PaymentAmenitiesTmp::create([
+                'hotel_branch_id' => $picHotelBranch->hotel_branch_id,
+                'amenities_id' => $extraBed->id,
+                'amount' => $request['amount_extra_bed'],
+                'price'  => $extraBed->price,
+                'total_price' => $extraBed->price * $request['amount_extra_bed']
+            ]);
+        }
+
+        return $paymentAmenitiesTmp;
     }
 
     private function uploadFile($file, $destinationPath)

@@ -17,7 +17,7 @@ class HotelRoomNumber extends Model
 
     public function hotelRoomReservedTmp()
     {
-        return $this->belongsTo(HotelRoomReservedTmp::class);
+        return $this->hasOne(HotelRoomReservedTmp::class);
     }
 
     public function hotelRoom()

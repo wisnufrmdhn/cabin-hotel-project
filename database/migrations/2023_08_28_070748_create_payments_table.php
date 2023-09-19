@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->integer('down_payment');
             $table->integer('discount');
             $table->integer('total_price');
             $table->integer('total_price_amenities');

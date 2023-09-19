@@ -7,11 +7,13 @@ use App\Models\ReservationMethod;
 use App\Models\PicHotelBranch;
 use App\Models\HotelRoom;
 use App\Models\HotelRoomRate;
+use App\Models\PaymentMethod;
 use App\Models\HotelRoomNumber;
 use App\Services\ReservationService;
 use App\Models\CustomerTmp;
 use App\Models\HotelRoomReservedTmp;
 use App\Models\ReservationTmp;
+use App\Models\PaymentAmenitiesTmp;
 use App\Models\ReservationDetailTmp;
 
 class ReservationController extends Controller
@@ -42,31 +44,50 @@ class ReservationController extends Controller
         $reservationTmp = [];
         $reservationDetailTmp = [];
         $hotelRoomReservedTmp = [];
+        $amenitiesTmp = [];
+        $totalPrice = null;
+        $paymentOTA = PaymentMethod::where('payment_method', 'like', "%OTA%")->get();
+        $paymentCard = PaymentMethod::where('payment_method', 'like', "%Card%")->get();
+        $paymentTransfer = PaymentMethod::where('payment_method', 'like', "%Transfer%")->get();
+        $paymentQris = PaymentMethod::where('payment_method', 'like', "%Qris%")->get();
         
         if($customerTmp){
             $reservationTmp = ReservationTmp::where('hotel_branch_id', $pic->hotel_branch_id)->where('customer_tmp_id', $customerTmp->id)->first();
+            if($reservationTmp){
+                $reservationDetailTmp = ReservationDetailTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationTmp')->get();
 
-            $reservationDetailTmp = ReservationDetailTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationTmp')->get();
+                $roomReservedId = [];
 
-            $roomReservedId = [];
+                foreach($reservationDetailTmp as $reservationDetailsTmp){
+                    $roomReservedId[] = $reservationDetailsTmp->id;
+                }
+                
+                $hotelRoomReservedTmp = HotelRoomReservedTmp::whereIn('reservation_detail_tmp_id', $roomReservedId)->with('reservationDetailTmp', 'hotelRoomNumber.hotelRoom')->get();
 
-            foreach($reservationDetailTmp as $reservationDetailsTmp){
-                $roomReservedId[] = $reservationDetailsTmp->id;
+                $totalPrice = HotelRoomReservedTmp::whereIn('reservation_detail_tmp_id', $roomReservedId)->with('reservationDetailTmp', 'hotelRoomNumber.hotelRoom')->sum('price');
+
+                $amenitiesTmp = PaymentAmenitiesTmp::where('hotel_branch_id', $pic->hotel_branch_id)->with('amenities')->get();
+
+                if($amenitiesTmp){
+                    $amenitiesTotalPrice = PaymentAmenitiesTmp::where('hotel_branch_id', $pic->hotel_branch_id)->with('amenities')->sum('total_price');
+                    $totalPrice = $totalPrice + $amenitiesTotalPrice;
+                }
             }
-            
-            $hotelRoomReservedTmp = HotelRoomReservedTmp::whereIn('reservation_detail_tmp_id', $roomReservedId)->with('reservationDetailTmp', 'hotelRoomNumber.hotelRoom')->get();
-            return view('admin.reservation.index', compact('reservationMethod', 'hotelRooms', 'customerTmp', 'reservationTmp', 'reservationDetailTmp', 'hotelRoomReservedTmp')); 
         }
 
-        return view('admin.reservation.index', compact('reservationMethod', 'hotelRooms', 'customerTmp', 'reservationTmp', 'reservationDetailTmp', 'hotelRoomReservedTmp')); 
+        return view('admin.reservation.index', compact('reservationMethod', 'hotelRooms', 'customerTmp', 'reservationTmp', 'reservationDetailTmp', 'hotelRoomReservedTmp', 'paymentOTA', 'paymentCard', 'paymentTransfer', 'paymentQris', 'totalPrice', 'amenitiesTmp')); 
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required',
-        ]);
+        try{    
+            $store = $this->service->store($request);
+            return $store;
+        }catch(\Throwable $th){
+            return $th;
+            return redirect()->route('admin.reservation.index')->with('error', 'Reservation data final failed to add');
+        }
+        return redirect()->route('admin.reservation.index')->with('success', 'Reservation data final added successfully');
     }
 
     public function storeCustomer(Request $request)
@@ -74,10 +95,8 @@ class ReservationController extends Controller
         try{    
             $store = $this->service->storeCustomer($request);
         }catch(\Throwable $th){
-            return $th;
             return redirect()->route('admin.reservation.index')->with('error', 'Customer failed to add');
         }
-        return $store;
         return redirect()->route('admin.reservation.index')->with('success', 'Customer added successfully');
     }
 
@@ -85,11 +104,11 @@ class ReservationController extends Controller
     {
         try{    
             $store = $this->service->storeRoomOrder($request);
+            return $store;
         }catch(\Throwable $th){
             return $th;
             return redirect()->route('admin.reservation.index')->with('error', 'Room order failed to add');
         }
-        return $store;
         return redirect()->route('admin.reservation.index')->with('success', 'Room order added successfully');
     }
 
@@ -97,11 +116,11 @@ class ReservationController extends Controller
     {
         try{    
             $store = $this->service->storeAmenities($request);
+            return $store;
         }catch(\Throwable $th){
             return $th;
             return redirect()->route('admin.reservation.index')->with('error', 'Room order failed to add');
         }
-        return $store;
         return redirect()->route('admin.reservation.index')->with('success', 'Room order added successfully');
     }
 }

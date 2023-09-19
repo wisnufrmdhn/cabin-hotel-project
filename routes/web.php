@@ -33,6 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', [ReservationController::class, 'index'])->name('index');
             Route::post('/store-customer', [ReservationController::class, 'storeCustomer'])->name('store-customer');
             Route::post('/store-room-order', [ReservationController::class, 'storeRoomOrder'])->name('store-room-order');
+            Route::post('/store-amenities', [ReservationController::class, 'storeAmenities'])->name('store-amenities');
         });
     });
 });
