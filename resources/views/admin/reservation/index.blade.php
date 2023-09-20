@@ -496,41 +496,87 @@
                                         @if($customerTmp)
                                         <div class="col-lg-12 col-sm-12">
                                             <label for="email">Data Pelanggan</label>
-                                                <div class="mb-4">
-                                                    <p>Nama : {{ $customerTmp->customer_name }}</p>
-                                                    <p>Email : {{ $customerTmp->customer_email }}</p>
-                                                    <p>No Hp : {{ $customerTmp->customer_phone }}</p>
-                                                </div>
+                                            <div class="table-responsive">
+                                            <table class="table table-centered table-nowrap mb-0 rounded">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="border-0">Nama Pelanggan</th>
+                                                    <th class="border-0">Email</th>
+                                                    <th class="border-0">Nomor Handphone</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>{{ $customerTmp->customer_name }}</td>
+                                                    <td>{{ $customerTmp->customer_email }}</td>
+                                                    <td>{{ $customerTmp->customer_phone }}</td>
+                                                </tr>
+                                                <!-- End of Item -->
+                                            </tbody>
+                                            </table>
+                                            </div>
                                             </div>
                                         @endif
                                         @if($hotelRoomReservedTmp)
-                                        @foreach($hotelRoomReservedTmp as $reservationData)
-                                        <div class="col-lg-2 col-sm-2">
+                                        <div class="col-lg-12 col-sm-12">
+                                        </br></br>
                                             <label for="email">Data Reservasi Kamar</label>
-                                                <div class="mb-4">
-                                                    <p>Tipe Kamar : {{ $reservationData->hotelRoomNumber->hotelRoom->room_type }} </p>
-                                                    <p>Nomor Kamar : {{ $reservationData->hotelRoomNumber->room_number }} </p>
-                                                    <p>Total Tamu : {{ $reservationData->total_guest }} </p>
-                                                    <p>Harga Kamar : Rp. {{ number_format($reservationData->price, 2, ",", ".") }} </p>
-                                                </div>
+                                            <div class="table-responsive">
+                                            <table class="table table-centered table-nowrap mb-0 rounded">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th class="border-0 rounded-start">Tipe Kamar</th>
+                                                    <th class="border-0">Nomor Kamar</th>
+                                                    <th class="border-0">Total Tamu</th>
+                                                    <th class="border-0">Total Harga Kamar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($hotelRoomReservedTmp as $reservationData)
+                                                <tr>
+                                                    <td>{{ $reservationData->hotelRoomNumber->hotelRoom->room_type }}</td>
+                                                    <td>{{ $reservationData->hotelRoomNumber->room_number }}</td>
+                                                    <td>{{ $reservationData->total_guest }}</td>
+                                                    <td>{{ number_format($reservationData->price, 2, ",", ".") }}</td>
+                                                </tr>
+                                                <!-- End of Item -->
+                                            @endforeach
+                                            </tbody>
+                                            </table>
                                             </div>
-                                        @endforeach
+                                        </div>
                                         @endif
                                         <div class="col-lg-12 col-sm-12">
                                         </div>
                                         @if($amenitiesTmp)
-                                        @foreach($amenitiesTmp as $amenities)
-                                        <div class="col-lg-2 col-sm-2">
+                                        <div class="col-lg-12 col-sm-12">
+                                        </br></br>
                                             <label for="email">Data Amenities</label>
-                                                <div class="mb-4">
-                                                    <p>Amenities : {{ $amenities->amenities->amenities }} </p>
-                                                    <p>Kuantitas : {{ $amenities->amount }} </p>
-                                                    <p>Total Harga Amenities : Rp. {{ number_format($amenities->total_price, 2, ",", ".")}} </p>
+                                                <div class="table-responsive">
+                                                <table class="table table-centered table-nowrap mb-0 rounded">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th class="border-0 rounded-start">Amenities</th>
+                                                        <th class="border-0">Kuantitas</th>
+                                                        <th class="border-0">Total Harga Amenities</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($amenitiesTmp as $amenities)
+                                                    <tr>
+                                                        <td>{{ $amenities->amenities->amenities }}</td>
+                                                        <td>{{ $amenities->amount }}</td>
+                                                        <td>Rp. {{ number_format($amenities->total_price, 2, ",", ".")}}</td>
+                                                    </tr>
+                                                    <!-- End of Item -->
+                                                @endforeach
+                                                </tbody>
+                                                </table>
                                                 </div>
                                             </div>
-                                        @endforeach
                                         @endif
                                             <div class="col-lg-12 col-sm-12">
+                                            </br></br>
                                             <label for="email">Diskon</label>
                                                 <div class="mb-4">
                                                     <input type="text" name="discount" class="form-control" id="discount" aria-describedby="emailHelp">
@@ -551,7 +597,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 col-sm-12">
-                                                <button class="btn w-100 btn-default btn-secondary" type="button">Simpan</button>
+                                                <button class="btn w-100 btn-default btn-secondary" type="submit">Simpan</button>
                                             </div>
                                         </div>
                                         <!-- End of Form -->
