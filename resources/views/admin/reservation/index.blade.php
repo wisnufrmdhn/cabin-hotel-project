@@ -51,7 +51,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="customer_title" name="customer_title" aria-label="customer_title" disabled>
+                                            <select class="form-select w-100 mb-0" id="customer_id" name="customer_id" aria-label="customer_id" disabled>
                                                 <option selected>Daftar Tamu</option>
                                                 <option value="Mrs">Mrs</option>
                                             </select>
@@ -231,7 +231,7 @@
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                                 <select class="form-select w-100 mb-0" id="hotel_room_id" name="hotel_room_id" aria-label="State select example">
-                                                <option selected>Tipe Kamar</option>
+                                                <option selected value="">Tipe Kamar</option>
                                                 @foreach ($hotelRooms as $roomType)
                                                     <option value="{{ $roomType->id }}">{{ $roomType->room_type }}</option>
                                                 @endforeach
@@ -248,7 +248,7 @@
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                                 <select class="form-select w-100 mb-0" id="total_guest" name="total_guest" aria-label="State select example">
-                                                        <option selected>Jumlah Orang</option>
+                                                        <option selected value="">Jumlah Orang</option>
                                                         @for ($i = 1; $i <= 4; $i++)
                                                             <option value="{{ $i }}">{{ $i }}</option>
                                                         @endfor
@@ -270,7 +270,7 @@
                                             <div class="mb-4">
                                                 <label for="email">Breakfast</label>
                                                 <select class="form-select w-100 mb-0" id="amount_breakfast" name="amount_breakfast" aria-label="State select example">
-                                                <option selected>Breakfast</option>
+                                                <option selected value="">Breakfast</option>
                                                     @for ($i = 0; $i <= 10; $i++)
                                                         <option value="{{ $i }}">{{ $i }}</option>
                                                     @endfor
@@ -281,7 +281,7 @@
                                             <div class="mb-4">
                                             <label for="email">Extra Bed</label>
                                                 <select class="form-select w-100 mb-0" id="state" name="amount_extra_bed" aria-label="State select example">
-                                                    <option selected>Extra Bed</option>
+                                                    <option selected value="">Extra Bed</option>
                                                     @for ($i = 0; $i <= 10; $i++)
                                                         <option value="{{ $i }}">{{ $i }}</option>
                                                     @endfor
@@ -311,6 +311,8 @@
                                 <h1 class="h5"><u>Payment</u></h1>
                                 </br>
                                     <!-- Form -->
+                                    <form method="POST" action="{{route('admin.reservation.store')}}" enctype="multipart/form-data">
+                                    {{ csrf_field() }}
                                     <div class="row">
                                     <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
@@ -327,7 +329,7 @@
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <select class="form-select w-100 mb-0" id="customer_title" name="payment_category_ota" aria-label="payment_category_ota">
-                                                <option selected>Jenis OTA</option>
+                                                <option selected value="">Jenis OTA</option>
                                                 @foreach($paymentOTA as $OTA)
                                                     <option value="{{ $OTA->id }}">{{ $OTA->payment_method }}</option>
                                                 @endforeach
@@ -345,8 +347,8 @@
                                         </br></br>
                                         <div class="col-lg-12 col-sm-12">
                                         <label>Tipe Pembayaran</label>
-                                            <select class="form-select w-100 mb-0" id="payment_category_qris" name="payment_category_qris" aria-label="payment_category_qris">
-                                                <option selected>Tipe Pembayaran</option>
+                                            <select class="form-select w-100 mb-0" id="payment_category" name="payment_category" aria-label="payment_category">
+                                                <option selected value="">Tipe Pembayaran</option>
                                                     <option value="Down Payment">Down Payment</option>
                                                     <option value="Lunas">Lunas</option>
                                             </select>
@@ -390,7 +392,7 @@
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <select class="form-select w-100 mb-0" id="customer_title" name="payment_category_card" aria-label="payment_category_card">
-                                                <option selected>Jenis Card</option>
+                                                <option selected value="">Jenis Card</option>
                                                 @foreach ($paymentCard as $cards)
                                                     <option value="{{ $cards->id }}">{{ $cards->payment_method }}</option>
                                                 @endforeach
@@ -422,7 +424,7 @@
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <select class="form-select w-100 mb-0" id="payment_category_qris" name="payment_category_qris" aria-label="payment_category_qris">
-                                                <option selected>Jenis Qris</option>
+                                                <option selected value="">Jenis Qris</option>
                                                 @foreach ($paymentQris as $qris)
                                                     <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
                                                 @endforeach
@@ -453,8 +455,8 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="payment_method_transfer" name="payment_method_transfer" aria-label="payment_method_transfer">
-                                                <option selected>Jenis Bank Transfer</option>
+                                            <select class="form-select w-100 mb-0" id="payment_method_transfer" name="payment_method_transfer" aria-label="payment_category_transfer">
+                                                <option selected value="">Jenis Bank Transfer</option>
                                                 @foreach ($paymentQris as $qris)
                                                     <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
                                                 @endforeach
@@ -599,6 +601,7 @@
                                             <div class="col-lg-12 col-sm-12">
                                                 <button class="btn w-100 btn-default btn-secondary" type="submit">Simpan</button>
                                             </div>
+                                            </form>
                                         </div>
                                         <!-- End of Form -->
                                     </div>

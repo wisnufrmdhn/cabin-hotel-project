@@ -5,13 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PaymentAmenities extends Model
+class PaymentDetail extends Model
 {
     use HasFactory;
 
-    protected $table = 'payment_amenities';
+    protected $table = 'payment_details';
 
-    protected $guarded = [
-        'id'
-    ];
+    protected $guarded = ['
+        id
+    '];
 }

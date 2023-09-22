@@ -17,6 +17,7 @@ return new class extends Migration
             $table->engine = 'InnoDB';
             $table->id();
             $table->enum('customer_identity_type', ['KTP', 'SIM', 'Lainnya'])->nullable();
+            $table->enum('customer_title', ['Mr', 'Mrs'])->nullable();
             $table->string('customer_name')->nullable();
             $table->string('customer_email')->nullable();
             $table->string('customer_phone')->nullable();

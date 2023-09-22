@@ -18,9 +18,7 @@ return new class extends Migration
             $table->foreignId('payment_id')->constrained('payments');
             $table->foreignId('customer_id')->constrained('customers');
             $table->foreignId('hotel_branch_id')->constrained('hotel_branches')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('payment_method_id')->constrained('payment_methods');
             $table->integer('down_payment');
-            $table->foreignId('hotel_room_reserved_id')->constrained('hotel_rooms_reserved');
             $table->enum('status', ['New', 'Claimed']);
             $table->timestamp('claim_date');
             $table->timestamps();
