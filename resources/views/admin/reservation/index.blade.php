@@ -233,6 +233,7 @@
                                             <select class="form-select w-100 mb-0" id="reservation_day_category" name="reservation_day_category" aria-label="reservation_day_category">
                                                 <option value="Weekday">Weekday</option>
                                                 <option value="Weekend">Weekend</option>
+                                                <option value="Weekend">Middle Day</option>
                                                 <option value="High Season">High Season</option>
                                             </select>
                                         </div>
@@ -327,10 +328,17 @@
                                     {{ csrf_field() }}
                                     <div class="row">
                                     <div class="col-lg-12 col-sm-12">
-                                            <label for="email">Diskon</label>
+                                            <label for="discount">Diskon</label>
+                                                <div class="mb-2">  
+                                                    <select class="form-select w-100 mb-2" id="discount_type" name="discount_type" aria-label="discount_type">
+                                                    <option selected value="">Jenis Diskon</option>
+                                                    <option value="Nominal">Nominal</option>
+                                                    <option value="Persen">Persen (%)</option>
+                                                </div>
                                                 <div class="mb-4">
                                                     <input type="text" name="discount" class="form-control" id="discount" aria-describedby="emailHelp">
                                                 </div>
+                                            </select>
                                             </div>
                                             <div class="col-lg-12 col-sm-12">
                                                 <div class="mb-4">
@@ -361,7 +369,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="customer_title" name="payment_category_ota" aria-label="payment_category_ota">
+                                            <select class="form-select w-100 mb-0" id="payment_category_ota" name="payment_category_ota" aria-label="payment_category_ota">
                                                 <option selected value="">Jenis OTA</option>
                                                 @foreach($paymentOTA as $OTA)
                                                     <option value="{{ $OTA->id }}">{{ $OTA->payment_method }}</option>
@@ -437,9 +445,9 @@
                                         <div class="col-lg-12 col-sm-12 paymentOption" id="transferOptions" style="display: none;">
                                             <select class="form-select w-100 mb-2" name="transferBank" aria-label="transferBank" style="margin-bottom: 10px;">
                                                 <option selected value="">Pilih Bank Transfer</option>
-                                                <option value="bca">Bank BCA</option>
-                                                <option value="bni">Bank BNI</option>
-                                                <option value="mandiri">Bank Mandiri</option>
+                                            @foreach($paymentTransfer as $transfer)
+                                                <option value="{{ $transfer->id }}">{{ $transfer->payment_method }}</option>
+                                            @endforeach
                                             </select>
                                             <input type="text" name="transferAmount" class="form-control mb-2" placeholder="Nominal Pembayaran">
                                             <input type="text" name="transferReference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Transfer">
@@ -449,8 +457,9 @@
                                         <div class="col-lg-12 col-sm-12 paymentOption" id="cardOptions" style="display: none;">
                                             <select class="form-select w-100 mb-2" name="cardType" aria-label="cardType">
                                                 <option selected value="">Pilih Jenis Kartu</option>
-                                                <option value="debit_bca">Debit Card BCA</option>
-                                                <option value="debit_bni">Debit Card BNI</option>
+                                            @foreach($paymentCard as $card)
+                                                <option value="{{ $card->id }}">{{ $card->payment_method }}</option>
+                                            @endforeach
                                             </select>
                                             <input type="text" name="cardAmount" class="form-control mb-2" placeholder="Nominal Pembayaran">
                                             <input type="text" name="cardNumber" class="form-control mb-2" placeholder="Nomor Kartu">
@@ -460,10 +469,9 @@
                                         <div class="col-lg-12 col-sm-12 paymentOption" id="qrisOptions" style="display: none;">
                                             <select class="form-select w-100 mb-2" name="qrisType" aria-label="qrisType">
                                                 <option selected value="">Pilih Jenis QRIS</option>
-                                                <option value="qris_bca">QRIS BCA</option>
-                                                <option value="qris_bni">QRIS BNI</option>
-                                                <option value="qris_mandiri">QRIS Mandiri</option>
-                                                <option value="qris_cimb">QRIS CIMB</option>
+                                            @foreach($paymentQris as $qris)
+                                                <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
+                                            @endforeach
                                             </select>
                                             <input type="text" name="qrisAmount" class="form-control mb-2" placeholder="Nominal Pembayaran">
                                             <input type="text" name="qrisReference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi QRIS">
