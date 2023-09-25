@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\ReservationMethod;
 use App\Models\PicHotelBranch;
 use App\Models\HotelRoom;
-use App\Models\HotelRoomRate;
 use App\Models\PaymentMethod;
 use App\Models\HotelRoomNumber;
 use App\Services\ReservationService;
@@ -110,7 +109,6 @@ class ReservationController extends Controller
     {
         try{    
             $store = $this->service->storeRoomOrder($request);
-            return $store;
         }catch(\Throwable $th){
             return $th;
             return redirect()->route('admin.reservation.index')->with('error', 'Room order failed to add');
@@ -122,7 +120,6 @@ class ReservationController extends Controller
     {
         try{    
             $store = $this->service->storeAmenities($request);
-            return $store;
         }catch(\Throwable $th){
             return $th;
             return redirect()->route('admin.reservation.index')->with('error', 'Room order failed to add');

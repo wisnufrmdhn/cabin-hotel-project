@@ -1,4 +1,7 @@
 @extends('admin.layout.template')
+@push('css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
 @section('content') 
         <div class="py-4">
                 
@@ -51,10 +54,9 @@
                                                 <label for="daftar_tamu">Pilih Dari Daftar Tamu</label>
                                             </div>
                                         </div>
-                                        <div class="col-lg-12 col-sm-12">
+                                        <div class="col-lg-12 col-sm-12" id="customer_select_id">
                                             <select class="form-select w-100 mb-0" id="customer_id" name="customer_id" aria-label="customer_id" disabled>
-                                                <option selected>Daftar Tamu</option>
-                                                <option value="Mrs">Mrs</option>
+                                                <option value="">Daftar Tamu</option>
                                             </select>
                                         </div>
                                         </br></br></br>
@@ -714,6 +716,48 @@
 </div>
 @endsection
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        const customerCheck = $('#customer_check');
+        customerCheck.on('change', function() {
+                // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
+                if (this.checked) {
+                    $('#customer_id').removeAttr('disabled');
+                } else {
+                    $('#customer_id').prop('disabled', true);
+                }
+        });
+    });
+</script>
+<script>
+        $(document).ready(function() {
+            $('#customer_id').select2({
+                ajax: {
+                    placeholder: 'Daftar Tamu',
+                    url: "{{ route('ajax.list-customers') }}",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            term: params.term
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: $.map(data, function(item) {
+                                return {
+                                    text: item.customer_name + ' - ' + item.customer_phone,
+                                    id: item.id
+                                };
+                            })
+                        };
+                    },
+                    cache: true
+                }
+            });
+        });
+</script>
 <script>
     $(document).ready(function() {
         $('#paymentMethod').change(function() {

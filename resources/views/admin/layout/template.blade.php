@@ -60,6 +60,7 @@
 
 <!-- Volt CSS -->
 <link type="text/css" href="../../css/volt.css" rel="stylesheet">
+@stack('css')
 
 <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
 

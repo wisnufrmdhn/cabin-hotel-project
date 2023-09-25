@@ -40,5 +40,6 @@ Route::group(['middleware' => ['auth']], function () {
 });
 
 Route::group(['as' => 'ajax.', 'prefix' => 'ajax'], function () {
+    Route::get('/getListCustomers', [AjaxController::class, 'getListCustomers'])->name('list-customers');
     Route::get('/getRoomNumbers/{roomType}', [AjaxController::class, 'getRoomNumbers'])->name('room-numbers');
 });
