@@ -41,7 +41,7 @@
                                         <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" name="daily" id="flexSwitchCheckDefault">
+                                                <input class="form-check-input" type="checkbox" name="search_guest" id="flexSwitchCheckDefault">
                                             </div>
                                             </div>
                                         </div>
@@ -110,7 +110,7 @@
                                         </div>
                                         </form>
                                     </div>
-                                    </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+                                    </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
                                     <!-- End of Form -->
                                 </div>
                             </div>
@@ -138,7 +138,7 @@
                                         <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" name="daily" id="flexSwitchCheckDefault">
+                                                <input class="form-check-input" type="checkbox" id="daily" name="daily" id="flexSwitchCheckDefault">
                                             </div>
                                             </div>
                                         </div>
@@ -151,27 +151,33 @@
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                                 <label for="email">Check Out</label>
-                                                <input type="datetime-local" class="form-control" name="reservation_end_date_daily" id="reservation_end_date" aria-describedby="emailHelp">
+                                                <input type="datetime-local" class="form-control" name="reservation_end_date_daily" id="reservation_end_date_daily" aria-describedby="emailHelp">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="mb-4">
+                                                <label for="result_daily_reservation_end_date" style="display: none;">Perhitungan waktu checkout dengan pilih tanggal & jam</label>
+                                                <input type="text" class="form-control" id="result_daily_reservation_end_date" style="display: none;" disabled>
                                             </div>
                                         </div>
                                         
                                         <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" name="mixed" id="flexSwitchCheckDefault">
+                                                <input class="form-check-input" type="checkbox" id="mixed" name="mixed" id="flexSwitchCheckDefault">
                                             </div>
                                             </div>
                                         </div>
             
                                         <div class="col-lg-8 col-sm-12">
                                             <div class="mb-4">
-                                                <p>Checkout dengan pilih hari & jam</p>
+                                                <p>Checkout dengan pilih durasi</p>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-sm-6">
                                             <div class="mb-4">
                                                 <label for="email">Hari</label>
-                                                <select class="form-select w-100 mb-0" id="state" name="mixed_day" aria-label="State select example">
+                                                <select class="form-select w-100 mb-0" id="mixed_time_day" name="mixed_day" aria-label="State select example">
                                                     @for ($i = 0; $i <= 30; $i++)
                                                         <option value="{{ $i }}">{{ $i }}</option>
                                                     @endfor
@@ -181,11 +187,17 @@
                                         <div class="col-lg-6 col-sm-6">
                                             <div class="mb-4">
                                                 <label for="email">Jam</label>
-                                                <select class="form-select w-100 mb-0" id="state" name="mixed_hour" aria-label="State select example">
+                                                <select class="form-select w-100 mb-0" id="mixed_time_hour" name="mixed_hour" aria-label="State select example">
                                                     @for ($i = 0; $i <= 24; $i++)
                                                         <option value="{{ $i }}">{{ $i }}</option>
                                                     @endfor
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="mb-2">
+                                                <label for="result_mix_reservation_end_date" style="display: none;">Perhitungan waktu checkout dengan pilih durasi</label>
+                                                <input type="datetime-local" class="form-control"  id="result_mix_reservation_end_date" style="display: none;" disabled>
                                             </div>
                                         </div>
 
@@ -293,7 +305,7 @@
                                                 <button class="btn w-100 btn-secondary" type="submit">Tambah Amenities</button>
                                             </div>
                                         </div>
-                                        </br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+                                        </br></br></br></br></br>
                                         </form>
                                     </div>
                                     <!-- End of Form -->
@@ -314,7 +326,28 @@
                                     <form method="POST" action="{{route('admin.reservation.store')}}" enctype="multipart/form-data">
                                     {{ csrf_field() }}
                                     <div class="row">
-                                    <div class="col-lg-2 col-sm-2">
+                                    <div class="col-lg-12 col-sm-12">
+                                            <label for="email">Diskon</label>
+                                                <div class="mb-4">
+                                                    <input type="text" name="discount" class="form-control" id="discount" aria-describedby="emailHelp">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-sm-12">
+                                                <div class="mb-4">
+                                                    <p><b>Total Price :</p></b>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-sm-12">
+                                                <div class="mb-4">
+                                                    @if($totalPrice)
+                                                    <input type="text" name="total_price" class="form-control" id="total_price" value="{{ number_format($totalPrice, 0, ',', '.') }}" aria-describedby="total_price" disabled>
+                                                    @else
+                                                    <input type="text" name="total_price" class="form-control" id="total_price"  aria-describedby="total_price" disabled>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                    
+                                        <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="payment_method_ota">
@@ -368,7 +401,7 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
+                                            <div class="mb-2">
                                                 <input type="text" name="payment_cash_value" class="form-control" id="payment_cash_value" placeholder="Nominal Bayar" aria-describedby="emailHelp">
                                             </div>
                                         </div>
@@ -387,96 +420,56 @@
                                         </div>
                                         <div class="col-lg-8 col-sm-12">
                                             <div class="mb-4">
-                                                <p>Card</p>
+                                                <p>Non Cash</p>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="customer_title" name="payment_category_card" aria-label="payment_category_card">
-                                                <option selected value="">Jenis Card</option>
-                                                @foreach ($paymentCard as $cards)
-                                                    <option value="{{ $cards->id }}">{{ $cards->payment_method }}</option>
-                                                @endforeach
+                                            <select class="form-select w-100 mb-0" id="paymentMethod" name="paymentMethod" aria-label="paymentMethod">
+                                                <option selected value="">Metode Pembayaran</option>
+                                                <option value="Card">Card</option>
+                                                <option value="Qris">QRIS</option>
+                                                <option value="Transfer">Transfer</option>
                                             </select>
                                         </div>
-                                        </br></br>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                <input type="text" name="card_number" class="form-control" id="email" placeholder="No Kartu" aria-describedby="emailHelp">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                <input type="text" name="payment_card_value" class="form-control" id="email" placeholder="Nominal Bayar" aria-describedby="emailHelp">
-                                            </div>
-                                        </div>
+                                        <br><br>
 
-                                        <div class="col-lg-2 col-sm-2">
-                                            <div class="mb-4">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" name="payment_method_qris" id="flexSwitchCheckDefault">
-                                            </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8 col-sm-12">
-                                            <div class="mb-4">
-                                                <p>Qris</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="payment_category_qris" name="payment_category_qris" aria-label="payment_category_qris">
-                                                <option selected value="">Jenis Qris</option>
-                                                @foreach ($paymentQris as $qris)
-                                                    <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
-                                                @endforeach
+                                        <!-- Form select untuk transfer -->
+                                        <div class="col-lg-12 col-sm-12 paymentOption" id="transferOptions" style="display: none;">
+                                            <select class="form-select w-100 mb-2" name="transferBank" aria-label="transferBank" style="margin-bottom: 10px;">
+                                                <option selected value="">Pilih Bank Transfer</option>
+                                                <option value="bca">Bank BCA</option>
+                                                <option value="bni">Bank BNI</option>
+                                                <option value="mandiri">Bank Mandiri</option>
                                             </select>
-                                        </div>
-                                        </br></br>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                <input type="text" class="form-control" name="qris_reference_number" id="reference_number" placeholder="Nomor Referensi QRIS" aria-describedby="emailHelp">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                <input type="text" name="payment_qris_value" class="form-control" id="payment_qris_value" placeholder="Nominal Bayar" aria-describedby="emailHelp">
-                                            </div>
+                                            <input type="text" name="transferAmount" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                                            <input type="text" name="transferReference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Transfer">
                                         </div>
 
-                                        <div class="col-lg-2 col-sm-2">
-                                            <div class="mb-4">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" name="payment_method_transfer" type="checkbox" id="flexSwitchCheckDefault">
-                                            </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-8 col-sm-12">
-                                            <div class="mb-4">
-                                                <p>Transfer</p>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="payment_method_transfer" name="payment_method_transfer" aria-label="payment_category_transfer">
-                                                <option selected value="">Jenis Bank Transfer</option>
-                                                @foreach ($paymentQris as $qris)
-                                                    <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
-                                                @endforeach
+                                        <!-- Form select untuk card -->
+                                        <div class="col-lg-12 col-sm-12 paymentOption" id="cardOptions" style="display: none;">
+                                            <select class="form-select w-100 mb-2" name="cardType" aria-label="cardType">
+                                                <option selected value="">Pilih Jenis Kartu</option>
+                                                <option value="debit_bca">Debit Card BCA</option>
+                                                <option value="debit_bni">Debit Card BNI</option>
                                             </select>
+                                            <input type="text" name="cardAmount" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                                            <input type="text" name="cardNumber" class="form-control mb-2" placeholder="Nomor Kartu">
                                         </div>
-                                        </br></br>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                <input type="text" name="payment_transfer_value" class="form-control" placeholder="Nominal Bayar" id="email" aria-describedby="emailHelp">
-                                            </div>
-                                        </div>
-                                        </br></br>
-                                        <div class="col-lg-12 col-sm-12">
-                                            <div class="mb-4">
-                                                <input type="text" name="transfer_reference_number" class="form-control" placeholder="Nomor Referensi Transfer" id="email" aria-describedby="emailHelp">
-                                            </div>
-                                        </div>
-                                        
 
-                                        </br></br></br></br></br></br></br></br></br></br></br></br></br>
+                                        <!-- Form select untuk qris -->
+                                        <div class="col-lg-12 col-sm-12 paymentOption" id="qrisOptions" style="display: none;">
+                                            <select class="form-select w-100 mb-2" name="qrisType" aria-label="qrisType">
+                                                <option selected value="">Pilih Jenis QRIS</option>
+                                                <option value="qris_bca">QRIS BCA</option>
+                                                <option value="qris_bni">QRIS BNI</option>
+                                                <option value="qris_mandiri">QRIS Mandiri</option>
+                                                <option value="qris_cimb">QRIS CIMB</option>
+                                            </select>
+                                            <input type="text" name="qrisAmount" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                                            <input type="text" name="qrisReference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi QRIS">
+                                        </div>
+                                    
+                                        </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
                                     </div>
                                     <!-- End of Form -->
                                 </div>
@@ -484,9 +477,8 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col">
+                @if($customerTmp)
+                    <div class="col-12">
                         <div class="card border-0 shadow components-section">
                             <div class="card-body">     
                                 <div class="row">
@@ -499,7 +491,7 @@
                                         <div class="col-lg-12 col-sm-12">
                                             <label for="email">Data Pelanggan</label>
                                             <div class="table-responsive">
-                                            <table class="table table-centered table-nowrap mb-0 rounded">
+                                            <table class="table table-centered table-nowrap mb-4 rounded">
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th class="border-0">Nama Pelanggan</th>
@@ -576,29 +568,10 @@
                                                 </table>
                                                 </div>
                                             </div>
-                                        @endif
+                                            @endif
+                                            
                                             <div class="col-lg-12 col-sm-12">
-                                            </br></br>
-                                            <label for="email">Diskon</label>
-                                                <div class="mb-4">
-                                                    <input type="text" name="discount" class="form-control" id="discount" aria-describedby="emailHelp">
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-sm-12">
-                                                <div class="mb-4">
-                                                    <p><b>Total Price :</p></b>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-sm-12">
-                                                <div class="mb-4">
-                                                    @if($totalPrice)
-                                                    <input type="text" name="total_price" class="form-control" id="total_price" value="{{ number_format($totalPrice, 0, ',', '.') }}" aria-describedby="total_price" disabled>
-                                                    @else
-                                                    <input type="text" name="total_price" class="form-control" id="total_price"  aria-describedby="total_price" disabled>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-12 col-sm-12">
+                                            </br>
                                                 <button class="btn w-100 btn-default btn-secondary" type="submit">Simpan</button>
                                             </div>
                                             </form>
@@ -608,7 +581,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
 
                     <!-- End of Form -->
                 </div>
@@ -649,6 +622,22 @@
 @endsection
 @push('scripts')
 <script>
+    $(document).ready(function() {
+        $('#paymentMethod').change(function() {
+            $('.paymentOption').hide(); // Sembunyikan semua form select tambahan
+
+            // Tampilkan form select tambahan sesuai dengan metode pembayaran yang dipilih
+            if ($(this).val() === 'Transfer') {
+                $('#transferOptions').show();
+            } else if ($(this).val() === 'Card') {
+                $('#cardOptions').show();
+            } else if ($(this).val() === 'Qris') {
+                $('#qrisOptions').show();
+            }
+        });
+    });
+</script>
+<script>
     $(document).ready(function () {
         $('#hotel_room_id').change(function () {
             const hotelRoom = $(this).val();
@@ -675,6 +664,77 @@
             }
         });
     });
+</script>
+<script>
+        $(document).ready(function() {
+            $('#daily').on('change', function() {
+                // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
+                if (this.checked) {
+                    $('#result_daily_reservation_end_date, label[for="result_daily_reservation_end_date"]').show();
+                } else {
+                    $('#result_daily_reservation_end_date, label[for="result_daily_reservation_end_date"]').hide();
+                }
+            });
+
+            // Menangani perubahan pada input datetime check-in dan check-out
+            $('#reservation_end_date_daily').on('change', function() {
+                // Mendapatkan nilai dari input datetime check-in dan check-out
+                var checkinValue = new Date($('#reservation_start_date').val());
+                var checkoutValue = new Date($('#reservation_end_date_daily').val());
+                
+                // Mengatur zona waktu ke GMT+7 (Indonesia Barat)
+                checkinValue.setHours(checkinValue.getHours() + 7);
+                checkoutValue.setHours(checkoutValue.getHours() + 7);
+
+                // Menghitung selisih waktu dalam milidetik
+                var timeDifference = checkoutValue - checkinValue;
+
+                // Menghitung selisih waktu dalam hari dan jam
+                var days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+                // Mengatur nilai hasil dalam format "Hari:Jam"
+                var formattedResult = days + " Hari : " + hours + " Jam";
+
+                 // Mengatur nilai hasil dalam format tanggal dan jam
+                $('#result_daily_reservation_end_date').val(formattedResult);
+            });
+        });
+</script>
+<script>
+        $(document).ready(function() {
+            $('#mixed').on('change', function() {
+                // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
+                if (this.checked) {
+                    $('#result_mix_reservation_end_date, label[for="result_mix_reservation_end_date"]').show();
+                } else {
+                    $('#result_mix_reservation_end_date, label[for="result_mix_reservation_end_date"]').hide();
+                }
+            });
+
+            // Menangani perubahan pada input datetime, select hari, dan select jam
+            $('#mixed_time_day, #mixed_time_hour').on('change', function() {
+                // Mendapatkan nilai dari input datetime, select hari, dan select jam
+                var datetimeValue = new Date($('#reservation_start_date').val());
+                var addDays = parseInt($('#mixed_time_day').val());
+                var addHours = parseInt($('#mixed_time_hour').val());
+
+                // Menambahkan hari dan jam ke datetime awal
+                datetimeValue.setDate(datetimeValue.getDate() + addDays);
+                datetimeValue.setHours(datetimeValue.getHours() + addHours);
+
+                // Format hasil dalam format tanggal dan jam dengan zona waktu GMT+7 (Indonesia Barat)
+                var formattedResult = datetimeValue.getFullYear() + '-' + padZero(datetimeValue.getMonth() + 1) + '-' + padZero(datetimeValue.getDate()) + 'T' + padZero(datetimeValue.getHours()) + ':' + padZero(datetimeValue.getMinutes());
+
+                 // Mengatur nilai hasil dalam format tanggal dan jam
+                $('#result_mix_reservation_end_date').val(formattedResult);
+            });
+
+            // Fungsi untuk menambahkan nol di depan angka jika diperlukan
+            function padZero(num) {
+                return (num < 10 ? '0' : '') + num;
+            }
+        });
 </script>
 <script>
     function formatRupiah(amount) {
