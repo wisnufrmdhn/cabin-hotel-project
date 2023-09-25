@@ -45,20 +45,14 @@ class ReservationService
         ]);
 
         $reservationTmp = ReservationTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('customer_tmp_id', $customerTmp->id)->first();
-        $reservationDetailTmp = ReservationDetailTmp::where('reservation_tmp_id', $reservationTmp->id)->get();
-        $reservationDetailId = [];
 
-        foreach($reservationDetailTmp as $reservedId){
-            $reservationDetailId[] = $reservedId->id;
-        }
-
-        $hotelRoomReservedTmp = HotelRoomReservedTmp::whereIn('reservation_detail_tmp_id', $reservationDetailId)->get();
+        $hotelRoomReservedTmp = HotelRoomReservedTmp::whereIn('reservation_tmp_id', $reservationTmp->id)->get();
         $paymentAmenitiesTmp = PaymentAmenitiesTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->get();
 
         $amenitiesTotalPrice = PaymentAmenitiesTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->with('amenities')->sum('total_price');
         $amenitiesTotalPrice = $amenitiesTotalPrice ? $amenitiesTotalPrice : 0;
 
-        $totalPrice = HotelRoomReservedTmp::whereIn('reservation_detail_tmp_id', $reservationDetailId)->with('reservationDetailTmp', 'hotelRoomNumber.hotelRoom')->sum('price');
+        $totalPrice = HotelRoomReservedTmp::whereIn('reservation_tmp_id', $reservationTmp->id)->with('reservationDetailTmp', 'hotelRoomNumber.hotelRoom')->sum('price');
 
         $request['payment_cash_value'] = $request['payment_cash_value'] ? $request['payment_cash_value'] : 0;
         $request['payment_card_value'] = $request['payment_card_value'] ? $request['payment_card_value'] : 0;
@@ -167,25 +161,15 @@ class ReservationService
             'reservation_method_id'       => $customerTmp->reservation_method_id,
             'payment_id'                  => $storePayment->id,
             'booking_number'              => $request['booking_number'] ? $request['booking_number'] : null,
+            'reservation_start_date'      => $reservationTmp->reservation_start_date,
+            'reservation_end_date'        => $reservationTmp->reservation_end_date,
+            'reservation_day_category'    => $reservationTmp->reservation_day_category,
             'status'                      => 'Booking',
         ]);
 
-        $reservationDetailId = [];
-
-        foreach($reservationDetailTmp as $reservationDetailData){
-            $storeReservationDetail = ReservationDetail::create([
-                'reservation_id'              => $storeReservation->id,
-                'reservation_start_date'      => $reservationDetailData->reservation_start_date,
-                'reservation_end_date'        => $reservationDetailData->reservation_end_date,
-                'reservation_day_category'    => $reservationDetailData->reservation_day_category,
-            ]);
-
-            $reservationDetailId[] = $storeReservationDetail->id;
-        }
-
         foreach($hotelRoomReservedTmp as $index => $roomReserved){
             $storeHotelRoomReserved = HotelRoomReserved::create([
-                'reservation_detail_id'       => $reservationDetailId[$index],
+                'reservation_id'              => $reservationTmp->id,
                 'hotel_room_number_id'        => $roomReserved->hotel_room_number_id,
                 'total_guest'                 => $roomReserved->total_guest,
                 'price'                       => $roomReserved->price,
@@ -238,6 +222,16 @@ class ReservationService
         $customerTmp = CustomerTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->first();
         $reservationTmp = ReservationTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('customer_tmp_id', $customerTmp->id)->first();
 
+        //check reservation checkout type if type is daily, mixed, and hourly condition
+        if($request['daily']){
+            $request['reservation_start_date'] = $request['reservation_start_date_daily'];
+            $request['reservation_end_date'] = $request['reservation_end_date_daily'];
+        }else if($request['mixed']){
+            $request['reservation_start_date'] = $request['reservation_start_date_daily'];
+            //convert day and hour to datetime with carbon
+            $request['reservation_end_date'] = Carbon::parse($request['reservation_start_date_daily'])->addDays($request['mixed_day'])->addHours($request['mixed_hour']);
+        }
+
         if(!$reservationTmp){
             //get admin data for know who input this data and from where hotel branches
             $request->merge([
@@ -253,6 +247,9 @@ class ReservationService
                     'hotel_branch_id', 
                     'user_id', 
                     'customer_tmp_id', 
+                    'reservation_start_date', 
+                    'reservation_end_date', 
+                    'reservation_day_category',
                     'status', 
                 ]);
                 $storeReservation = ReservationTmp::create($reservation);
@@ -261,30 +258,9 @@ class ReservationService
         // //check reservation status type if method id 1 then the value is reservation_start_date_daily add 1 hour
         // $request['reservation_start_date_daily'] = $request['reservation_method_id'] == 1 ? Carbon::parse($request['reservation_end_date_daily'])->addHours(1) : $request['reservation_start_date_daily'];
 
-        //check reservation checkout type if type is daily, mixed, and hourly condition
-        if($request['daily']){
-            $request['reservation_start_date'] = $request['reservation_start_date_daily'];
-            $request['reservation_end_date'] = $request['reservation_end_date_daily'];
-        }else if($request['mixed']){
-            $request['reservation_start_date'] = $request['reservation_start_date_daily'];
-            //convert day and hour to datetime with carbon
-            $request['reservation_end_date'] = Carbon::parse($request['reservation_start_date_daily'])->addDays($request['mixed_day'])->addHours($request['mixed_hour']);
-        }
-
         $reservationTemporary = ReservationTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('customer_tmp_id', $customerTmp->id)->first();
         $request['reservation_tmp_id'] = $reservationTemporary->id;
 
-        //filter request only for reservation data
-        $reservationDetail = $request->only([
-            'reservation_tmp_id', 
-            'reservation_start_date', 
-            'reservation_end_date', 
-            'reservation_day_category',
-        ]);
-
-        $storeReservationDetail = ReservationDetailTmp::create($reservationDetail);
-
-        $request['reservation_detail_tmp_id'] = $storeReservationDetail->id;
         $hotelRoomNumber = HotelRoomNumber::where('id', $request['hotel_room_number_id'])->first();
         $hotelRoomId = $hotelRoomNumber->hotel_room_id;
 
@@ -318,7 +294,7 @@ class ReservationService
 
         
         $storeHotelRoomReserved = HotelRoomReservedTmp::create([
-            'reservation_detail_tmp_id' => $request['reservation_detail_tmp_id'],
+            'reservation_tmp_id'        => $request['reservation_tmp_id'],
             'hotel_room_number_id'      => $request['hotel_room_number_id'],
             'total_guest'               => $request['total_guest'],
             'price'                     => $request['price'],

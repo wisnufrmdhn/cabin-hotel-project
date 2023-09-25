@@ -15,8 +15,8 @@ class ReservationTmp extends Model
         'id'
     ];
 
-    public function reservationDetailTmp()
+    public function hotelRoomReservedTmp()
     {
-        return $this->hasMany(ReservationDetail::class);
+        return $this->belongsTo(HotelRoomReservedTmp::class);
     }
 }

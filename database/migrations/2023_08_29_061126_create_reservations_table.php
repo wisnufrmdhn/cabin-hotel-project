@@ -21,6 +21,9 @@ return new class extends Migration
             $table->foreignId('reservation_method_id')->constrained('reservation_methods');
             $table->foreignId('payment_id')->constrained('payments')->onUpdate('cascade')->onDelete('cascade');
             $table->string('booking_number')->nullable();
+            $table->datetime('reservation_start_date');
+            $table->datetime('reservation_end_date');
+            $table->enum('reservation_day_category', ['Weekday', 'Weekend', 'High Season']);
             $table->enum('status', ['Booking', 'Checkin', 'Checkout', 'Canceled']);
             $table->timestamps();
         });

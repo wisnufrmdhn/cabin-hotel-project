@@ -15,9 +15,9 @@ class HotelRoomReservedTmp extends Model
         'id'
     ];
 
-    public function reservationDetailTmp()
+    public function reservationTmp()
     {
-        return $this->hasOne(ReservationDetailTmp::class, 'id');
+        return $this->hasOne(ReservationTmp::class, 'id');
     }
 
     public function hotelRoomNumber()

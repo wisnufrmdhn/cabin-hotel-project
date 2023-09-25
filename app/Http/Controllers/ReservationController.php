@@ -14,7 +14,6 @@ use App\Models\CustomerTmp;
 use App\Models\HotelRoomReservedTmp;
 use App\Models\ReservationTmp;
 use App\Models\PaymentAmenitiesTmp;
-use App\Models\ReservationDetailTmp;
 
 class ReservationController extends Controller
 {
@@ -54,17 +53,10 @@ class ReservationController extends Controller
         if($customerTmp){
             $reservationTmp = ReservationTmp::where('hotel_branch_id', $pic->hotel_branch_id)->where('customer_tmp_id', $customerTmp->id)->first();
             if($reservationTmp){
-                $reservationDetailTmp = ReservationDetailTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationTmp')->get();
-
-                $roomReservedId = [];
-
-                foreach($reservationDetailTmp as $reservationDetailsTmp){
-                    $roomReservedId[] = $reservationDetailsTmp->id;
-                }
                 
-                $hotelRoomReservedTmp = HotelRoomReservedTmp::whereIn('reservation_detail_tmp_id', $roomReservedId)->with('reservationDetailTmp', 'hotelRoomNumber.hotelRoom')->get();
+                $hotelRoomReservedTmp = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationTmp', 'hotelRoomNumber.hotelRoom')->get();
 
-                $totalPrice = HotelRoomReservedTmp::whereIn('reservation_detail_tmp_id', $roomReservedId)->with('reservationDetailTmp', 'hotelRoomNumber.hotelRoom')->sum('price');
+                $totalPrice = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationTmp', 'hotelRoomNumber.hotelRoom')->sum('price');
 
                 $amenitiesTmp = PaymentAmenitiesTmp::where('hotel_branch_id', $pic->hotel_branch_id)->with('amenities')->get();
 
@@ -104,6 +96,7 @@ class ReservationController extends Controller
     {
         try{    
             $store = $this->service->storeRoomOrder($request);
+            return $store;
         }catch(\Throwable $th){
             return $th;
             return redirect()->route('admin.reservation.index')->with('error', 'Room order failed to add');

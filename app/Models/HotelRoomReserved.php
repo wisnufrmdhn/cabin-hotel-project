@@ -15,9 +15,9 @@ class HotelRoomReserved extends Model
         'id'
     ];
 
-    public function reservationDetail()
+    public function reservation()
     {
-        return $this->hasOne(ReservationDetail::class, 'id');
+        return $this->hasOne(Reservation::class, 'id');
     }
 
     public function hotelRoomNumber()

@@ -14,4 +14,9 @@ class Reservation extends Model
     protected $guarded = [
         'id'
     ];
+
+    public function hotelRoomReserved()
+    {
+        return $this->belongsTo(HotelRoomReserved::class);
+    }
 }
