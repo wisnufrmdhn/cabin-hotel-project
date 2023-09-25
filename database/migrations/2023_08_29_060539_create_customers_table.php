@@ -18,7 +18,7 @@ return new class extends Migration
             $table->enum('customer_title', ['Mr', 'Mrs']);
             $table->enum('customer_identity_type', ['KTP', 'SIM', 'Lainnya']);
             $table->string('customer_name');
-            $table->string('customer_email');
+            $table->string('customer_email')->nullable();
             $table->string('customer_phone');
             $table->string('customer_address');
             $table->string('customer_photo_url');

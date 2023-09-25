@@ -14,6 +14,7 @@ use App\Models\CustomerTmp;
 use App\Models\HotelRoomReservedTmp;
 use App\Models\ReservationTmp;
 use App\Models\PaymentAmenitiesTmp;
+use Carbon\Carbon;
 
 class ReservationController extends Controller
 {
@@ -45,6 +46,10 @@ class ReservationController extends Controller
         $hotelRoomReservedTmp = [];
         $amenitiesTmp = [];
         $totalPrice = null;
+        $checkin = null;
+        $checkout = null;
+        $dayCategory = null;
+        $diffResult = null;
         $paymentOTA = PaymentMethod::where('payment_method', 'like', "%OTA%")->get();
         $paymentCard = PaymentMethod::where('payment_method', 'like', "%Card%")->get();
         $paymentTransfer = PaymentMethod::where('payment_method', 'like', "%Transfer%")->get();
@@ -53,6 +58,15 @@ class ReservationController extends Controller
         if($customerTmp){
             $reservationTmp = ReservationTmp::where('hotel_branch_id', $pic->hotel_branch_id)->where('customer_tmp_id', $customerTmp->id)->first();
             if($reservationTmp){
+
+                $dayCategory = $reservationTmp->reservation_day_category;
+                $checkin = Carbon::parse($reservationTmp->reservation_start_date);
+                $checkout = Carbon::parse($reservationTmp->reservation_end_date);
+                $diff = $checkin->diffInHours($checkout);
+
+                $day = intval($diff / 24);
+                $hour = intval($diff % 24);
+                $diffResult = $day . ' Hari : ' . $hour . ' Jam';
                 
                 $hotelRoomReservedTmp = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationTmp', 'hotelRoomNumber.hotelRoom')->get();
 
@@ -67,14 +81,13 @@ class ReservationController extends Controller
             }
         }
 
-        return view('admin.reservation.index', compact('reservationMethod', 'hotelRooms', 'customerTmp', 'reservationTmp', 'reservationDetailTmp', 'hotelRoomReservedTmp', 'paymentOTA', 'paymentCard', 'paymentTransfer', 'paymentQris', 'totalPrice', 'amenitiesTmp')); 
+        return view('admin.reservation.index', compact('reservationMethod', 'hotelRooms', 'customerTmp', 'reservationTmp', 'reservationDetailTmp', 'hotelRoomReservedTmp', 'paymentOTA', 'paymentCard', 'paymentTransfer', 'paymentQris', 'totalPrice', 'amenitiesTmp', 'checkin', 'checkout', 'diffResult', 'dayCategory')); 
     }
 
     public function store(Request $request)
     {
         try{    
             $store = $this->service->store($request);
-            return $store;
         }catch(\Throwable $th){
             return $th;
             return redirect()->route('admin.reservation.index')->with('error', 'Reservation data final failed to add');
@@ -87,6 +100,7 @@ class ReservationController extends Controller
         try{    
             $store = $this->service->storeCustomer($request);
         }catch(\Throwable $th){
+            return $th;
             return redirect()->route('admin.reservation.index')->with('error', 'Customer failed to add');
         }
         return redirect()->route('admin.reservation.index')->with('success', 'Customer added successfully');

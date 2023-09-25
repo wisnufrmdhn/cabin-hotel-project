@@ -26,7 +26,8 @@
                                             <label for="exampleInputIconLeft">Jenis Tamu</label>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="state" name="reservation_method_id" aria-label="State select example">
+                                            <select class="form-select w-100 mb-0" id="reservation_method_id" name="reservation_method_id" aria-label="State select example">
+                                            <option selected value="">Jenis Reservasi</option>
                                                 @foreach ($reservationMethod as $methods)
                                                     <option value="{{ $methods->id }}">{{ $methods->reservation_method }}</option>
                                                 @endforeach
@@ -35,19 +36,19 @@
                                         </br></br>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                    <input type="text" class="form-control" name="booking_number" id="booking_number" placeholder="Booking Number" aria-describedby="booking_number">
+                                                    <input type="text" class="form-control" name="booking_number" id="booking_number" placeholder="Booking Number" aria-describedby="booking_number" style="display: none;">
                                             </div>
                                         </div>
                                         <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" name="search_guest" id="flexSwitchCheckDefault">
+                                                <input class="form-check-input" type="checkbox" id="customer_check" name="customer_check" id="flexSwitchCheckDefault">
                                             </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-8 col-sm-12">
-                                            <div class="mb-4">
-                                                <label for="exampleInputIconLeft">Pilih Dari Daftar Tamu</label>
+                                            <div class="mb-2">
+                                                <label for="daftar_tamu">Pilih Dari Daftar Tamu</label>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
@@ -110,7 +111,7 @@
                                         </div>
                                         </form>
                                     </div>
-                                    </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+                                    </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
                                     <!-- End of Form -->
                                 </div>
                             </div>
@@ -129,11 +130,96 @@
                                 {{ csrf_field() }}
                                     <!-- Form -->
                                     <div class="row">
-                                    <div class="col-lg-12 col-sm-12">
+                                    @if($reservationTmp)
+                                    <input type="hidden" id="daily" name="daily" value="1"> 
+                                    <input type="hidden" id="reservation_start_date_daily" name="reservation_start_date_daily" value="{{ $reservationTmp->reservation_start_date }}"> 
+                                    <input type="hidden" id="reservation_end_date_daily" name="reservation_end_date_daily" value="{{ $reservationTmp->reservation_end_date }}"> 
+                                    <input type="hidden" id="reservation_day_category" name="reservation_day_category" value="{{ $reservationTmp->reservation_day_category }}"> 
+                                        <div class="col-lg-12 col-sm-12">
+                                                <div class="mb-4">
+                                                    <label for="email">Check In</label>
+                                                    <input type="datetime-local" class="form-control" name="reservation_start_date_daily" id="reservation_start_date" aria-describedby="emailHelp" value="{{ $reservationTmp->reservation_start_date }}" disabled>
+                                                </div>
+                                        </div>
+                                        <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
-                                                <label for="email">Check In</label>
-                                                <input type="datetime-local" class="form-control" name="reservation_start_date_daily" id="reservation_start_date" aria-describedby="emailHelp">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="daily" name="daily" id="flexSwitchCheckDefault" value="1" disabled>
                                             </div>
+                                            </div>
+                                        </div>
+            
+                                        <div class="col-lg-8 col-sm-12">
+                                            <div class="mb-4">
+                                                <p>Checkout dengan pilih tanggal & jam</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="mb-4">
+                                                <label for="email">Check Out</label>
+                                                <input type="datetime-local" class="form-control" name="reservation_end_date_daily" id="reservation_end_date_daily" aria-describedby="emailHelp" value="{{ $reservationTmp->reservation_end_date }}" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="mb-4">
+                                                <label for="result_daily_reservation_end_date">Perhitungan waktu checkout dengan pilih tanggal & jam</label>
+                                                <input type="text" class="form-control" id="result_daily_reservation_end_date" value="{{ $diffResult }}" disabled>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-lg-2 col-sm-2">
+                                            <div class="mb-4">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="mixed" name="mixed" id="flexSwitchCheckDefault" disabled>
+                                            </div>
+                                            </div>
+                                        </div>
+            
+                                        <div class="col-lg-8 col-sm-12">
+                                            <div class="mb-4">
+                                                <p>Checkout dengan pilih durasi</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="mb-4">
+                                                <label for="email">Hari</label>
+                                                <select class="form-select w-100 mb-0" id="mixed_time_day" name="mixed_day" aria-label="State select example" disabled>
+                                                    @for ($i = 0; $i <= 30; $i++)
+                                                        <option value="{{ $i }}">{{ $i }}</option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-sm-6">
+                                            <div class="mb-4">
+                                                <label for="email">Jam</label>
+                                                <select class="form-select w-100 mb-0" id="mixed_time_hour" name="mixed_hour" aria-label="State select example" disabled>
+                                                    @for ($i = 0; $i <= 24; $i++)
+                                                        <option value="{{ $i }}">{{ $i }}</option>
+                                                    @endfor
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12" style="display: none;" id="result_mix_reservation">
+                                            <div class="mb-2">
+                                                <label for="result_mix_reservation_end_date">Perhitungan waktu checkout dengan pilih durasi</label>
+                                                <input type="datetime-local" id="result_mix_reservation_end_date" class="form-control" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <select class="form-select w-100 mb-0" id="reservation_day_category" name="reservation_day_category" aria-label="reservation_day_category" disabled>
+                                                <option value="Weekday" {{ $dayCategory === "Weekday" ? 'selected' : '' }}>Weekday</option>
+                                                <option value="Weekend" {{ $dayCategory === "Weekend" ? 'selected' : '' }}>Weekend</option>
+                                                <option value="Weekend" {{ $dayCategory === "Middle Day" ? 'selected' : '' }}>Middle Day</option>
+                                                <option value="High Season" {{ $dayCategory === "High Season" ? 'selected' : '' }}>High Season</option>
+                                            </select>
+                                        </div>
+                                    @else
+                                        <div class="col-lg-12 col-sm-12">
+                                                <div class="mb-4">
+                                                    <label for="email">Check In</label>
+                                                    <input type="datetime-local" class="form-control" name="reservation_start_date_daily" id="reservation_start_date" aria-describedby="emailHelp">
+                                                </div>
                                         </div>
                                         <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
@@ -194,12 +280,22 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-12 col-sm-12">
+                                        <div class="col-lg-12 col-sm-12" style="display: none;" id="result_mix_reservation">
                                             <div class="mb-2">
-                                                <label for="result_mix_reservation_end_date" style="display: none;">Perhitungan waktu checkout dengan pilih durasi</label>
-                                                <input type="datetime-local" class="form-control"  id="result_mix_reservation_end_date" style="display: none;" disabled>
+                                                <label for="result_mix_reservation_end_date">Perhitungan waktu checkout dengan pilih durasi</label>
+                                                <input type="datetime-local" id="result_mix_reservation_end_date" class="form-control" disabled>
                                             </div>
                                         </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <select class="form-select w-100 mb-0" id="reservation_day_category" name="reservation_day_category" aria-label="reservation_day_category">
+                                                <option value="Weekday">Weekday</option>
+                                                <option value="Weekend">Weekend</option>
+                                                <option value="Middle Day">Middle Day</option>
+                                                <option value="High Season">High Season</option>
+                                            </select>
+                                        </div>
+                                    @endif
+                                        
 
                                         <!-- <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
@@ -227,16 +323,6 @@
                                                 <input type="time" name="reservation_end_date_hourly" class="form-control" aria-describedby="emailHelp">
                                             </div>
                                         </div> -->
-
-
-                                        <div class="col-lg-12 col-sm-12">
-                                            <select class="form-select w-100 mb-0" id="reservation_day_category" name="reservation_day_category" aria-label="reservation_day_category">
-                                                <option value="Weekday">Weekday</option>
-                                                <option value="Weekend">Weekend</option>
-                                                <option value="Weekend">Middle Day</option>
-                                                <option value="High Season">High Season</option>
-                                            </select>
-                                        </div>
                                         </br></br></br>
                                         <div class="col-lg-12 col-sm-12">
                                             <label for="exampleInputIconLeft">Data Kamar</label>
@@ -382,7 +468,6 @@
                                                 <input type="text" class="form-control" id="payment_ota_value" name="payment_ota_value" placeholder="Nominal Bayar" aria-describedby="emailHelp">
                                             </div>
                                         </div>
-                                        <hr color="black">
                                         </br>
                                         <label>Pay At Hotel </label>
                                         </br></br>
@@ -422,7 +507,7 @@
                                         <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="payment_method_card">
+                                                <input class="form-check-input" type="checkbox" id="payment_method_non_cash" name="payment_method_non_cash">
                                             </div>
                                             </div>
                                         </div>
@@ -443,38 +528,38 @@
 
                                         <!-- Form select untuk transfer -->
                                         <div class="col-lg-12 col-sm-12 paymentOption" id="transferOptions" style="display: none;">
-                                            <select class="form-select w-100 mb-2" name="transferBank" aria-label="transferBank" style="margin-bottom: 10px;">
+                                            <select class="form-select w-100 mb-2" name="payment_category_transfer" aria-label="transferBank" style="margin-bottom: 10px;">
                                                 <option selected value="">Pilih Bank Transfer</option>
                                             @foreach($paymentTransfer as $transfer)
                                                 <option value="{{ $transfer->id }}">{{ $transfer->payment_method }}</option>
                                             @endforeach
                                             </select>
-                                            <input type="text" name="transferAmount" class="form-control mb-2" placeholder="Nominal Pembayaran">
-                                            <input type="text" name="transferReference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Transfer">
+                                            <input type="text" name="payment_transfer_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                                            <input type="text" name="payment_method_transfer_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Transfer">
                                         </div>
 
                                         <!-- Form select untuk card -->
                                         <div class="col-lg-12 col-sm-12 paymentOption" id="cardOptions" style="display: none;">
-                                            <select class="form-select w-100 mb-2" name="cardType" aria-label="cardType">
+                                            <select class="form-select w-100 mb-2" name="payment_category_card" aria-label="cardType">
                                                 <option selected value="">Pilih Jenis Kartu</option>
                                             @foreach($paymentCard as $card)
                                                 <option value="{{ $card->id }}">{{ $card->payment_method }}</option>
                                             @endforeach
                                             </select>
-                                            <input type="text" name="cardAmount" class="form-control mb-2" placeholder="Nominal Pembayaran">
-                                            <input type="text" name="cardNumber" class="form-control mb-2" placeholder="Nomor Kartu">
+                                            <input type="text" name="payment_card_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                                            <input type="text" name="payment_method_card_number" class="form-control mb-2" placeholder="Nomor Kartu">
                                         </div>
 
                                         <!-- Form select untuk qris -->
                                         <div class="col-lg-12 col-sm-12 paymentOption" id="qrisOptions" style="display: none;">
-                                            <select class="form-select w-100 mb-2" name="qrisType" aria-label="qrisType">
+                                            <select class="form-select w-100 mb-2" name="payment_category_qris" aria-label="qrisType">
                                                 <option selected value="">Pilih Jenis QRIS</option>
                                             @foreach($paymentQris as $qris)
                                                 <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
                                             @endforeach
                                             </select>
-                                            <input type="text" name="qrisAmount" class="form-control mb-2" placeholder="Nominal Pembayaran">
-                                            <input type="text" name="qrisReference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi QRIS">
+                                            <input type="text" name="payment_qris_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                                            <input type="text" name="payment_method_qris_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi QRIS">
                                         </div>
                                     
                                         </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
@@ -646,6 +731,35 @@
     });
 </script>
 <script>
+    $(document).ready(function() {
+        $('#paymentMethod').change(function() {
+            $('.paymentOption').hide(); // Sembunyikan semua form select tambahan
+
+            // Tampilkan form select tambahan sesuai dengan metode pembayaran yang dipilih
+            if ($(this).val() === 'Transfer') {
+                $('#transferOptions').show();
+            } else if ($(this).val() === 'Card') {
+                $('#cardOptions').show();
+            } else if ($(this).val() === 'Qris') {
+                $('#qrisOptions').show();
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        const reservationMethod = $('#reservation_method_id');
+        reservationMethod.on('change', function() {
+                // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
+                if (reservationMethod.val() == 1 || reservationMethod.val() == 2 || reservationMethod.val() == "" ) {
+                    $('#booking_number, label[for="booking_number"]').hide();
+                } else {
+                    $('#booking_number, label[for="booking_number"]').show();
+                }
+        });
+    });
+</script>
+<script>
     $(document).ready(function () {
         $('#hotel_room_id').change(function () {
             const hotelRoom = $(this).val();
@@ -714,9 +828,9 @@
             $('#mixed').on('change', function() {
                 // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
                 if (this.checked) {
-                    $('#result_mix_reservation_end_date, label[for="result_mix_reservation_end_date"]').show();
+                    $('#result_mix_reservation').show();
                 } else {
-                    $('#result_mix_reservation_end_date, label[for="result_mix_reservation_end_date"]').hide();
+                    $('#result_mix_reservation').hide();
                 }
             });
 

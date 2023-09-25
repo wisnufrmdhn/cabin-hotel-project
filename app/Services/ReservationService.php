@@ -46,13 +46,13 @@ class ReservationService
 
         $reservationTmp = ReservationTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('customer_tmp_id', $customerTmp->id)->first();
 
-        $hotelRoomReservedTmp = HotelRoomReservedTmp::whereIn('reservation_tmp_id', $reservationTmp->id)->get();
+        $hotelRoomReservedTmp = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->get();
         $paymentAmenitiesTmp = PaymentAmenitiesTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->get();
 
         $amenitiesTotalPrice = PaymentAmenitiesTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->with('amenities')->sum('total_price');
         $amenitiesTotalPrice = $amenitiesTotalPrice ? $amenitiesTotalPrice : 0;
 
-        $totalPrice = HotelRoomReservedTmp::whereIn('reservation_tmp_id', $reservationTmp->id)->with('reservationDetailTmp', 'hotelRoomNumber.hotelRoom')->sum('price');
+        $totalPrice = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationDetailTmp', 'hotelRoomNumber.hotelRoom')->sum('price');
 
         $request['payment_cash_value'] = $request['payment_cash_value'] ? $request['payment_cash_value'] : 0;
         $request['payment_card_value'] = $request['payment_card_value'] ? $request['payment_card_value'] : 0;
@@ -61,8 +61,20 @@ class ReservationService
 
         $request['total_payment'] = $request['payment_cash_value'] +  $request['payment_card_value'] + $request['payment_qris_value'] + $request['payment_transfer_value'];
 
+        $request['discount'] = $request['discount'] ? $request['discount'] : 0;
+
+        if($request['discount_type'] == 'Persen'){
+            $request['discount'] = $request['discount'] / 100;
+            $request['total_payment'] = $request['total_payment'] * (1 - $request['discount']);
+        }else if($request['discount_type'] == 'Nominal'){
+            $request['discount'] = $request['discount'];
+            $request['total_payment'] = $request['total_payment'] - $request['discount'];
+        }
+
+        $request['total_payment'] = $request['payment_cash_value'] +  $request['payment_card_value'] + $request['payment_qris_value'] + $request['payment_transfer_value'];
+
         $storePayment = Payment::create([
-            'discount'              => $request['discount'] ? $request['discount'] : 0,
+            'discount'              => $request['discount'],
             'total_price'           => $totalPrice,
             'total_price_amenities' => $amenitiesTotalPrice,
             'total_payment'         => $request['total_payment'],
@@ -72,6 +84,7 @@ class ReservationService
         if($request['payment_category'] == 'Down Payment')
         {
             $storeDownPayment = DownPayment::create([
+                'payment_id'            => $storePayment->id,
                 'customer_id'           => $storeCustomer->id,
                 'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
                 'down_payment'          => $request['total_payment'],
@@ -104,40 +117,42 @@ class ReservationService
             ]);
         }
 
-        if($request['payment_method_card']){
-            $storePaymentDetailCard = PaymentDetail::create([
-                'payment_id'            => $storePayment->id,
-                'payment_method_id'     => $request['payment_category_card'],
-                'payment'               => $request['payment_card_value'],
-                'change'                => null,
-                'bank_name'             => null,
-                'card_number'           => $request['card_number'],
-                'reference_number'      => null,
-            ]);
-        }
+        if($request['payment_method_non_cash']){
+            if($request['payment_category_card']){
+                $storePaymentDetailCard = PaymentDetail::create([
+                    'payment_id'            => $storePayment->id,
+                    'payment_method_id'     => $request['payment_category_card'],
+                    'payment'               => $request['payment_card_value'],
+                    'change'                => null,
+                    'bank_name'             => null,
+                    'card_number'           => $request['payment_method_card_number'],
+                    'reference_number'      => null,
+                ]);
+            }
 
-        if($request['payment_method_qris']){
-            $storePaymentDetailQris = PaymentDetail::create([
-                'payment_id'            => $storePayment->id,
-                'payment_method_id'     => $request['payment_category_qris'],
-                'payment'               => $request['payment_qris_value'],
-                'change'                => null,
-                'bank_name'             => null,
-                'card_number'           => null,
-                'reference_number'      => $request['reference_number'],
-            ]);
-        }
+            if($request['payment_category_qris']){
+                $storePaymentDetailQris = PaymentDetail::create([
+                    'payment_id'            => $storePayment->id,
+                    'payment_method_id'     => $request['payment_category_qris'],
+                    'payment'               => $request['payment_qris_value'],
+                    'change'                => null,
+                    'bank_name'             => null,
+                    'card_number'           => null,
+                    'reference_number'      => $request['payment_method_qris_reference'],
+                ]);
+            }
 
-        if($request['payment_method_transfer']){
-            $storePaymentDetailTransfer = PaymentDetail::create([
-                'payment_id'            => $storePayment->id,
-                'payment_method_id'     => $request['payment_category_transfer'],
-                'payment'               => $request['payment_transfer_value'],
-                'change'                => null,
-                'bank_name'             => null,
-                'card_number'           => null,
-                'reference_number'      => $request['reference_number'],
-            ]);
+            if($request['payment_category_transfer']){
+                $storePaymentDetailTransfer = PaymentDetail::create([
+                    'payment_id'            => $storePayment->id,
+                    'payment_method_id'     => $request['payment_category_transfer'],
+                    'payment'               => $request['payment_transfer_value'],
+                    'change'                => null,
+                    'bank_name'             => null,
+                    'card_number'           => null,
+                    'reference_number'      => $request['payment_method_transfer_reference'],
+                ]);
+            }
         }
 
         if($amenitiesTotalPrice > 0){

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('hotel_branch_id')->constrained('hotel_branches')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('down_payment');
             $table->enum('status', ['New', 'Claimed']);
-            $table->timestamp('claim_date');
+            $table->timestamp('claim_date')->nullable();
             $table->timestamps();
         });
     }

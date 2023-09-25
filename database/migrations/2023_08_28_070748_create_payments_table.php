@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('total_price');
             $table->integer('total_price_amenities');
             $table->integer('total_payment');
-            $table->integer('change');
+            $table->integer('change')->nullable();
             $table->timestamps();
         });
     }

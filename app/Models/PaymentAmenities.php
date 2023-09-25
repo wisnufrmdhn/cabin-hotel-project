@@ -14,4 +14,9 @@ class PaymentAmenities extends Model
     protected $guarded = [
         'id'
     ];
+
+    public function amenities()
+    {
+        return $this->belongsTo(amenities::class);
+    }
 }
