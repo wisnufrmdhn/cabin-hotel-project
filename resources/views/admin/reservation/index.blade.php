@@ -497,12 +497,12 @@
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-2">
-                                                <input type="text" name="payment_cash_value" class="form-control" id="payment_cash_value" placeholder="Nominal Bayar" aria-describedby="emailHelp">
+                                                <input type="text" id="payment_cash_value" name="payment_cash_value" class="form-control" id="payment_cash_value" placeholder="Nominal Bayar" aria-describedby="emailHelp">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <input type="text" name="change" class="form-control" id="email" placeholder="Nominal Kembali" aria-describedby="emailHelp">
+                                                <input type="text" name="change" class="form-control" id="change" placeholder="Nominal Kembali">
                                             </div>
                                         </div>
 
@@ -536,7 +536,7 @@
                                                 <option value="{{ $transfer->id }}">{{ $transfer->payment_method }}</option>
                                             @endforeach
                                             </select>
-                                            <input type="text" name="payment_transfer_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                                            <input type="text" id="payment_transfer_value" name="payment_transfer_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
                                             <input type="text" name="payment_method_transfer_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Transfer">
                                         </div>
 
@@ -548,7 +548,7 @@
                                                 <option value="{{ $card->id }}">{{ $card->payment_method }}</option>
                                             @endforeach
                                             </select>
-                                            <input type="text" name="payment_card_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                                            <input type="text" id="payment_card_value" name="payment_card_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
                                             <input type="text" name="payment_method_card_number" class="form-control mb-2" placeholder="Nomor Kartu">
                                         </div>
 
@@ -560,7 +560,7 @@
                                                 <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
                                             @endforeach
                                             </select>
-                                            <input type="text" name="payment_qris_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                                            <input type="text" id="payment_qris_value" name="payment_qris_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
                                             <input type="text" name="payment_method_qris_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi QRIS">
                                         </div>
                                     
@@ -903,29 +903,99 @@
         });
 </script>
 <script>
+    var input2Value = $('#total_price').val() || 0;
+
     function formatRupiah(amount) {
-            var formatter = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR'
-            });
-            return formatter.format(amount);
+        var formatter = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR'
+        });
+        
+        return formatter.format(amount);
     }
+
+    function calculateResult() {
+        var discountCategory = $('#discount_type').val()
+        var input1Value = parseFloat($('#discount').val().replace(/[^0-9]/g, '')) || 0;
+        var totalPrice = parseInt(input2Value.replace(/\./g, ''), 10);
+
+        if(discountCategory == 'Nominal'){
+            var result = totalPrice - input1Value;
+        }else{
+            var result = totalPrice * (1 - (input1Value / 100));
+        }
+            var formattedResult = formatRupiah(result.toFixed(2)); // Format with 2 decimal places
+            $('#total_price').val(formattedResult);
+        }
     
     $(document).ready(function () {
-            var input2Value = $('#total_price').val() || 0;
-
-            $('#discount').on('input', function () {
-                calculateResult();
-            });
-
-            function calculateResult() {
-                var input1Value = parseFloat($('#discount').val()) || 0;
-                var totalPrice = parseInt(input2Value.replace(/\./g, ''), 10);
-                console.log(totalPrice);
-                var result = totalPrice - input1Value;
-                var formattedResult = formatRupiah(result.toFixed(2)); // Format with 2 decimal places
-                $('#total_price').val(formattedResult);
-            }
+        $('#discount').on('input', function () {
+            calculateResult();
+        });
     });
-    </script>
+</script>
+<script>
+$(document).ready(function() {
+    // Function to format the input as currency
+    function inputRupiah(input) {
+        // Remove non-numeric characters
+        var number = input.replace(/\D/g, '');
+
+        // Add thousands separator (.,) and currency symbol (Rp) if it's a valid number
+        if (!isNaN(number)) {
+            var formatted = 'Rp ' + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            return formatted;
+        }
+
+        return input; // Return the original input if it's not a valid number
+    }
+
+    // Add input event listener to apply formatting as the user types
+        $('#discount').on('input', function() {
+            var discountType = $('#discount_type').val()
+            if(discountType == 'Nominal'){
+                console.log('rupiah')
+                var inputVal = $(this).val();
+                var formattedVal = inputRupiah(inputVal);
+                $(this).val(formattedVal);
+            }
+        });
+
+        $('#payment_ota_value').on('input', function() {
+            var inputVal = $(this).val();
+            var formattedVal = inputRupiah(inputVal);
+            $(this).val(formattedVal);
+        });
+
+        $('#payment_cash_value').on('input', function() {
+            var inputVal = $(this).val();
+            var formattedVal = inputRupiah(inputVal);
+            $(this).val(formattedVal);
+        });
+
+        $('#change').on('input', function() {
+            var inputVal = $(this).val();
+            var formattedVal = inputRupiah(inputVal);
+            $(this).val(formattedVal);
+        });
+
+        $('#payment_card_value').on('input', function() {
+            var inputVal = $(this).val();
+            var formattedVal = inputRupiah(inputVal);
+            $(this).val(formattedVal);
+        });
+
+        $('#payment_transfer_value').on('input', function() {
+            var inputVal = $(this).val();
+            var formattedVal = inputRupiah(inputVal);
+            $(this).val(formattedVal);
+        });
+
+        $('#payment_qris_value').on('input', function() {
+            var inputVal = $(this).val();
+            var formattedVal = inputRupiah(inputVal);
+            $(this).val(formattedVal);
+        });
+});
+</script>
 @endpush

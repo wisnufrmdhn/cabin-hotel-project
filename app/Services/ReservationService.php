@@ -60,14 +60,19 @@ class ReservationService
 
         $totalPrice = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationDetailTmp', 'hotelRoomNumber.hotelRoom')->sum('price');
 
-        $request['payment_cash_value'] = $request['payment_cash_value'] ? $request['payment_cash_value'] : 0;
-        $request['payment_card_value'] = $request['payment_card_value'] ? $request['payment_card_value'] : 0;
-        $request['payment_qris_value'] = $request['payment_qris_value'] ? $request['payment_qris_value'] : 0;
-        $request['payment_transfer_value'] = $request['payment_transfer_value'] ? $request['payment_transfer_value'] : 0;
+        $request['payment_ota_value'] = $request['payment_ota_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_ota_value']) : 0;
+        $request['payment_cash_value'] = $request['payment_cash_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_cash_value']) : 0;
+        $request['payment_card_value'] = $request['payment_card_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_card_value']) : 0;
+        $request['payment_qris_value'] = $request['payment_qris_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_qris_value']) : 0;
+        $request['payment_transfer_value'] = $request['payment_transfer_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_transfer_value']) : 0;
 
-        $request['total_payment'] = $request['payment_cash_value'] +  $request['payment_card_value'] + $request['payment_qris_value'] + $request['payment_transfer_value'];
+        if($request['payment_method_ota']){
+            $request['total_payment'] = $request['payment_ota_value'];
+        }else{
+            $request['total_payment'] = $request['payment_cash_value'] +  $request['payment_card_value'] + $request['payment_qris_value'] + $request['payment_transfer_value'];
+        }
 
-        $request['discount'] = $request['discount'] ? $request['discount'] : 0;
+        $request['discount'] = $request['discount'] ? (int) preg_replace("/[^0-9]/", "", $request['discount']) : 0;
 
         if($request['discount_type'] == 'Persen'){
             $request['discount'] = $request['discount'] / 100;
@@ -102,7 +107,7 @@ class ReservationService
         if($request['payment_method_ota']){
             $storePaymentDetailOta = PaymentDetail::create([
                 'payment_id'            => $storePayment->id,
-                'payment_method_id'     => $request['payment_category_card'],
+                'payment_method_id'     => $request['payment_category_ota'],
                 'payment'               => $request['payment_ota_value'],
                 'change'                => null,
                 'bank_name'             => null,
