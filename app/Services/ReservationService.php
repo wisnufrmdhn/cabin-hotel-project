@@ -33,16 +33,22 @@ class ReservationService
         $picHotelBranch = PicHotelBranch::where('user_id', $user->id)->first();
         $customerTmp = CustomerTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->first();
 
-        $storeCustomer = Customer::create([
-            'customer_title'              => $customerTmp->customer_title,
-            'customer_identity_type'      => $customerTmp->customer_identity_type,
-            'customer_name'               => $customerTmp->customer_name,
-            'customer_email'              => $customerTmp->customer_email,
-            'customer_phone'              => $customerTmp->customer_phone,
-            'customer_address'            => $customerTmp->customer_identity_type,
-            'customer_photo_url'          => $customerTmp->customer_photo_url,
-            'customer_identity_photo_url' => $customerTmp->customer_identity_photo_url
-        ]);
+        if($customerTmp->customer_tmp_id){
+            $customerId = $customerTmp->customer_tmp_id;
+        }else{
+            $storeCustomer = Customer::create([
+                'customer_title'              => $customerTmp->customer_title,
+                'customer_identity_type'      => $customerTmp->customer_identity_type,
+                'customer_name'               => $customerTmp->customer_name,
+                'customer_email'              => $customerTmp->customer_email,
+                'customer_phone'              => $customerTmp->customer_phone,
+                'customer_address'            => $customerTmp->customer_identity_type,
+                'customer_photo_url'          => $customerTmp->customer_photo_url,
+                'customer_identity_photo_url' => $customerTmp->customer_identity_photo_url
+            ]);
+
+            $customerId = $storeCustomer->id;
+        }
 
         $reservationTmp = ReservationTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('customer_tmp_id', $customerTmp->id)->first();
 
@@ -85,7 +91,7 @@ class ReservationService
         {
             $storeDownPayment = DownPayment::create([
                 'payment_id'            => $storePayment->id,
-                'customer_id'           => $storeCustomer->id,
+                'customer_id'           => $customerId,
                 'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
                 'down_payment'          => $request['total_payment'],
                 'status'                => 'New',
@@ -172,7 +178,7 @@ class ReservationService
         $storeReservation = Reservation::create([
             'hotel_branch_id'             => $picHotelBranch->hotel_branch_id,
             'user_id'                     => $user->id,
-            'customer_id'                 => $storeCustomer->id,
+            'customer_id'                 => $customerId,
             'reservation_method_id'       => $customerTmp->reservation_method_id,
             'payment_id'                  => $storePayment->id,
             'booking_number'              => $request['booking_number'] ? $request['booking_number'] : null,
@@ -198,34 +204,53 @@ class ReservationService
 
     public function storeCustomer($request)
     {
-        // Upload customer photo and identity photo
-        $customerPhoto = $this->uploadFile($request->file('customer_photo'), 'img/customer/identity_photos');
-        $customerIdentityPhoto = $this->uploadFile($request->file('customer_identity_photo'), 'img/customer/identity_photos');
-        $request['customer_identity_photo_url'] = $customerIdentityPhoto;
-        $request['customer_photo_url'] = $customerPhoto;
-
         //define pic hotel branch 
         $user = Auth::user();
         $pic = PicHotelBranch::where('user_id', $user->id)->first();
         $request['hotel_branch_id'] = $pic->hotel_branch_id;
 
-        //filter request only for customer data
-        $customer = $request->only([
-            'hotel_branch_id',
-            'reservation_method_id',
-            'booking_number',
-            'customer_title',
-            'customer_identity_type', 
-            'customer_name', 
-            'customer_email', 
-            'customer_phone', 
-            'customer_address', 
-            'customer_identity_photo_url', 
-            'customer_photo_url',
-        ]);
+        if($request['customer_check']){
+            $getCustomer = Customer::where('id', $request['customer_id'])->first();
 
-        //store customer tmp data to database
-        $storeCustomer = CustomerTmp::create($customer);
+            $storeCustomer = CustomerTmp::create([
+                'hotel_branch_id'        => $request['hotel_branch_id'],
+                'reservation_method_id'  => $request['reservation_method_id'],
+                'customer_tmp_id'        => $getCustomer->id,
+                'booking_number'         => $request['booking_number'] ? $request['booking_number'] : null,
+                'customer_title'         => $getCustomer->customer_title,
+                'customer_identity_type' => $getCustomer->customer_identity_type,
+                'customer_name'          => $getCustomer->customer_name,
+                'customer_email'         => $getCustomer->customer_email,
+                'customer_phone'         => $getCustomer->customer_phone,
+                'customer_address'       => $getCustomer->customer_address,
+                'customer_identity_photo_url' => $getCustomer->customer_identity_photo_url,
+                'customer_photo_url' => $getCustomer->customer_photo_url
+            ]);
+        }else{
+            // Upload customer photo and identity photo
+            $customerPhoto = $this->uploadFile($request->file('customer_photo'), 'img/customer/identity_photos');
+            $customerIdentityPhoto = $this->uploadFile($request->file('customer_identity_photo'), 'img/customer/identity_photos');
+            $request['customer_identity_photo_url'] = $customerIdentityPhoto;
+            $request['customer_photo_url'] = $customerPhoto;
+
+            //filter request only for customer data
+            $customer = $request->only([
+                'hotel_branch_id',
+                'reservation_method_id',
+                'booking_number',
+                'customer_title',
+                'customer_identity_type', 
+                'customer_name', 
+                'customer_email', 
+                'customer_phone', 
+                'customer_address', 
+                'customer_identity_photo_url', 
+                'customer_photo_url',
+            ]);
+
+            //store customer tmp data to database
+            $storeCustomer = CustomerTmp::create($customer);
+        }
         
         return $storeCustomer;
     }
@@ -324,25 +349,46 @@ class ReservationService
         $picHotelBranch = PicHotelBranch::where('user_id', $user->id)->first();
         $breakfast = Amenities::where('amenities', 'Breakfast')->first();
         $extraBed = Amenities::where('amenities', 'Extra Bed')->first();
+        $breakfastTmp = PaymentAmenitiesTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('amenities_id', 1)->first();
+        $extraBedTmp = PaymentAmenitiesTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('amenities_id', 2)->first();
+        
 
         if($request['amount_breakfast']){
-            $paymentAmenitiesTmp = PaymentAmenitiesTmp::create([
-                'hotel_branch_id' => $picHotelBranch->hotel_branch_id,
-                'amenities_id' => $breakfast->id,
-                'amount' => $request['amount_breakfast'],
-                'price'  => $breakfast->price,
-                'total_price' => $breakfast->price * $request['amount_breakfast']
-            ]);
+            if($breakfastTmp){
+                $breakfastAmount = $breakfastTmp->amount + $request['amount_breakfast'];
+                $breakfastTotalPrice = $breakfastTmp->total_price + ($breakfast->price * $request['amount_breakfast']);
+                $paymentAmenitiesTmp = $breakfastTmp->update([
+                    'amount' => $breakfastAmount,
+                    'total_price' => $breakfastTotalPrice
+                ]);
+            }else{
+                $paymentAmenitiesTmp = PaymentAmenitiesTmp::create([
+                    'hotel_branch_id' => $picHotelBranch->hotel_branch_id,
+                    'amenities_id' => $breakfast->id,
+                    'amount' => $request['amount_breakfast'],
+                    'price'  => $breakfast->price,
+                    'total_price' => $breakfast->price * $request['amount_breakfast']
+                ]);
+            }
         }
         
         if($request['amount_extra_bed']){
-            $paymentAmenitiesTmp = PaymentAmenitiesTmp::create([
-                'hotel_branch_id' => $picHotelBranch->hotel_branch_id,
-                'amenities_id' => $extraBed->id,
-                'amount' => $request['amount_extra_bed'],
-                'price'  => $extraBed->price,
-                'total_price' => $extraBed->price * $request['amount_extra_bed']
-            ]);
+            if($extraBedTmp){
+                $extraBedAmount = $extraBedTmp->amount + $request['amount_extra_bed'];
+                $extraBedTotalPrice = $extraBedTmp->total_price + ($extraBed->price * $request['amount_extra_bed']);
+                $paymentAmenitiesTmp = $extraBedTmp->update([
+                    'amount' => $extraBedAmount,
+                    'total_price' => $extraBedTotalPrice
+                ]);
+            }else{  
+                $paymentAmenitiesTmp = PaymentAmenitiesTmp::create([
+                    'hotel_branch_id' => $picHotelBranch->hotel_branch_id,
+                    'amenities_id' => $extraBed->id,
+                    'amount' => $request['amount_extra_bed'],
+                    'price'  => $extraBed->price,
+                    'total_price' => $extraBed->price * $request['amount_extra_bed']
+                ]);
+            }
         }
 
         return $paymentAmenitiesTmp;
