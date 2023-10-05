@@ -390,10 +390,9 @@
                                             <div class="mb-4">
                                                 <label for="email">Breakfast</label>
                                                 <select class="form-select w-100 mb-0" id="amount_breakfast" name="amount_breakfast" aria-label="State select example">
-                                                <option selected value="">Breakfast</option>
-                                                    @for ($i = 0; $i <= 10; $i++)
-                                                        <option value="{{ $i }}">{{ $i }}</option>
-                                                    @endfor
+                                                    <option selected value="None">None</option>
+                                                        <option value="None">Include</option>
+                                                        <option value="None">Exclude</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -401,10 +400,8 @@
                                             <div class="mb-4">
                                             <label for="email">Extra Bed</label>
                                                 <select class="form-select w-100 mb-0" id="state" name="amount_extra_bed" aria-label="State select example">
-                                                    <option selected value="">Extra Bed</option>
-                                                    @for ($i = 0; $i <= 10; $i++)
-                                                        <option value="{{ $i }}">{{ $i }}</option>
-                                                    @endfor
+                                                    <option value="Extraperson">Extraperson</option>
+                                                        <option value="Extrabed">Extrabed</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -856,8 +853,14 @@
                 // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
                 if (this.checked) {
                     $('#result_daily_reservation_end_date, label[for="result_daily_reservation_end_date"]').show();
+                    $('#mixed').prop('disabled', true);
+                    $('#mixed_time_day').prop('disabled', true);
+                    $('#mixed_time_hour').prop('disabled', true);
                 } else {
                     $('#result_daily_reservation_end_date, label[for="result_daily_reservation_end_date"]').hide();
+                    $('#mixed').prop('disabled', false);
+                    $('#mixed_time_day').prop('disabled', false);
+                    $('#mixed_time_hour').prop('disabled', false);
                 }
             });
 
@@ -892,8 +895,12 @@
                 // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
                 if (this.checked) {
                     $('#result_mix_reservation').show();
+                    $('#daily').prop('disabled', true);
+                    $('#reservation_end_date_daily').prop('disabled', true);
                 } else {
                     $('#result_mix_reservation').hide();
+                    $('#daily').prop('disabled', false);
+                    $('#reservation_end_date_daily').prop('disabled', false);
                 }
             });
 
