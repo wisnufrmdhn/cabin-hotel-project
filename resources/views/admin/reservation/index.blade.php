@@ -75,19 +75,44 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-sm-4">
-                                            <select class="form-select w-100 mb-0" id="state" name="customer_identity_type" aria-label="State select example">
+                                            <select class="form-select w-100 mb-4" id="state" name="customer_identity_type" aria-label="State select example">
                                                 <option value="KTP">KTP</option>
                                                 <option value="SIM">SIM</option>
                                             </select>
                                         </div>
                                         <div class="col-lg-8 col-sm-8">
                                             <div class="mb-4">
-                                                <input class="form-control" name="customer_identity_photo" type="file" placeholder="Foto" id="formFile">
+                                                    <input type="text" name="customer_address" class="form-control" id="customer_address" placeholder="Domisili" aria-describedby="customer_address">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
+                                            <label for="webcamCapture">Take Photo Identitas Tamu</label>
+                                        </div>
+                                                <input type="button" class="btn w-100 btn-secondary" value="Take Photo Identitas Tamu" id="startWebcamButton">
+                                                <input type="button" class="btn w-100 btn-secondary" value="Capture" id="captureButton" style="display: none;">
+                                                <input type="button" class="btn w-100 btn-secondary" value="Close Webcam" id="closeWebcamButton" style="display: none;">
+                                                <br>
+
+                                                <input type="hidden" name="customer_identity_photo" id="webcamCapture">
+                                                <div id="photoPreview"></div>
+                                                <video id="webcamFeed" style="display:none; transform: scaleX(-1);"></video>
+                                        <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                    <input type="text" name="customer_address" class="form-control" id="customer_address" placeholder="Domisili" aria-describedby="customer_address">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <label for="webcamCapture">Take Photo Tamu</label>
+                                        </div>
+                                                <input type="button" class="btn w-100 btn-secondary" value="Take Photo Tamu" id="startWebcamTamuButton">
+                                                <input type="button" class="btn w-100 btn-secondary" value="Capture" id="captureTamuButton" style="display: none;">
+                                                <input type="button" class="btn w-100 btn-secondary" value="Close Webcam" id="closeWebcamTamuButton" style="display: none;">
+                                                <br>
+
+                                                <input type="hidden" name="customer_photo" id="webcamCaptureTamu">
+                                                <div id="photoPreviewTamu"></div>
+                                                <video id="webcamFeedTamu" style="display:none; transform: scaleX(-1);"></video>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="mb-4">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
@@ -98,12 +123,6 @@
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                                     <input type="text" name="customer_email" class="form-control" id="customer_email" placeholder="Email" aria-describedby="customer_email">
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-12 col-sm-12">
-                                        <label for="exampleInputIconLeft">Foto</label>
-                                            <div class="mb-4">
-                                                <input class="form-control" name="customer_photo" type="file" placeholder="Foto" id="formFile">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
@@ -997,5 +1016,149 @@ $(document).ready(function() {
             $(this).val(formattedVal);
         });
 });
+</script>
+<script>
+        $(document).ready(function() {
+            const startWebcamButton = document.getElementById('startWebcamButton');
+            const captureButton = document.getElementById('captureButton');
+            const closeWebcamButton = document.getElementById('closeWebcamButton');
+            const photoPreview = document.getElementById('photoPreview');
+            const webcamFeed = document.getElementById('webcamFeed');
+            const photoForm = document.getElementById('photoForm');
+            const webcamCaptureInput = document.getElementById('webcamCapture');
+
+            let stream = null;
+
+            startWebcamButton.addEventListener('click', function() {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(webcamStream) {
+                        stream = webcamStream;
+                        webcamFeed.style.display = 'block';
+                        webcamFeed.srcObject = stream;
+                        webcamFeed.play();
+                        startWebcamButton.style.display = 'none';
+                        captureButton.style.display = 'inline-block';
+                        closeWebcamButton.style.display = 'inline-block';
+                    })
+                    .catch(function(err) {
+                        console.error('Error accessing the webcam:', err);
+                    });
+            });
+
+            closeWebcamButton.addEventListener('click', function() {
+                if (stream) {
+                    const tracks = stream.getTracks();
+                    tracks.forEach(function(track) {
+                        track.stop();
+                    });
+                    webcamFeed.style.display = 'none';
+                    startWebcamButton.style.display = 'inline-block';
+                    captureButton.style.display = 'none';
+                    closeWebcamButton.style.display = 'none';
+                    photoForm.reset();
+                    photoPreview.innerHTML = '';
+                }
+            });
+
+            captureButton.addEventListener('click', function() {
+                if (stream) {
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.width = webcamFeed.videoWidth;
+                    canvas.height = webcamFeed.videoHeight;
+                     // Apply horizontal flip before drawing the video frame
+                    context.translate(canvas.width, 0);
+                    context.scale(-1, 1);
+                    
+                    context.drawImage(webcamFeed, 0, 0, canvas.width, canvas.height);
+
+                    // Convert the captured image to a Data URL without mirroring
+                    const dataURL = canvas.toDataURL('image/jpeg');
+                    const base64Data = dataURL.split(',')[1]; // Extract base64 data
+                    webcamCaptureInput.value = base64Data;
+
+                    const img = document.createElement('img');
+                    img.src = dataURL;
+                    img.className = 'img-thumbnail';
+
+                    // Reset the canvas transformation
+                    context.setTransform(1, 0, 0, 1, 0, 0);
+                    photoPreview.innerHTML = '';
+                    photoPreview.appendChild(img);
+                }
+            });
+        });
+</script>
+<script>
+        $(document).ready(function() {
+            const startWebcamButton = document.getElementById('startWebcamTamuButton');
+            const captureButton = document.getElementById('captureTamuButton');
+            const closeWebcamButton = document.getElementById('closeWebcamTamuButton');
+            const photoPreview = document.getElementById('photoPreviewTamu');
+            const webcamFeed = document.getElementById('webcamFeedTamu');
+            const photoForm = document.getElementById('photoFormTamu');
+            const webcamCaptureInput = document.getElementById('webcamCaptureTamu');
+
+            let stream = null;
+
+            startWebcamButton.addEventListener('click', function() {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(webcamStream) {
+                        stream = webcamStream;
+                        webcamFeed.style.display = 'block';
+                        webcamFeed.srcObject = stream;
+                        webcamFeed.play();
+                        startWebcamButton.style.display = 'none';
+                        captureButton.style.display = 'inline-block';
+                        closeWebcamButton.style.display = 'inline-block';
+                    })
+                    .catch(function(err) {
+                        console.error('Error accessing the webcam:', err);
+                    });
+            });
+
+            closeWebcamButton.addEventListener('click', function() {
+                if (stream) {
+                    const tracks = stream.getTracks();
+                    tracks.forEach(function(track) {
+                        track.stop();
+                    });
+                    webcamFeed.style.display = 'none';
+                    startWebcamButton.style.display = 'inline-block';
+                    captureButton.style.display = 'none';
+                    closeWebcamButton.style.display = 'none';
+                    photoForm.reset();
+                    photoPreview.innerHTML = '';
+                }
+            });
+
+            captureButton.addEventListener('click', function() {
+                if (stream) {
+                    const canvas = document.createElement('canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.width = webcamFeed.videoWidth;
+                    canvas.height = webcamFeed.videoHeight;
+                     // Apply horizontal flip before drawing the video frame
+                    context.translate(canvas.width, 0);
+                    context.scale(-1, 1);
+                    
+                    context.drawImage(webcamFeed, 0, 0, canvas.width, canvas.height);
+
+                    // Convert the captured image to a Data URL without mirroring
+                    const dataURL = canvas.toDataURL('image/jpeg');
+                    const base64Data = dataURL.split(',')[1]; // Extract base64 data
+                    webcamCaptureInput.value = base64Data;
+
+                    const img = document.createElement('img');
+                    img.src = dataURL;
+                    img.className = 'img-thumbnail';
+
+                    // Reset the canvas transformation
+                    context.setTransform(1, 0, 0, 1, 0, 0);
+                    photoPreview.innerHTML = '';
+                    photoPreview.appendChild(img);
+                }
+            });
+        });
 </script>
 @endpush

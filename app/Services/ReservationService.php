@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\File;
 use App\Models\User;
 use App\Models\Customer;
 use App\Models\CustomerTmp;
@@ -214,7 +216,9 @@ class ReservationService
         $pic = PicHotelBranch::where('user_id', $user->id)->first();
         $request['hotel_branch_id'] = $pic->hotel_branch_id;
 
-        if($request['customer_check']){
+        if($request['customer_check'] == 1){
+
+            $request['customer_check'];
             $getCustomer = Customer::where('id', $request['customer_id'])->first();
 
             $storeCustomer = CustomerTmp::create([
@@ -233,8 +237,12 @@ class ReservationService
             ]);
         }else{
             // Upload customer photo and identity photo
-            $customerPhoto = $this->uploadFile($request->file('customer_photo'), 'img/customer/identity_photos');
-            $customerIdentityPhoto = $this->uploadFile($request->file('customer_identity_photo'), 'img/customer/identity_photos');
+            // Get the base64-encoded image data from the request
+            $customerPhotoBase64 = $request->input('customer_photo');
+            $customerIdentityPhotoBase64 = $request->input('customer_identity_photo');
+
+            $customerPhoto = $this->uploadFile($customerPhotoBase64, 'img/customer/customer_photos');
+            $customerIdentityPhoto = $this->uploadFile($customerIdentityPhotoBase64, 'img/customer/identity_photos');
             $request['customer_identity_photo_url'] = $customerIdentityPhoto;
             $request['customer_photo_url'] = $customerPhoto;
 
@@ -399,11 +407,21 @@ class ReservationService
         return $paymentAmenitiesTmp;
     }
 
-    private function uploadFile($file, $destinationPath)
+    private function uploadFile($base64Image, $destinationPath)
     {
-        $fileName = $file->getClientOriginalName();
-        $file->move(public_path($destinationPath), $fileName);
-        return "$destinationPath/$fileName";
+        $imageData = base64_decode($base64Image);
+        $fileName = uniqid() . '.jpg';
+        $path = "$destinationPath/$fileName";
+        
+        // Check if the directory exists, and create it if not
+        if (!File::isDirectory($destinationPath)) {
+            File::makeDirectory($destinationPath, 0775, true, true);
+        }
+
+        // Specify the image format if necessary
+        $saveImage = Image::make($imageData)->encode('jpg')->save($path);
+
+        return $path;
     }
 }
 
