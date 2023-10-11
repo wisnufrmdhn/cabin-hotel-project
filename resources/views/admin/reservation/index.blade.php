@@ -493,7 +493,7 @@
                                         <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="payment_method_ota">
+                                                <input class="form-check-input" type="checkbox" id="payment_method_ota" name="payment_method_ota">
                                             </div>
                                             </div>
                                         </div>
@@ -532,7 +532,7 @@
                                         <div class="col-lg-2 col-sm-2">
                                             <div class="mb-4">
                                             <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="payment_method_cash">
+                                                <input class="form-check-input" type="checkbox" id="payment_method_cash" name="payment_method_cash">
                                             </div>
                                             </div>
                                         </div>
@@ -974,6 +974,70 @@
             function padZero(num) {
                 return (num < 10 ? '0' : '') + num;
             }
+        });
+</script>
+<script>
+    $(document).ready(function() {
+            $('#payment_method_ota').on('change', function() {
+                // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
+                if (this.checked) {
+                    $('#payment_category').prop('disabled', true);
+                    $('#payment_method_cash').prop('disabled', true);
+                    $('#payment_cash_value').prop('disabled', true);
+                    $('#change').prop('disabled', true);
+                    $('#payment_method_non_cash').prop('disabled', true);
+                    $('#paymentMethod').prop('disabled', true);
+                } else {
+                    $('#payment_category').prop('disabled', false);
+                    $('#payment_method_cash').prop('disabled', false);
+                    $('#payment_cash_value').prop('disabled', false);
+                    $('#change').prop('disabled', false);
+                    $('#payment_method_non_cash').prop('disabled', false);
+                    $('#paymentMethod').prop('disabled', false);
+                }
+            });
+        });
+</script>
+<script>
+    $(document).ready(function() {
+            $('#payment_method_cash').on('change', function() {
+                // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
+                if (this.checked) {
+                    $('#payment_method_ota').prop('disabled', true);
+                    $('#payment_category_ota').prop('disabled', true);
+                    $('#payment_ota_value').prop('disabled', true);
+                    $('#payment_method_non_cash').prop('disabled', true);
+                    $('#paymentMethod').prop('disabled', true);
+                } else {
+                    $('#payment_method_ota').prop('disabled', false);
+                    $('#payment_category_ota').prop('disabled', false);
+                    $('#payment_ota_value').prop('disabled', false);
+                    $('#payment_method_non_cash').prop('disabled', false);
+                    $('#paymentMethod').prop('disabled', false);
+                }
+            });
+        });
+</script>
+<script>
+    $(document).ready(function() {
+            $('#payment_method_non_cash').on('change', function() {
+                // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
+                if (this.checked) {
+                    $('#payment_method_ota').prop('disabled', true);
+                    $('#payment_category_ota').prop('disabled', true);
+                    $('#payment_ota_value').prop('disabled', true);
+                    $('#payment_method_cash').prop('disabled', true);
+                    $('#payment_cash_value').prop('disabled', true);
+                    $('#change').prop('disabled', true);
+                } else {
+                    $('#payment_method_ota').prop('disabled', false);
+                    $('#payment_category_ota').prop('disabled', false);
+                    $('#payment_ota_value').prop('disabled', false);
+                    $('#payment_method_cash').prop('disabled', false);
+                    $('#payment_cash_value').prop('disabled', false);
+                    $('#change').prop('disabled', false);
+                }
+            });
         });
 </script>
 <script>
