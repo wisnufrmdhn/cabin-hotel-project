@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('amount');
             $table->integer('price');
             $table->integer('total_price');  
-            
+            $table->enum('breakfast_status', ['None', 'Include', 'Exclude'])->nullable();
             $table->timestamps();
         });
     }

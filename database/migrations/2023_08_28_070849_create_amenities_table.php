@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('amenities', function (Blueprint $table) {
             $table->id();
             $table->string('amenities');
-            $table->integer('price');
+            $table->integer('price')->nullable();
             $table->timestamps();
         });
     }

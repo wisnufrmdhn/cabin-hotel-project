@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('down_payment');
             $table->enum('status', ['New', 'Claimed']);
             $table->timestamp('claim_date')->nullable();
+            $table->string('payment_image')->nullable();
             $table->timestamps();
         });
     }

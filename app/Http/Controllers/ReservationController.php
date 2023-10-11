@@ -13,6 +13,8 @@ use App\Models\CustomerTmp;
 use App\Models\HotelRoomReservedTmp;
 use App\Models\ReservationTmp;
 use App\Models\PaymentAmenitiesTmp;
+use App\Models\Reservation;
+use App\Models\HotelBranch;
 use Carbon\Carbon;
 
 class ReservationController extends Controller
@@ -120,6 +122,7 @@ class ReservationController extends Controller
     {
         try{    
             $store = $this->service->storeAmenities($request);
+            return $store;
         }catch(\Throwable $th){
             return $th;
             return redirect()->route('admin.reservation.index')->with('error', 'Room order failed to add');

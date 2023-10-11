@@ -86,16 +86,13 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
-                                            <label for="webcamCapture">Take Photo Identitas Tamu</label>
+                                            <label for="webcamCapture">Photo Identitas Tamu</label>
                                         </div>
-                                                <input type="button" class="btn w-100 btn-secondary" value="Take Photo Identitas Tamu" id="startWebcamButton">
-                                                <input type="button" class="btn w-100 btn-secondary" value="Capture" id="captureButton" style="display: none;">
-                                                <input type="button" class="btn w-100 btn-secondary" value="Close Webcam" id="closeWebcamButton" style="display: none;">
-                                                <br>
-
-                                                <input type="hidden" name="customer_identity_photo" id="webcamCapture">
-                                                <div id="photoPreview"></div>
-                                                <video id="webcamFeed" style="display:none; transform: scaleX(-1);"></video>
+                                        <div class="col-lg-12 col-sm-12">
+                                            <div class="mb-4">
+                                                <input class="form-control" name="customer_identity_photo" type="file" placeholder="Foto" id="formFile">
+                                            </div>
+                                        </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                             </div>
@@ -384,30 +381,64 @@
                                         </br></br>
                                         <form method="POST" action="{{route('admin.reservation.store-amenities')}}" enctype="multipart/form-data">
                                         {{ csrf_field() }}
-                                        <h1 class="h5"><u>Tambahan Amenities</u></h1>
+                                        <h1 class="h5"><u>Tambahan Additional</u></h1>
                                         </br>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
                                                 <label for="email">Breakfast</label>
-                                                <select class="form-select w-100 mb-0" id="amount_breakfast" name="amount_breakfast" aria-label="State select example">
+                                                <select class="form-select w-100 mb-0" id="breakfast" name="breakfast" aria-label="State select example">
                                                     <option selected value="None">None</option>
-                                                        <option value="None">Include</option>
-                                                        <option value="None">Exclude</option>
+                                                        <option value="Include">Include</option>
+                                                        <option value="Exclude">Exclude</option>
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-sm-3">
+                                                <div class="input-group mb-4">
+                                                <select class="form-select w-100 mb-0" id="total_breakfast" name="total_breakfast" aria-label="State select example" disabled>
+                                                        @for ($i = 1; $i <= 4; $i++)
+                                                            <option value="{{ $i }}">{{ $i }}</option>
+                                                        @endfor
+                                                </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-9 col-sm-9">
+                                                <div class="input-group mb-4">
+                                                <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                                    <input type="text" name="breakfast_price" class="form-control" id="breakfast_price" aria-describedby="emailHelp" disabled>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                            <label for="email">Extra Bed</label>
-                                                <select class="form-select w-100 mb-0" id="state" name="amount_extra_bed" aria-label="State select example">
+                                            <label for="email">Extra Person & Extra Bed</label>
+                                                <select class="form-select w-100 mb-0" id="extra_person_bed" name="extra_person_bed" aria-label="State select example">
                                                     <option value="Extraperson">Extraperson</option>
                                                         <option value="Extrabed">Extrabed</option>
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-sm-3">
+                                                <div class="input-group mb-4">
+                                                <select class="form-select w-100 mb-0" id="total_extra_person_bed" name="total_extra_person_bed" aria-label="State select example">
+                                                        @for ($i = 1; $i <= 4; $i++)
+                                                            <option value="{{ $i }}">{{ $i }}</option>
+                                                        @endfor
+                                                </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-9 col-sm-9">
+                                                <div class="input-group mb-4">
+                                                <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                                    <input type="text" name="extra_person_bed_price" class="form-control" id="extra_person_bed_price" aria-describedby="emailHelp">
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-12 col-sm-12">
                                             <div class="mb-4">
-                                                <button class="btn w-100 btn-secondary" type="submit">Tambah Amenities</button>
+                                                <button class="btn w-100 btn-secondary" type="submit">Tambah Additional</button>
                                             </div>
                                         </div>
                                         </br></br></br></br></br>
@@ -656,14 +687,14 @@
                                         @if($amenitiesTmp)
                                         <div class="col-lg-12 col-sm-12">
                                         </br></br>
-                                            <label for="email">Data Amenities</label>
+                                            <label for="email">Data Additional</label>
                                                 <div class="table-responsive">
                                                 <table class="table table-centered table-nowrap mb-0 rounded">
                                                 <thead class="thead-light">
                                                     <tr>
-                                                        <th class="border-0 rounded-start">Amenities</th>
+                                                        <th class="border-0 rounded-start">Additional</th>
                                                         <th class="border-0">Kuantitas</th>
-                                                        <th class="border-0">Total Harga Amenities</th>
+                                                        <th class="border-0">Total Harga Additional</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -786,6 +817,23 @@
                 $('#cardOptions').show();
             } else if ($(this).val() === 'Qris') {
                 $('#qrisOptions').show();
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#breakfast').change(function() {
+            console.log($(this).val())
+
+            // Tampilkan form select tambahan sesuai dengan metode pembayaran yang dipilih
+            if ($(this).val() === 'Exclude') {
+                console.log('exclue')
+                $('#total_breakfast').prop('disabled', false);
+                $('#breakfast_price').prop('disabled', false);
+            } else {
+                $('#total_breakfast').prop('disabled', true);
+                $('#breakfast_price').prop('disabled', true);
             }
         });
     });
@@ -1023,78 +1071,6 @@ $(document).ready(function() {
             $(this).val(formattedVal);
         });
 });
-</script>
-<script>
-        $(document).ready(function() {
-            const startWebcamButton = document.getElementById('startWebcamButton');
-            const captureButton = document.getElementById('captureButton');
-            const closeWebcamButton = document.getElementById('closeWebcamButton');
-            const photoPreview = document.getElementById('photoPreview');
-            const webcamFeed = document.getElementById('webcamFeed');
-            const photoForm = document.getElementById('photoForm');
-            const webcamCaptureInput = document.getElementById('webcamCapture');
-
-            let stream = null;
-
-            startWebcamButton.addEventListener('click', function() {
-                navigator.mediaDevices.getUserMedia({ video: true })
-                    .then(function(webcamStream) {
-                        stream = webcamStream;
-                        webcamFeed.style.display = 'block';
-                        webcamFeed.srcObject = stream;
-                        webcamFeed.play();
-                        startWebcamButton.style.display = 'none';
-                        captureButton.style.display = 'inline-block';
-                        closeWebcamButton.style.display = 'inline-block';
-                    })
-                    .catch(function(err) {
-                        console.error('Error accessing the webcam:', err);
-                    });
-            });
-
-            closeWebcamButton.addEventListener('click', function() {
-                if (stream) {
-                    const tracks = stream.getTracks();
-                    tracks.forEach(function(track) {
-                        track.stop();
-                    });
-                    webcamFeed.style.display = 'none';
-                    startWebcamButton.style.display = 'inline-block';
-                    captureButton.style.display = 'none';
-                    closeWebcamButton.style.display = 'none';
-                    photoForm.reset();
-                    photoPreview.innerHTML = '';
-                }
-            });
-
-            captureButton.addEventListener('click', function() {
-                if (stream) {
-                    const canvas = document.createElement('canvas');
-                    const context = canvas.getContext('2d');
-                    canvas.width = webcamFeed.videoWidth;
-                    canvas.height = webcamFeed.videoHeight;
-                     // Apply horizontal flip before drawing the video frame
-                    context.translate(canvas.width, 0);
-                    context.scale(-1, 1);
-                    
-                    context.drawImage(webcamFeed, 0, 0, canvas.width, canvas.height);
-
-                    // Convert the captured image to a Data URL without mirroring
-                    const dataURL = canvas.toDataURL('image/jpeg');
-                    const base64Data = dataURL.split(',')[1]; // Extract base64 data
-                    webcamCaptureInput.value = base64Data;
-
-                    const img = document.createElement('img');
-                    img.src = dataURL;
-                    img.className = 'img-thumbnail';
-
-                    // Reset the canvas transformation
-                    context.setTransform(1, 0, 0, 1, 0, 0);
-                    photoPreview.innerHTML = '';
-                    photoPreview.appendChild(img);
-                }
-            });
-        });
 </script>
 <script>
         $(document).ready(function() {

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->datetime('reservation_end_date');
             $table->enum('reservation_day_category', ['Weekday', 'Weekend', 'High Season']);
             $table->enum('status', ['Booking', 'Checkin', 'Checkout', 'Canceled']);
+            $table->enum('breakfast_status', ['None', 'Include', 'Exclude'])->nullable();
             $table->timestamps();
         });
     }

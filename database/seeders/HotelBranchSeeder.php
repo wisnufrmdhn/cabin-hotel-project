@@ -19,6 +19,7 @@ class HotelBranchSeeder extends Seeder
             [
                 'hotel_name' => 'The Cabin Purwokinanti',
                 'hotel_address' => 'Jl. Juminahan No.48, Purwokinanti, Pakualaman, Kota Yogyakarta',
+                'hotel_code' => 'PWK',
             ],
         ];
 

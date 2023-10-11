@@ -20,11 +20,13 @@ return new class extends Migration
             $table->foreignId('customer_id')->constrained('customers')->onUpdate('cascade')->onDelete('cascade');
             $table->foreignId('reservation_method_id')->constrained('reservation_methods');
             $table->foreignId('payment_id')->constrained('payments')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('reservation_code');
             $table->string('booking_number')->nullable();
             $table->datetime('reservation_start_date');
             $table->datetime('reservation_end_date');
             $table->enum('reservation_day_category', ['Weekday', 'Weekend', 'High Season', 'Middle Day']);
             $table->enum('status', ['Booking', 'Checkin', 'Checkout', 'Canceled']);
+            $table->enum('breakfast_status', ['None', 'Include', 'Exclude'])->nullable();
             $table->timestamps();
         });
     }

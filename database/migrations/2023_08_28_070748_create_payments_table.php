@@ -15,11 +15,13 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->string('payment_code');
             $table->integer('discount');
             $table->integer('total_price');
-            $table->integer('total_price_amenities');
-            $table->integer('total_payment');
+            $table->integer('total_price_amenities')->nullable();
+            $table->integer('total_payment')->nullable();
             $table->integer('change')->nullable();
+            $table->string('payment_image')->nullable();
             $table->timestamps();
         });
     }

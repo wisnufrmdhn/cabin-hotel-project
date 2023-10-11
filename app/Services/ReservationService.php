@@ -15,6 +15,7 @@ use App\Models\ReservationDetail;
 use App\Models\ReservationTmp;
 use App\Models\ReservationDetailTmp;
 use App\Models\HotelRoomNumber;
+use App\Models\HotelBranch;
 use App\Models\HotelRoomRate;
 use App\Models\HotelRoomReservedTmp;
 use App\Models\Payment;
@@ -34,6 +35,10 @@ class ReservationService
         $user = Auth::user();
         $picHotelBranch = PicHotelBranch::where('user_id', $user->id)->first();
         $customerTmp = CustomerTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->first();
+        $branch = HotelBranch::where('id', $picHotelBranch->hotel_branch_id)->first();
+        $today = date("Ymd");   
+        $reservationCheck = Reservation::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->count();
+        $reservationCount = str_pad($reservationCheck + 1, 4, '0', STR_PAD_LEFT);
 
         if($customerTmp->customer_tmp_id){
             $customerId = $customerTmp->customer_tmp_id;
@@ -85,13 +90,15 @@ class ReservationService
         }
 
         $request['total_payment'] = $request['payment_cash_value'] +  $request['payment_card_value'] + $request['payment_qris_value'] + $request['payment_transfer_value'];
+        $request['payment_code']  = 'INV-'.$branch->hotel_code.'-'.$today.'-'.$reservationCount;
 
         $storePayment = Payment::create([
             'discount'              => $request['discount'],
             'total_price'           => $totalPrice,
             'total_price_amenities' => $amenitiesTotalPrice,
             'total_payment'         => $request['total_payment'],
-            'change'                => $request['change'] ? $request['change'] : 0
+            'change'                => $request['change'] ? $request['change'] : 0,
+            'payment_code'          => $request['payment_code']
         ]);
 
         if($request['payment_category'] == 'Down Payment')
@@ -168,8 +175,13 @@ class ReservationService
             }
         }
 
+        $request['breakfast_status'] = 'None';
+
         if($amenitiesTotalPrice > 0){
             foreach($paymentAmenitiesTmp as $payAmenities){
+                if($payAmenities->amenities_id == 1){
+                    $request['breakfast_status'] = $payAmenities->breakfast_status;
+                }
                 $storePaymentAmenities = PaymentAmenities::create([
                     'payment_id'            => $storePayment->id,
                     'amenities_id'          => $payAmenities->amenities_id,
@@ -182,6 +194,8 @@ class ReservationService
             $deletePaymentAmenitiesTmp = PaymentAmenitiesTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->delete();
         }
 
+        $request['reservation_code']  = 'RSV-'.$branch->hotel_code.'-'.$today.'-'.$reservationCount;
+
         $storeReservation = Reservation::create([
             'hotel_branch_id'             => $picHotelBranch->hotel_branch_id,
             'user_id'                     => $user->id,
@@ -193,6 +207,8 @@ class ReservationService
             'reservation_end_date'        => $reservationTmp->reservation_end_date,
             'reservation_day_category'    => $reservationTmp->reservation_day_category,
             'status'                      => 'Booking',
+            'reservation_code'            => $request['reservation_code'],
+            'breakfast_status'            => $request['breakfast_status']
         ]);
 
         foreach($hotelRoomReservedTmp as $index => $roomReserved){
@@ -217,8 +233,6 @@ class ReservationService
         $request['hotel_branch_id'] = $pic->hotel_branch_id;
 
         if($request['customer_check'] == 1){
-
-            $request['customer_check'];
             $getCustomer = Customer::where('id', $request['customer_id'])->first();
 
             $storeCustomer = CustomerTmp::create([
@@ -239,9 +253,9 @@ class ReservationService
             // Upload customer photo and identity photo
             // Get the base64-encoded image data from the request
             $customerPhotoBase64 = $request->input('customer_photo');
-            $customerIdentityPhotoBase64 = $request->input('customer_identity_photo');
+            $customerIdentityPhotoBase64 = $request['customer_identity_photo'];
 
-            $customerPhoto = $this->uploadFile($customerPhotoBase64, 'img/customer/customer_photos');
+            $customerPhoto = $this->uploadPhotoCustomer($customerPhotoBase64, 'img/customer/customer_photos');
             $customerIdentityPhoto = $this->uploadFile($customerIdentityPhotoBase64, 'img/customer/identity_photos');
             $request['customer_identity_photo_url'] = $customerIdentityPhoto;
             $request['customer_photo_url'] = $customerPhoto;
@@ -362,52 +376,86 @@ class ReservationService
         $picHotelBranch = PicHotelBranch::where('user_id', $user->id)->first();
         $breakfast = Amenities::where('amenities', 'Breakfast')->first();
         $extraBed = Amenities::where('amenities', 'Extra Bed')->first();
+        $extraPerson = Amenities::where('amenities', 'Extra Person')->first();
         $breakfastTmp = PaymentAmenitiesTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('amenities_id', 1)->first();
         $extraBedTmp = PaymentAmenitiesTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('amenities_id', 2)->first();
+        $extraPersonTmp = PaymentAmenitiesTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('amenities_id', 3)->first();
         
-
-        if($request['amount_breakfast']){
+        if($request['breakfast'] == 'Exclude'){
             if($breakfastTmp){
-                $breakfastAmount = $breakfastTmp->amount + $request['amount_breakfast'];
-                $breakfastTotalPrice = $breakfastTmp->total_price + ($breakfast->price * $request['amount_breakfast']);
+                $breakfastAmount = $breakfastTmp->amount + $request['total_breakfast'];
+                $breakfastTotalPrice = $breakfastTmp->total_price + $request['breakfast_price'];
                 $paymentAmenitiesTmp = $breakfastTmp->update([
                     'amount' => $breakfastAmount,
                     'total_price' => $breakfastTotalPrice
                 ]);
             }else{
                 $paymentAmenitiesTmp = PaymentAmenitiesTmp::create([
-                    'hotel_branch_id' => $picHotelBranch->hotel_branch_id,
-                    'amenities_id' => $breakfast->id,
-                    'amount' => $request['amount_breakfast'],
-                    'price'  => $breakfast->price,
-                    'total_price' => $breakfast->price * $request['amount_breakfast']
+                    'hotel_branch_id'  => $picHotelBranch->hotel_branch_id,
+                    'amenities_id'     => $breakfast->id,
+                    'amount'           => $request['total_breakfast'],
+                    'price'            => $request['breakfast_price'],
+                    'total_price'      => $request['breakfast_price'],
+                    'breakfast_status' => $request['breakfast']
                 ]);
             }
-        }
-        
-        if($request['amount_extra_bed']){
-            if($extraBedTmp){
-                $extraBedAmount = $extraBedTmp->amount + $request['amount_extra_bed'];
-                $extraBedTotalPrice = $extraBedTmp->total_price + ($extraBed->price * $request['amount_extra_bed']);
-                $paymentAmenitiesTmp = $extraBedTmp->update([
-                    'amount' => $extraBedAmount,
-                    'total_price' => $extraBedTotalPrice
-                ]);
-            }else{  
+        }else{
+            if($breakfastTmp == null){
                 $paymentAmenitiesTmp = PaymentAmenitiesTmp::create([
-                    'hotel_branch_id' => $picHotelBranch->hotel_branch_id,
-                    'amenities_id' => $extraBed->id,
-                    'amount' => $request['amount_extra_bed'],
-                    'price'  => $extraBed->price,
-                    'total_price' => $extraBed->price * $request['amount_extra_bed']
+                    'hotel_branch_id'  => $picHotelBranch->hotel_branch_id,
+                    'amenities_id'     => $breakfast->id,
+                    'amount'           => 0,
+                    'price'            => 0,
+                    'total_price'      => 0,
+                    'breakfast_status' => $request['breakfast']
                 ]);
             }
         }
 
-        return $paymentAmenitiesTmp;
+        if($request['extra_person_bed_price']){
+            
+            if($request['extra_person_bed'] == 'Extrabed'){
+                if($extraBedTmp){
+                    $extraBedAmount = $extraBedTmp->amount + $request['total_extra_person_bed'];
+                    $extraBedTotalPrice = $extraBedTmp->total_price + $request['extra_person_bed_price'];
+                    $paymentAmenitiesTmp = $extraBedTmp->update([
+                        'amount' => $extraBedAmount,
+                        'total_price' => $extraBedTotalPrice
+                    ]);
+                }else{  
+                    $paymentAmenitiesTmp = PaymentAmenitiesTmp::create([
+                        'hotel_branch_id' => $picHotelBranch->hotel_branch_id,
+                        'amenities_id' => $extraBed->id,
+                        'amount' => $request['total_extra_person_bed'],
+                        'price'  => $request['extra_person_bed_price'],
+                        'total_price' => $request['extra_person_bed_price']
+                    ]);
+                }
+            }
+    
+            if($request['extra_person_bed'] == 'Extraperson'){
+                if($extraPersonTmp){
+                    $extraPersonAmount = $extraBedTmp->amount + $request['amount_extra_bed'];
+                    $extraPersonTotalPrice = $extraPersonTmp->total_price + $extraPersonTmp->price;
+                    $paymentAmenitiesTmp = $extraBedTmp->update([
+                        'amount' => $extraPersonAmount,
+                        'total_price' => $extraPersonTotalPrice,
+                    ]);
+                }else{  
+                    $paymentAmenitiesTmp = PaymentAmenitiesTmp::create([
+                        'hotel_branch_id' => $picHotelBranch->hotel_branch_id,
+                        'amenities_id' => $extraPerson->id,
+                        'amount' => $request['total_extra_person_bed'],
+                        'price'  => $request['extra_person_bed_price'],
+                        'total_price' => $request['extra_person_bed_price']
+                    ]);
+                }
+                return $paymentAmenitiesTmp;
+            }
+        }
     }
 
-    private function uploadFile($base64Image, $destinationPath)
+    private function uploadPhotoCustomer($base64Image, $destinationPath)
     {
         $imageData = base64_decode($base64Image);
         $fileName = uniqid() . '.jpg';
@@ -422,6 +470,13 @@ class ReservationService
         $saveImage = Image::make($imageData)->encode('jpg')->save($path);
 
         return $path;
+    }
+
+    private function uploadFile($file, $destinationPath)
+    {
+        $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path($destinationPath), $fileName);
+        return "$destinationPath/$fileName";
     }
 }
 

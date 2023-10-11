@@ -24,6 +24,10 @@ class AmenitiesSeeder extends Seeder
                 'amenities' => 'Extra Bed',
                 'price' => 100000,
             ],
+            [
+                'amenities' => 'Extra Person',
+                'price' => 50000,
+            ],
         ];
 
         foreach ($amenities as $key => $value) {
