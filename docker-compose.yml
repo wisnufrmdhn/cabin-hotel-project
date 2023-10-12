@@ -51,6 +51,7 @@ services:
     container_name: laravel-certbot
     volumes:
       - ./certbot-etc:/etc/letsencrypt
+      - ./var-www-certbot:/var/www/html  # Create this directory in certbot container
     command: certonly --webroot -w /var/www/html -d thecabinhotelgroup.com  # Replace 'your_domain.com' with your actual domain
     depends_on:
       - nginx  # Wait for Nginx to start
