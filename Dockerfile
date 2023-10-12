@@ -19,7 +19,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Set working directory
 WORKDIR /var/www/html
-COPY ./ ./
 
 # Expose port 9000 for PHP-FPM
 EXPOSE 9000

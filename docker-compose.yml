@@ -3,9 +3,12 @@ version: '3.8'
 services:
   app:
     build:
-      context: .
+      context: ./
       dockerfile: Dockerfile
     container_name: laravel-app
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
     environment:
       - APP_ENV=local
       - APP_KEY=base64:vcdt76YIOUf5udsHoH6h8fMLGTIsSDj+zXYMVDJGYCM=
@@ -34,6 +37,7 @@ services:
     ports:
       - "80:80"  # Map host port 80 to container port 80 (HTTP)
     volumes:
+      - ./:/var/www/html
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
       - app
