@@ -1,5 +1,0 @@
-# Use the official Certbot image as a base image
-FROM certbot/certbot:latest
-
-# Specify the entry point command for the container
-CMD ["certbot", "certonly", "--webroot", "-w", "/var/www/certbot", "-d", "thecabinhotelgroup.com"]
