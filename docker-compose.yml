@@ -52,7 +52,8 @@ services:
     volumes:
       - ./certbot-etc:/etc/letsencrypt
       - ./var-www-certbot:/var/www/html  # Create this directory in certbot container
-    command: certonly --webroot -w /var/www/html -d thecabinhotelgroup.com  # Replace 'your_domain.com' with your actual domain
+    command: certonly --webroot -w /var/www/html -d thecabinhotelgroup.com --email ilhaam43@gmail.com  # Replace 'your@email.com' with your actual email address
+    # Replace 'your_domain.com' with your actual domain
     depends_on:
       - nginx  # Wait for Nginx to start
 
