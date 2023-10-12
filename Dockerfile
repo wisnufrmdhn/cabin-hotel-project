@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
     libfreetype6-dev \
-    zip
+    zip \
+    nano
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
