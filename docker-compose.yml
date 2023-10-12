@@ -18,7 +18,7 @@ services:
     networks:
       - laravel-network
     command: >
-      sh -c "composer install && composer dump-autoload && chmod -R 777 storage bootstrap/cache && php-fpm && php artisan migrate:fresh --seed"
+      sh -c "composer install && composer dump-autoload && chmod -R 777 storage bootstrap/cache && php-fpm && php artisan migrate --seed"
 
   mysql:
     image: mysql:8
