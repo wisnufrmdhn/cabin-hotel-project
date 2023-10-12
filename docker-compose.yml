@@ -8,6 +8,9 @@ services:
     container_name: laravel-app
     volumes:
       - .:/var/www/html
+    command: 
+      - /bin/sh -c "composer install && composer dump-autoload"
+      - /bin/sh -c "chmod -R 777 storage bootstrap/cache && php-fpm"
     environment:
       - APP_ENV=local
       - APP_KEY=base64:vcdt76YIOUf5udsHoH6h8fMLGTIsSDj+zXYMVDJGYCM=

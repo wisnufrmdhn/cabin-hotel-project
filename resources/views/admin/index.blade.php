@@ -275,7 +275,7 @@
                                             <div class="col-auto">
                                                 <!-- Avatar -->
                                                 <a href="#" class="avatar">
-                                                    <img class="rounded" alt="Image placeholder" src="../../assets/img/team/profile-picture-1.jpg">
+                                                    <img class="rounded" alt="Image placeholder" src="{{ asset('assets/img/team/profile-picture-1.jpg') }}">
                                                 </a>
                                             </div>
                                             <div class="col-auto ms--2">
@@ -300,7 +300,7 @@
                                                 <div class="col-auto">
                                                     <!-- Avatar -->
                                                     <a href="#" class="avatar">
-                                                        <img class="rounded" alt="Image placeholder" src="../../assets/img/team/profile-picture-2.jpg">
+                                                        <img class="rounded" alt="Image placeholder" src="{{ asset('assets/img/team/profile-picture-2.jpg') }}">
                                                     </a>
                                                 </div>
                                                 <div class="col-auto ms--2">
@@ -325,7 +325,7 @@
                                                 <div class="col-auto">
                                                     <!-- Avatar -->
                                                     <a href="#" class="avatar">
-                                                        <img class="rounded" alt="Image placeholder" src="../../assets/img/team/profile-picture-3.jpg">
+                                                        <img class="rounded" alt="Image placeholder" src="{{ asset('assets/img/team/profile-picture-3.jpg') }}">
                                                     </a>
                                                 </div>
                                                 <div class="col-auto ms--2">
@@ -350,7 +350,7 @@
                                                 <div class="col-auto">
                                                     <!-- Avatar -->
                                                     <a href="#" class="avatar">
-                                                        <img class="rounded" alt="Image placeholder" src="../../assets/img/team/profile-picture-4.jpg">
+                                                        <img class="rounded" alt="Image placeholder" src="{{ asset('assets/img/team/profile-picture-4.jpg') }}">
                                                     </a>
                                                 </div>
                                                 <div class="col-auto ms--2">
@@ -587,10 +587,10 @@
         <div class="d-flex justify-content-center">
             <a class="me-3" href="https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard"
                 target="_blank">
-                <img src="../../assets/img/technologies/bootstrap-5-logo.svg" class="image image-xs">
+                <img src="{{ asset('assets/img/technologies/bootstrap-5-logo.svg') }}" class="image image-xs">
             </a>
             <a href="https://demo.themesberg.com/volt-react-dashboard/#/" target="_blank">
-                <img src="../../assets/img/technologies/react-logo.svg" class="image image-xs">
+                <img src="{{ asset('assets/img/technologies/react-logo.svg') }}" class="image image-xs">
             </a>
         </div>
     </div>

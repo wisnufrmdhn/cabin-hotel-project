@@ -44,22 +44,22 @@
 <meta property="twitter:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-bootstrap-5-dashboard/volt-pro-preview.jpg">
 
 <!-- Favicon -->
-<link rel="apple-touch-icon" sizes="120x120" href="../../assets/img/favicon/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon/favicon-16x16.png">
-<link rel="manifest" href="../../assets/img/favicon/site.webmanifest">
-<link rel="mask-icon" href="../../assets/img/favicon/safari-pinned-tab.svg" color="#ffffff">
+<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('assets/img/favicon/apple-touch-icon.png') }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/favicon/favicon-32x32.png') }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/favicon/favicon-16x16.png') }}">
+<link rel="manifest" href="{{ asset('assets/img/favicon/site.webmanifest') }}">
+<link rel="mask-icon" href="{{ asset('assets/img/favicon/safari-pinned-tab.svg') }}" color="#ffffff">
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="theme-color" content="#ffffff">
 
 <!-- Sweet Alert -->
-<link type="text/css" href="../../vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+<link type="text/css" href="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
 
 <!-- Notyf -->
-<link type="text/css" href="../../vendor/notyf/notyf.min.css" rel="stylesheet">
+<link type="text/css" href="{{ asset('vendor/notyf/notyf.min.css') }}" rel="stylesheet">
 
 <!-- Volt CSS -->
-<link type="text/css" href="../../css/volt.css" rel="stylesheet">
+<link type="text/css" href="{{ asset('css/volt.css') }}" rel="stylesheet">
 
 <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
 
@@ -73,7 +73,7 @@
         <!-- Section -->
         <section class="vh-lg-100 mt-5 mt-lg-0 bg-soft d-flex align-items-center">
             <div class="container">
-                <div class="row justify-content-center form-bg-image" data-background-lg="../../assets/img/illustrations/signin.svg">
+                <div class="row justify-content-center form-bg-image" data-background-lg="{{ asset('assets/img/illustrations/signin.svg') }}">
                     <div class="col-12 d-flex align-items-center justify-content-center">
                         <div class="bg-white shadow border-0 rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                         @if (session('error'))
@@ -127,45 +127,45 @@
     </main>
 
     <!-- Core -->
-<script src="../../vendor/@popperjs/core/dist/umd/popper.min.js"></script>
-<script src="../../vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="{{ asset('vendor/@popperjs/core/dist/umd/popper.min.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 
 <!-- Vendor JS -->
-<script src="../../vendor/onscreen/dist/on-screen.umd.min.js"></script>
+<script src="{{ asset('vendor/onscreen/dist/on-screen.umd.min.js') }}"></script>
 
 <!-- Slider -->
-<script src="../../vendor/nouislider/distribute/nouislider.min.js"></script>
+<script src="{{ asset('vendor/nouislider/distribute/nouislider.min.js') }}"></script>
 
 <!-- Smooth scroll -->
-<script src="../../vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+<script src="{{ asset('vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js') }}"></script>
 
 <!-- Charts -->
-<script src="../../vendor/chartist/dist/chartist.min.js"></script>
-<script src="../../vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+<script src="{{ asset('vendor/chartist/dist/chartist.min.js') }}"></script>
+<script src="{{ asset('vendor/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js') }}"></script>
 
 <!-- Datepicker -->
-<script src="../../vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
+<script src="{{ asset('vendor/vanillajs-datepicker/dist/js/datepicker.min.js') }}"></script>
 
 <!-- Sweet Alerts 2 -->
-<script src="../../vendor/sweetalert2/dist/sweetalert2.all.min.js"></script>
+<script src="{{ asset('vendor/sweetalert2/dist/sweetalert2.all.min.js') }}"></script>
 
 <!-- Moment JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
 
 <!-- Vanilla JS Datepicker -->
-<script src="../../vendor/vanillajs-datepicker/dist/js/datepicker.min.js"></script>
+<script src="{{ asset('vendor/vanillajs-datepicker/dist/js/datepicker.min.js') }}"></script>
 
 <!-- Notyf -->
-<script src="../../vendor/notyf/notyf.min.js"></script>
+<script src="{{ asset('vendor/notyf/notyf.min.js') }}"></script>
 
 <!-- Simplebar -->
-<script src="../../vendor/simplebar/dist/simplebar.min.js"></script>
+<script src="{{ asset('vendor/simplebar/dist/simplebar.min.js') }}"></script>
 
 <!-- Github buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 <!-- Volt JS -->
-<script src="../../assets/js/volt.js"></script>
+<script src="{{ asset('assets/js/volt.js') }}"></script>
 
     
 </body>

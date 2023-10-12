@@ -44,22 +44,22 @@
 <meta property="twitter:image" content="https://themesberg.s3.us-east-2.amazonaws.com/public/products/volt-pro-bootstrap-5-dashboard/volt-pro-preview.jpg">
 
 <!-- Favicon -->
-<link rel="apple-touch-icon" sizes="120x120" href="../../assets/img/favicon/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="../../assets/img/favicon/favicon-16x16.png">
-<link rel="manifest" href="../../assets/img/favicon/site.webmanifest">
-<link rel="mask-icon" href="../../assets/img/favicon/safari-pinned-tab.svg" color="#ffffff">
+<link rel="apple-touch-icon" sizes="120x120" href="{{ asset('assets/img/favicon/apple-touch-icon.png') }}">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/favicon/favicon-32x32.png') }}">
+<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/favicon/favicon-16x16.png') }}">
+<link rel="manifest" href="{{ asset('assets/img/favicon/site.webmanifest') }}">
+<link rel="mask-icon" href="{{ asset('assets/img/favicon/safari-pinned-tab.svg') }}" color="#ffffff">
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="theme-color" content="#ffffff">
 
 <!-- Sweet Alert -->
-<link type="text/css" href="../../vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
+<link type="text/css" href="{{ asset('vendor/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet">
 
 <!-- Notyf -->
-<link type="text/css" href="../../vendor/notyf/notyf.min.css" rel="stylesheet">
+<link type="text/css" href="{{ asset('vendor/notyf/notyf.min.css') }}" rel="stylesheet">
 
 <!-- Volt CSS -->
-<link type="text/css" href="../../css/volt.css" rel="stylesheet">
+<link type="text/css" href="{{ asset('css/volt.css') }}" rel="stylesheet">
 @stack('css')
 
 <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
@@ -72,8 +72,8 @@
         
 
         <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
-    <a class="navbar-brand me-lg-5" href="../../index.html">
-        <img class="navbar-brand-dark" src="../../assets/img/brand/light.svg" alt="Volt logo" /> <img class="navbar-brand-light" src="../../assets/img/brand/dark.svg" alt="Volt logo" />
+    <a class="navbar-brand me-lg-5" href="index.html">
+        <img class="navbar-brand-dark" src="{{ asset('assets/img/brand/light.svg') }}" alt="Volt logo" /> <img class="navbar-brand-light" src="{{ asset('assets/img/brand/dark.svg') }}" alt="Volt logo" />
     </a>
     <div class="d-flex align-items-center">
         <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,12 +87,12 @@
         <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
         <div class="d-flex align-items-center">
             <div class="avatar-lg me-4">
-            <img src="../../assets/img/team/profile-picture-3.jpg" class="card-img-top rounded-circle border-white"
+            <img src="{{ asset('assets/img/team/profile-picture-3.jpg') }}" class="card-img-top rounded-circle border-white"
                 alt="Bonnie Green">
             </div>
             <div class="d-block">
             <h2 class="h5 mb-3">Hi, Jane</h2>
-            <a href="../../pages/examples/sign-in.html" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
+            <a href="pages/examples/sign-in.html" class="btn btn-secondary btn-sm d-inline-flex align-items-center">
                 <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>            
                 Sign Out
             </a>
@@ -108,7 +108,7 @@
         </div>
         <ul class="nav flex-column pt-3 pt-md-0">
         <li class="nav-item">
-            <a href="../../pages/dashboard/dashboard.html" class="nav-link">
+            <a href="pages/dashboard/dashboard.html" class="nav-link">
             <span class="sidebar-icon">
                 <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
             </span> 
@@ -159,7 +159,7 @@
                     <div class="row align-items-center">
                         <div class="col-auto">
                         <!-- Avatar -->
-                        <img alt="Image placeholder" src="../../assets/img/team/profile-picture-1.jpg" class="avatar-md rounded">
+                        <img alt="Image placeholder" src="{{ asset('assets/img/team/profile-picture-1.jpg') }}" class="avatar-md rounded">
                         </div>
                         <div class="col ps-0 ms-2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -178,7 +178,7 @@
                     <div class="row align-items-center">
                         <div class="col-auto">
                         <!-- Avatar -->
-                        <img alt="Image placeholder" src="../../assets/img/team/profile-picture-2.jpg" class="avatar-md rounded">
+                        <img alt="Image placeholder" src="{{ asset('assets/img/team/profile-picture-2.jpg') }}" class="avatar-md rounded">
                         </div>
                         <div class="col ps-0 ms-2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -197,7 +197,7 @@
                     <div class="row align-items-center">
                         <div class="col-auto">
                         <!-- Avatar -->
-                        <img alt="Image placeholder" src="../../assets/img/team/profile-picture-3.jpg" class="avatar-md rounded">
+                        <img alt="Image placeholder" src="{{ asset('assets/img/team/profile-picture-3.jpg') }}" class="avatar-md rounded">
                         </div>
                         <div class="col ps-0 m-2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -216,7 +216,7 @@
                     <div class="row align-items-center">
                         <div class="col-auto">
                         <!-- Avatar -->
-                        <img alt="Image placeholder" src="../../assets/img/team/profile-picture-4.jpg" class="avatar-md rounded">
+                        <img alt="Image placeholder" src="{{ asset('assets/img/team/profile-picture-4.jpg') }}" class="avatar-md rounded">
                         </div>
                         <div class="col ps-0 ms-2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -235,7 +235,7 @@
                     <div class="row align-items-center">
                         <div class="col-auto">
                         <!-- Avatar -->
-                        <img alt="Image placeholder" src="../../assets/img/team/profile-picture-5.jpg" class="avatar-md rounded">
+                        <img alt="Image placeholder" src="{{ asset('assets/img/team/profile-picture-5.jpg') }}" class="avatar-md rounded">
                         </div>
                         <div class="col ps-0 ms-2">
                         <div class="d-flex justify-content-between align-items-center">
@@ -260,7 +260,7 @@
             <li class="nav-item dropdown ms-lg-3">
             <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <div class="media d-flex align-items-center">
-                <img class="avatar rounded-circle" alt="Image placeholder" src="../../assets/img/team/profile-picture-3.jpg">
+                <img class="avatar rounded-circle" alt="Image placeholder" src="{{ asset('assets/img/team/profile-picture-3.jpg') }}">
                 <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
                     <span class="mb-0 font-small fw-bold text-gray-900">Bonnie Green</span>
                 </div>
