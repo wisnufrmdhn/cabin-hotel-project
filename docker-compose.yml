@@ -6,8 +6,6 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: laravel-app
-    volumes:
-      - ./:/var/www/html
     environment:
       - APP_ENV=local
       - APP_KEY=base64:vcdt76YIOUf5udsHoH6h8fMLGTIsSDj+zXYMVDJGYCM=
