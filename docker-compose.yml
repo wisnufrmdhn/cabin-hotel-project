@@ -28,12 +28,25 @@ services:
     image: nginx:alpine
     container_name: laravel-nginx
     ports:
-      - "8000:80" # Map host port 8000 to container port 80
+      - "80:80"  # Map host port 80 to container port 80 (HTTP)
+      - "443:443" # Map host port 443 to container port 443 (HTTPS)
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./certbot-etc:/etc/letsencrypt # Let's Encrypt certificates directory
     depends_on:
       - app
+    networks:
+      - nginx-proxy
+
+  certbot:
+    image: certbot/certbot
+    container_name: laravel-certbot
+    volumes:
+      - ./certbot-etc:/etc/letsencrypt
+    command: certonly --webroot -w /var/www/certbot -d thecabinhotelgroup.com
 
 networks:
   default:
     driver: bridge
+  nginx-proxy:
+    external: true
