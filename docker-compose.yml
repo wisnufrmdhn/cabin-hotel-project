@@ -49,7 +49,10 @@ services:
     container_name: laravel-certbot
     volumes:
       - ./certbot-etc:/etc/letsencrypt
-    command: certonly --webroot -w /var/www/certbot -d thecabinhotelgroup.com
+      - /var/www/html:/var/www/html
+    command: >
+      certbot --nginx -d thecabinhotelgroup.com
+      # Use "--nginx" to obtain and automatically renew certificates with Nginx
 
 networks:
   laravel-network:
