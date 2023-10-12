@@ -4,13 +4,13 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile.php
+      dockerfile: Dockerfile
     container_name: laravel-app
     volumes:
       - .:/var/www/html
     environment:
       - APP_ENV=local
-      - APP_KEY=
+      - APP_KEY=base64:vcdt76YIOUf5udsHoH6h8fMLGTIsSDj+zXYMVDJGYCM=
       # Add more environment variables as needed
     depends_on:
       - mysql
@@ -21,10 +21,10 @@ services:
     image: mysql:8
     container_name: laravel-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: laravel
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: erativedev123
+      MYSQL_DATABASE: cabin_hotel
+      MYSQL_USER: erativedev
+      MYSQL_PASSWORD: erativedev123
     networks:
       - laravel-network
 
