@@ -1,52 +1,45 @@
-version: '3'
+version: '3.8'
 
 services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.php
     container_name: laravel-app
     volumes:
       - .:/var/www/html
     environment:
       - APP_ENV=local
-      - APP_KEY=base64:vcdt76YIOUf5udsHoH6h8fMLGTIsSDj+zXYMVDJGYCM=
+      - APP_KEY=
       # Add more environment variables as needed
     depends_on:
       - mysql
+    networks:
+      - laravel-network
 
   mysql:
-    image: mysql:8.0
+    image: mysql:8
     container_name: laravel-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: erativedev123
-      MYSQL_DATABASE: cabin_hotel
-      MYSQL_USER: erativedev
-      MYSQL_PASSWORD: erativedev123
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: secret
+    networks:
+      - laravel-network
 
   nginx:
     image: nginx:alpine
     container_name: laravel-nginx
     ports:
       - "80:80"  # Map host port 80 to container port 80 (HTTP)
-      - "443:443" # Map host port 443 to container port 443 (HTTPS)
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - ./certbot-etc:/etc/letsencrypt # Let's Encrypt certificates directory
     depends_on:
       - app
     networks:
-      - nginx-proxy
-
-  certbot:
-    image: certbot/certbot
-    container_name: laravel-certbot
-    volumes:
-      - ./certbot-etc:/etc/letsencrypt
-    command: certonly --webroot -w /var/www/certbot -d thecabinhotelgroup.com
+      - laravel-network
 
 networks:
-  default:
+  laravel-network:
     driver: bridge
-  nginx-proxy:
-    external: true
