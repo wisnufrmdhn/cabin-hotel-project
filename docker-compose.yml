@@ -12,6 +12,7 @@ services:
     environment:
       - APP_ENV=local
       - APP_KEY=base64:vcdt76YIOUf5udsHoH6h8fMLGTIsSDj+zXYMVDJGYCM=
+      - ASSET_URL=https://thecabinhotelgroup.com/ #for production
       # Add more environment variables as needed
     depends_on:
       - mysql
