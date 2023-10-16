@@ -97,7 +97,7 @@ class ReservationService
             'total_price'           => $totalPrice,
             'total_price_amenities' => $amenitiesTotalPrice,
             'total_payment'         => $request['total_payment'],
-            'change'                => $request['change'] ? $request['change'] : 0,
+            'change'                => $request['change'] ? (int) preg_replace("/[^0-9]/", "", $request['change']) : 0,
             'payment_code'          => $request['payment_code']
         ]);
 
@@ -130,7 +130,7 @@ class ReservationService
                 'payment_id'            => $storePayment->id,
                 'payment_method_id'     => 1,
                 'payment'               => $request['payment_cash_value'],
-                'change'                => $request['change'],
+                'change'                => $request['change'] ? (int) preg_replace("/[^0-9]/", "", $request['change']) : 0,
                 'bank_name'             => null,
                 'card_number'           => null,
                 'reference_number'      => null,
