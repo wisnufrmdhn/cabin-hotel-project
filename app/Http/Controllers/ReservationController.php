@@ -122,7 +122,6 @@ class ReservationController extends Controller
     {
         try{    
             $store = $this->service->storeAmenities($request);
-            return $store;
         }catch(\Throwable $th){
             return $th;
             return redirect()->route('admin.reservation.index')->with('error', 'Room order failed to add');
