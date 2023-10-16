@@ -17,6 +17,6 @@ class PaymentAmenitiesTmp extends Model
 
     public function amenities()
     {
-        return $this->belongsTo(amenities::class);
+        return $this->belongsTo(Amenities::class);
     }
 }
