@@ -40,7 +40,7 @@ class ReservationService
         $reservationCheck = Reservation::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->count();
         $reservationCount = str_pad($reservationCheck + 1, 4, '0', STR_PAD_LEFT);
 
-        if($customerTmp->customer_tmp_id){
+        if($customerTmp){
             $customerId = $customerTmp->customer_tmp_id;
         }else{
             $storeCustomer = Customer::create([
@@ -232,7 +232,7 @@ class ReservationService
         $pic = PicHotelBranch::where('user_id', $user->id)->first();
         $request['hotel_branch_id'] = $pic->hotel_branch_id;
 
-        if($request['customer_check'] == 1){
+        if($request['customer_check'] == 'on'){
             $getCustomer = Customer::where('id', $request['customer_id'])->first();
 
             $storeCustomer = CustomerTmp::create([
