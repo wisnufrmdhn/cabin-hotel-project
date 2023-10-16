@@ -145,6 +145,84 @@
                         enctype="multipart/form-data">
                         {{ csrf_field() }}
                         </br>
+                        @if($reservationTmp)
+                        <input type="hidden" id="daily" name="daily" value="1"> 
+                        <input type="hidden" id="reservation_start_date_daily" name="reservation_start_date_daily" value="{{ $reservationTmp->reservation_start_date }}"> 
+                        <input type="hidden" id="reservation_end_date_daily" name="reservation_end_date_daily" value="{{ $reservationTmp->reservation_end_date }}"> 
+                        <input type="hidden" id="reservation_day_category" name="reservation_day_category" value="{{ $reservationTmp->reservation_day_category }}">
+                        <div class="col">
+                            <div class="mb-2">
+                                <label for="email">Check In</label>
+                                <input type="datetime-local" class="form-control" name="reservation_start_date_daily" id="reservation_start_date" aria-describedby="emailHelp" value="{{ $reservationTmp->reservation_start_date }}" disabled>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="col">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="daily" name="daily" id="flexSwitchCheckDefault" value="1" disabled>
+                                <p>Checkout dengan pilih tanggal & jam</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <label for="email">Check Out</label>
+                                <input type="datetime-local" class="form-control" name="reservation_end_date_daily" id="reservation_end_date_daily" aria-describedby="emailHelp" value="{{ $reservationTmp->reservation_end_date }}" disabled>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <label for="result_daily_reservation_end_date" style="display: none;">Durasi menginap
+                                    berdasarkan tanggal & jam</label>
+                                <input type="text" class="form-control" id="result_daily_reservation_end_date" value="{{ $diffResult }}" disabled>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="col">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="mixed" name="mixed" id="flexSwitchCheckDefault" disabled>
+                                <p>Checkout dengan pilih durasi</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label for="email">Hari</label>
+                                    <select class="form-select w-100 mb-0" id="mixed_time_day" name="mixed_day" aria-label="State select example" disabled>
+                                        @for ($i = 0; $i <= 30; $i++)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label for="email">Jam</label>
+                                    <select class="form-select w-100 mb-0 " id="mixed_time_hour" name="mixed_hour"
+                                        aria-label="State select example" disabled>
+                                        @for ($i = 0; $i <= 24; $i++)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col" style="display: none;" id="result_mix_reservation">
+                            <div class="mb-0">
+                                <label for="result_mix_reservation_end_date">Perhitungan waktu checkout dengan pilih durasi</label>
+                                <input type="datetime-local" id="result_mix_reservation_end_date" class="form-control" disabled>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="col">
+                            <select class="form-select w-100 mb-0" id="reservation_day_category" name="reservation_day_category" aria-label="reservation_day_category" disabled>
+                                <option value="Weekday" {{ $dayCategory === "Weekday" ? 'selected' : '' }}>Weekday</option>
+                                <option value="Weekend" {{ $dayCategory === "Weekend" ? 'selected' : '' }}>Weekend</option>
+                                <option value="Weekend" {{ $dayCategory === "Middle Day" ? 'selected' : '' }}>Middle Day</option>
+                                <option value="High Season" {{ $dayCategory === "High Season" ? 'selected' : '' }}>High Season</option>
+                            </select>
+                        </div>
+                        </br>
+                        @else
                         <div class="col">
                             <div class="mb-2">
                                 <label for="email">Check In</label>
@@ -222,6 +300,7 @@
                             </select>
                         </div>
                         </br>
+                        @endif
                         <div class="col">
                             <label for="exampleInputIconLeft">Data Kamar</label>
                         </div>
