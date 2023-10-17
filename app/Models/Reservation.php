@@ -19,4 +19,14 @@ class Reservation extends Model
     {
         return $this->belongsTo(HotelRoomReserved::class);
     }
+
+    public function customer()
+    {
+        return $this->hasOne(Customer::class, 'id');
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'id');
+    }
 }

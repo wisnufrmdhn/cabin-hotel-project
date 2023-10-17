@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\AjaxController;
 
 /*
@@ -43,6 +44,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/', [FinanceController::class, 'index'])->name('index');
         });
     });
+    Route::get('/pdf/invoice/{invoiceId}', [PdfController::class, 'generateInvoice'])->name('pdf.invoices');
 });
 
 Route::group(['as' => 'ajax.', 'prefix' => 'ajax'], function () {

@@ -89,7 +89,6 @@ class ReservationController extends Controller
     {
         try{    
             $store = $this->service->store($request);
-            return $store;
         }catch(\Throwable $th){
             return $th;
             return redirect()->route('admin.reservation.index')->with('error', 'Reservation data final failed to add');
