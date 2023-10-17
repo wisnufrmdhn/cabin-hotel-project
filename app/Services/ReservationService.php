@@ -40,7 +40,7 @@ class ReservationService
         $reservationCheck = Reservation::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->count();
         $reservationCount = str_pad($reservationCheck + 1, 4, '0', STR_PAD_LEFT);
 
-        if($customerTmp){
+        if($customerTmp->customer_tmp_id){
             $customerId = $customerTmp->customer_tmp_id;
         }else{
             $storeCustomer = Customer::create([
@@ -177,18 +177,28 @@ class ReservationService
 
         $request['breakfast_status'] = 'None';
 
-        if($amenitiesTotalPrice > 0){
+        if($paymentAmenitiesTmp){
             foreach($paymentAmenitiesTmp as $payAmenities){
                 if($payAmenities->amenities_id == 1){
                     $request['breakfast_status'] = $payAmenities->breakfast_status;
+                    if($request['breakfast_status'] == 'Exclude'){
+                        $storePaymentAmenities = PaymentAmenities::create([
+                            'payment_id'            => $storePayment->id,
+                            'amenities_id'          => $payAmenities->amenities_id,
+                            'amount'                => $payAmenities->amount,
+                            'price'                 => $payAmenities->price,
+                            'total_price'           => $payAmenities->total_price,
+                        ]);
+                    }
+                }else{
+                    $storePaymentAmenities = PaymentAmenities::create([
+                        'payment_id'            => $storePayment->id,
+                        'amenities_id'          => $payAmenities->amenities_id,
+                        'amount'                => $payAmenities->amount,
+                        'price'                 => $payAmenities->price,
+                        'total_price'           => $payAmenities->total_price,
+                    ]);
                 }
-                $storePaymentAmenities = PaymentAmenities::create([
-                    'payment_id'            => $storePayment->id,
-                    'amenities_id'          => $payAmenities->amenities_id,
-                    'amount'                => $payAmenities->amount,
-                    'price'                 => $payAmenities->price,
-                    'total_price'           => $payAmenities->total_price,
-                ]);
             }
 
             $deletePaymentAmenitiesTmp = PaymentAmenitiesTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->delete();
@@ -213,7 +223,7 @@ class ReservationService
 
         foreach($hotelRoomReservedTmp as $index => $roomReserved){
             $storeHotelRoomReserved = HotelRoomReserved::create([
-                'reservation_id'              => $reservationTmp->id,
+                'reservation_id'              => $storeReservation->id,
                 'hotel_room_number_id'        => $roomReserved->hotel_room_number_id,
                 'total_guest'                 => $roomReserved->total_guest,
                 'price'                       => $roomReserved->price,
@@ -221,8 +231,6 @@ class ReservationService
         }
 
         $deleteCustomerTmp = CustomerTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->delete();
-
-        return $request;
     }
 
     public function storeCustomer($request)
@@ -387,7 +395,8 @@ class ReservationService
                 $breakfastTotalPrice = $breakfastTmp->total_price + $request['breakfast_price'];
                 $paymentAmenitiesTmp = $breakfastTmp->update([
                     'amount' => $breakfastAmount,
-                    'total_price' => $breakfastTotalPrice
+                    'total_price' => $breakfastTotalPrice,
+                    'breakfast_status' => $request['breakfast']
                 ]);
             }else{
                 $paymentAmenitiesTmp = PaymentAmenitiesTmp::create([
@@ -409,11 +418,14 @@ class ReservationService
                     'total_price'      => 0,
                     'breakfast_status' => $request['breakfast']
                 ]);
+            }else{
+                $paymentAmenitiesTmp = $breakfastTmp->update([
+                    'breakfast_status' => $request['breakfast']
+                ]);
             }
         }
 
         if($request['extra_person_bed_price']){
-            
             if($request['extra_person_bed'] == 'Extrabed'){
                 if($extraBedTmp){
                     $extraBedAmount = $extraBedTmp->amount + $request['total_extra_person_bed'];
@@ -435,9 +447,9 @@ class ReservationService
     
             if($request['extra_person_bed'] == 'Extraperson'){
                 if($extraPersonTmp){
-                    $extraPersonAmount = $extraBedTmp->amount + $request['amount_extra_bed'];
+                    $extraPersonAmount = $extraPersonTmp->amount + $request['total_extra_person_bed'];
                     $extraPersonTotalPrice = $extraPersonTmp->total_price + $extraPersonTmp->price;
-                    $paymentAmenitiesTmp = $extraBedTmp->update([
+                    $paymentAmenitiesTmp = $extraPersonTmp->update([
                         'amount' => $extraPersonAmount,
                         'total_price' => $extraPersonTotalPrice,
                     ]);
@@ -453,6 +465,13 @@ class ReservationService
                 return $paymentAmenitiesTmp;
             }
         }
+    }
+
+    public function deleteCustomer($id)
+    {
+        $customerTmp = CustomerTmp::find($id)->delete();
+
+        return $customerTmp;
     }
 
     private function uploadPhotoCustomer($base64Image, $destinationPath)

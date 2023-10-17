@@ -582,13 +582,15 @@
                                                             <th class="border-0">Nama Pelanggan</th>
                                                             <th class="border-0">Email</th>
                                                             <th class="border-0">Nomor Handphone</th>
+                                                            <th class="border-0">Aksi</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
+                                                        <tr class="tr{{ $customerTmp->id }}">
                                                             <td>{{ $customerTmp->customer_name }}</td>
                                                             <td>{{ $customerTmp->customer_email }}</td>
                                                             <td>{{ $customerTmp->customer_phone }}</td>
+                                                            <td><button type="button" class="btn btn-sm btn-default btn-danger delete-button" data-id="{{ $customerTmp->id }}">Delete</button></td>
                                                         </tr>
                                                         <!-- End of Item -->
                                                     </tbody>
@@ -1122,5 +1124,31 @@ $(document).ready(function() {
                 }
             });
         });
+</script>
+<script>
+    $(document).ready(function () {
+        $('.delete-button').on('click', function () {
+            var id = this.getAttribute('data-id');
+            
+            if (confirm('Are you sure you want to delete this data?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: "/admin/reservation/delete-customer/" + id,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        // Handle success, e.g., remove the row from the table
+                        alert('Data Berhasil Dihapus'); // Display a success message
+                        // Reload Page
+                        location.reload();
+                    },
+                    error: function (data) {
+                        alert('Error: Data Gagal Dihapus');
+                    }
+                });
+            }
+        });
+    });
 </script>
 @endpush

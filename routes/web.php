@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\AjaxController;
 
 /*
@@ -35,6 +36,11 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/store-customer', [ReservationController::class, 'storeCustomer'])->name('store-customer');
             Route::post('/store-room-order', [ReservationController::class, 'storeRoomOrder'])->name('store-room-order');
             Route::post('/store-amenities', [ReservationController::class, 'storeAmenities'])->name('store-amenities');
+            Route::post('/delete-customer/{id}', [ReservationController::class, 'deleteCustomer'])->name('delete-customer');
+        });
+
+        Route::group(['as' => 'finance.', 'prefix' => 'finance'], function () {
+            Route::get('/', [FinanceController::class, 'index'])->name('index');
         });
     });
 });

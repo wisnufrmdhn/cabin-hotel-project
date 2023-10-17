@@ -89,6 +89,7 @@ class ReservationController extends Controller
     {
         try{    
             $store = $this->service->store($request);
+            return $store;
         }catch(\Throwable $th){
             return $th;
             return redirect()->route('admin.reservation.index')->with('error', 'Reservation data final failed to add');
@@ -127,5 +128,16 @@ class ReservationController extends Controller
             return redirect()->route('admin.reservation.index')->with('error', 'Room order failed to add');
         }
         return redirect()->route('admin.reservation.index')->with('success', 'Room order added successfully');
+    }
+
+    public function deleteCustomer($id)
+    {
+        try{    
+            $delete = $this->service->deleteCustomer($id);
+        }catch(\Throwable $th){
+            return $th;
+            return redirect()->route('admin.reservation.index')->with('error', 'Customer failed to remove');
+        }
+        return redirect()->route('admin.reservation.index')->with('success', 'Customer remove successfully');
     }
 }
