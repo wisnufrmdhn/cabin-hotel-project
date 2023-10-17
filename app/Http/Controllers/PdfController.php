@@ -23,7 +23,7 @@ class PdfController extends Controller
 {
     public function generateInvoice($invoiceId)
     {
-        $invoice = Reservation::where('reservation_code', $invoiceId)->with('payment', 'Customer')->first();
+        $invoice = Reservation::where('reservation_code', $invoiceId)->with('payment', 'customer')->first();
 
         $pdf = PDF::loadView('pdf.invoice', compact('invoice'));
 

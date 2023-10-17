@@ -93,7 +93,7 @@ class ReservationController extends Controller
             return $th;
             return redirect()->route('admin.reservation.index')->with('error', 'Reservation data final failed to add');
         }
-        return redirect()->route('admin.reservation.index')->with('success', 'Reservation data final added successfully');
+        return redirect()->route('pdf.invoices', ['invoiceId' => $store]);
     }
 
     public function storeCustomer(Request $request)

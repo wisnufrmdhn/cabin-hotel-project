@@ -231,6 +231,7 @@ class ReservationService
         }
 
         $deleteCustomerTmp = CustomerTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->delete();
+        return $request['reservation_code'];
     }
 
     public function storeCustomer($request)

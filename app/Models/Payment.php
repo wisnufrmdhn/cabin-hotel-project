@@ -17,6 +17,6 @@ class Payment extends Model
 
     public function reservation()
     {
-        return $this->belongsTo(Reservation::class);
+        return $this->hasOne(Reservation::class);
     }
 }
