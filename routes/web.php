@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/store-room-order', [ReservationController::class, 'storeRoomOrder'])->name('store-room-order');
             Route::post('/store-amenities', [ReservationController::class, 'storeAmenities'])->name('store-amenities');
             Route::post('/delete-customer/{id}', [ReservationController::class, 'deleteCustomer'])->name('delete-customer');
+            Route::post('/delete-rooms/{id}', [ReservationController::class, 'deleteRooms'])->name('delete-rooms');
         });
 
         Route::group(['as' => 'finance.', 'prefix' => 'finance'], function () {

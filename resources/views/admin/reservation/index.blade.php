@@ -610,6 +610,7 @@
                                                             <th class="border-0">Nomor Kamar</th>
                                                             <th class="border-0">Total Tamu</th>
                                                             <th class="border-0">Total Harga Kamar</th>
+                                                            <th class="border-0">Aksi</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -620,8 +621,8 @@
                                                                 <td>{{ $reservationData->hotelRoomNumber->room_number }}
                                                                 </td>
                                                                 <td>{{ $reservationData->total_guest }}</td>
-                                                                <td>{{ number_format($reservationData->price, 2, ',', '.') }}
-                                                                </td>
+                                                                <td>{{ number_format($reservationData->price, 2, ',', '.') }}</td>
+                                                                <td><button type="button" class="btn btn-sm btn-default btn-danger delete-button-rooms" data-id="{{ $reservationData->id }}">Delete</button></td>
                                                             </tr>
                                                             <!-- End of Item -->
                                                         @endforeach
@@ -1134,6 +1135,32 @@ $(document).ready(function() {
                 $.ajax({
                     type: 'POST',
                     url: "/admin/reservation/delete-customer/" + id,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        // Handle success, e.g., remove the row from the table
+                        alert('Data Berhasil Dihapus'); // Display a success message
+                        // Reload Page
+                        location.reload();
+                    },
+                    error: function (data) {
+                        alert('Error: Data Gagal Dihapus');
+                    }
+                });
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $('.delete-button-rooms').on('click', function () {
+            var id = this.getAttribute('data-id');
+            
+            if (confirm('Are you sure you want to delete this data?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: "/admin/reservation/delete-rooms/" + id,
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },

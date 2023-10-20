@@ -475,6 +475,23 @@ class ReservationService
         return $customerTmp;
     }
 
+    public function deleteRooms($id)
+    {
+        $roomsTmp = HotelRoomReservedTmp::where('id', $id)->first();
+
+        $reservationTmpId = $roomsTmp->reservation_tmp_id;
+
+        $getRoomsTmp = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmpId)->get();
+
+        if($getRoomsTmp->count() == 1){
+            $reservationTmpDelete = ReservationTmp::find($reservationTmpId)->delete();
+            return $reservationTmpDelete;
+        }else{
+            $roomsTmpDelete = HotelRoomReservedTmp::find($id)->delete();
+            return $roomsTmpDelete;
+        }
+    }
+
     private function uploadPhotoCustomer($base64Image, $destinationPath)
     {
         $imageData = base64_decode($base64Image);

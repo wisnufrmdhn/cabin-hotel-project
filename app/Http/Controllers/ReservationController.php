@@ -139,4 +139,15 @@ class ReservationController extends Controller
         }
         return redirect()->route('admin.reservation.index')->with('success', 'Customer remove successfully');
     }
+
+    public function deleteRooms($id)
+    {
+        try{    
+            $delete = $this->service->deleteRooms($id);
+        }catch(\Throwable $th){
+            return $th;
+            return redirect()->route('admin.reservation.index')->with('error', 'Room failed to remove');
+        }
+        return redirect()->route('admin.reservation.index')->with('success', 'Room remove successfully');
+    }
 }
