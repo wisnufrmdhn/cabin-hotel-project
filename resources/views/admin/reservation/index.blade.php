@@ -30,6 +30,111 @@
                         enctype="multipart/form-data">
                         {{ csrf_field() }}
                         </br>
+                        @if($customerTmp)
+                        <div class="col">
+                            <label for="exampleInputIconLeft">Jenis Tamu</label>
+                        </div>
+                        <div class="col">
+                            <select class="form-select w-100 mb-2" id="reservation_method_id"
+                                name="reservation_method_id" aria-label="State select example" disabled>
+                                @foreach ($reservationMethod as $methods)
+                                    <option value="{{ $methods->id }}">
+                                        {{ $methods->reservation_method }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col">
+                            <div class="mb-4">
+                                <input type="text" class="form-control" name="booking_number"
+                                    id="booking_number" placeholder="Booking Number" aria-describedby="booking_number" style="display: none;" disabled>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="customer_check" name="customer_check" disabled>
+                                <label for="daftar_tamu">Pilih Dari Daftar Tamu</label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <select class="form-select w-100 mb-0" id="customer_id" name="customer_id" aria-label="customer_id" disabled>
+                                <option value="">Daftar Tamu</option>
+                            </select>
+                        </div>
+                        </br>
+                        <div class="col">
+                            <label for="exampleInputIconLeft">Isi Data Tamu</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4">
+                                <select class="form-select w-100 mb-0" id="customer_title" name="customer_title" aria-label="customer_title" disabled>
+                                    <option value="Mr">Mr</option>
+                                    <option value="Mrs">Mrs</option>
+                                </select>
+                            </div>
+                            <div class="col col-sm-8">
+                                <div class="mb-2">
+                                    <input type="text" class="form-control " placeholder="Nama"
+                                        id="customer_name" name="customer_name" aria-describedby="customer_name" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4">
+                                <select class="form-select w-100 mb-0" id="customer_identity_type"
+                                    name="customer_identity_type" aria-label="State select example" disabled>
+                                    <option value="KTP">KTP</option>
+                                    <option value="SIM">SIM</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-8 col-sm-8">
+                                <div class="mb-2">
+                                    <input class="form-control" name="customer_identity_photo" id="customer_identity_photo" type="file" placeholder="Foto" id="formFile" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-4">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <label for="webcamCapture">Take Photo Tamu</label>
+                            <div class="mb-2">
+                                <input type="button" class="btn w-100 btn-secondary" value="Take Photo Tamu" id="startWebcamTamuButton" disabled>
+                                <input type="button" class="btn w-100 btn-secondary" value="Capture" id="captureTamuButton" style="display: none;">
+                                <br><br>
+                                <input type="button" class="btn w-100 btn-secondary" value="Close Webcam" id="closeWebcamTamuButton" style="display: none;">
+                                <input type="hidden" name="customer_photo" id="webcamCaptureTamu">
+                                <div id="photoPreviewTamu"></div>
+                                <video id="webcamFeedTamu" style="display:none; transform: scaleX(-1); width:400; height:300;"></video>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <input type="text" name="customer_address" class="form-control "
+                                    id="customer_address" placeholder="Domisili" aria-describedby="customer_address" disabled>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <input type="text" class="form-control" name="customer_phone"
+                                    id="customer_phone" placeholder="Nomor Handphone" aria-describedby="customer_phone" disabled>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <input type="text" name="customer_email" class="form-control"
+                                    id="customer_email" placeholder="Email" aria-describedby="customer_email" disabled>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="col">
+                            <div class="mb-2">
+                                <button class="btn w-100 btn-secondary" type="submit" disabled>Tambah
+                                    Tamu</button>
+                            </div>
+                        </div>
+                        @else
                         <div class="col">
                             <label for="exampleInputIconLeft">Jenis Tamu</label>
                         </div>
@@ -80,7 +185,7 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4 col-sm-4">
-                                <select class="form-select w-100 mb-0" id="state"
+                                <select class="form-select w-100 mb-0" id="customer_identity_type"
                                     name="customer_identity_type" aria-label="State select example">
                                     <option value="KTP">KTP</option>
                                     <option value="SIM">SIM</option>
@@ -88,7 +193,7 @@
                             </div>
                             <div class="col-lg-8 col-sm-8">
                                 <div class="mb-2">
-                                    <input class="form-control" name="customer_identity_photo" type="file" placeholder="Foto" id="formFile">
+                                    <input class="form-control" name="customer_identity_photo" id="customer_identity_photo" type="file" placeholder="Foto" id="formFile">
                                 </div>
                             </div>
                         </div>
@@ -105,7 +210,7 @@
                                 <input type="button" class="btn w-100 btn-secondary" value="Close Webcam" id="closeWebcamTamuButton" style="display: none;">
                                 <input type="hidden" name="customer_photo" id="webcamCaptureTamu">
                                 <div id="photoPreviewTamu"></div>
-                                <video id="webcamFeedTamu" style="display:none; transform: scaleX(-1);"></video>
+                                <video id="webcamFeedTamu" style="display:none; transform: scaleX(-1); width:400; height:300;"></video>
                             </div>
                         </div>
                         <div class="col">
@@ -133,6 +238,7 @@
                                     Tamu</button>
                             </div>
                         </div>
+                        @endif
                     </form>
                 </div>
             </div>
@@ -145,7 +251,7 @@
                         enctype="multipart/form-data">
                         {{ csrf_field() }}
                         </br>
-                        @if($reservationTmp)
+                        @if($reservationTmp && $customerTmp)
                         <input type="hidden" id="daily" name="daily" value="1"> 
                         <input type="hidden" id="reservation_start_date_daily" name="reservation_start_date_daily" value="{{ $reservationTmp->reservation_start_date }}"> 
                         <input type="hidden" id="reservation_end_date_daily" name="reservation_end_date_daily" value="{{ $reservationTmp->reservation_end_date }}"> 
@@ -222,7 +328,7 @@
                             </select>
                         </div>
                         </br>
-                        @else
+                        @elseif($customerTmp)
                         <div class="col">
                             <div class="mb-2">
                                 <label for="email">Check In</label>
@@ -300,7 +406,86 @@
                             </select>
                         </div>
                         </br>
+                        @else
+                        <div class="col">
+                            <div class="mb-2">
+                                <label for="email">Check In</label>
+                                <input type="datetime-local" class="form-control " name="reservation_start_date_daily"
+                                    id="reservation_start_date" aria-describedby="emailHelp" disabled>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="col">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="daily" name="daily" disabled>
+                                <p>Checkout dengan pilih tanggal & jam</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <label for="email">Check Out</label>
+                                <input type="datetime-local" class="form-control " name="reservation_end_date_daily"
+                                    id="reservation_end_date_daily" aria-describedby="emailHelp" disabled>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <label for="result_daily_reservation_end_date" style="display: none;">Durasi menginap
+                                    berdasarkan tanggal & jam</label>
+                                <input type="text" class="form-control " id="result_daily_reservation_end_date"
+                                    style="display: none;" disabled>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="col">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="mixed" name="mixed" disabled>
+                                <p>Checkout dengan pilih durasi</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label for="email">Hari</label>
+                                    <select class="form-select w-100 mb-0 " id="mixed_time_day" name="mixed_day"
+                                        aria-label="State select example" disabled>
+                                        @for ($i = 0; $i <= 30; $i++)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mb-2">
+                                    <label for="email">Jam</label>
+                                    <select class="form-select w-100 mb-0 " id="mixed_time_hour" name="mixed_hour"
+                                        aria-label="State select example" disabled>
+                                        @for ($i = 0; $i <= 24; $i++)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col" style="display: none;" id="result_mix_reservation">
+                            <div class="mb-0">
+                                <label for="result_mix_reservation_end_date">Perhitungan waktu checkout dengan pilih durasi</label>
+                                <input type="datetime-local" id="result_mix_reservation_end_date" class="form-control" disabled>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="col">
+                            <select class="form-select w-100 mt-0 " id="reservation_day_category"
+                                name="reservation_day_category" aria-label="reservation_day_category" disabled>
+                                <option value="Weekday">Weekday</option>
+                                <option value="Weekend">Weekend</option>
+                                <option value="Weekend">Middle Day</option>
+                                <option value="High Season">High Season</option>
+                            </select>
+                        </div>
+                        </br>
                         @endif
+                        @if($customerTmp)
                         <div class="col">
                             <label for="exampleInputIconLeft">Data Kamar</label>
                         </div>
@@ -341,11 +526,54 @@
                             </div>
                         </div>
                     </form>
+                    @else
+                    <div class="col">
+                            <label for="exampleInputIconLeft">Data Kamar</label>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <select class="form-select w-100 mb-0 " id="hotel_room_id" name="hotel_room_id"
+                                    aria-label="State select example" disabled>
+                                    <option selected value="">Tipe Kamar</option>
+                                    @foreach ($hotelRooms as $roomType)
+                                        <option value="{{ $roomType->id }}">{{ $roomType->room_type }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <select class="form-select w-100 mb-0 " id="hotel_room_number_id"
+                                    name="hotel_room_number_id" aria-label="State select example" disabled>
+                                    <option value="">Pilih Nomer Kamar</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <select class="form-select w-100 mb-0 " id="total_guest" name="total_guest"
+                                    aria-label="State select example" disabled>
+                                    <option selected value="">Jumlah Orang</option>
+                                    @for ($i = 1; $i <= 4; $i++)
+                                        <option value="{{ $i }}">{{ $i }}</option>
+                                    @endfor
+                                </select>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="col">
+                            <div class="mb-2">
+                                <button class="btn w-100 btn-secondary" type="submit" disabled>Tambah Kamar</button>
+                            </div>
+                        </div>
+                    </form>
+                    @endif
                     <form method="POST" action="{{ route('admin.reservation.store-amenities') }}"
                         enctype="multipart/form-data">
                         {{ csrf_field() }}
                         </br>
                         <h5 style="font-size: 25px"><u>Tambahan Additional</u></h5>
+                        @if($customerTmp)
                         <div class="col">
                             <div class="mb-2">
                                 <label for="email">Breakfast</label>
@@ -404,6 +632,66 @@
                                 <button class="btn w-100 btn-secondary" type="submit">Tambah Additional</button>
                             </div>
                         </div>
+                        @else
+                        <div class="col">
+                            <div class="mb-2">
+                                <label for="email">Breakfast</label>
+                                    <select class="form-select w-100 mb-0" id="breakfast" name="breakfast" aria-label="State select example" disabled>
+                                    <option selected value="None">None</option>
+                                    <option value="Include">Include</option>
+                                    <option value="Exclude">Exclude</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-3">
+                                <div class="input-group mb-4">
+                                    <select class="form-select w-100 mb-0" id="total_breakfast" name="total_breakfast" aria-label="State select example" disabled>
+                                        @for ($i = 1; $i <= 4; $i++)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 col-sm-9">
+                                <div class="input-group mb-4">
+                                    <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                        <input type="text" name="breakfast_price" class="form-control" id="breakfast_price" aria-describedby="emailHelp" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                            <label for="email">Extra Person & Extra Bed</label>
+                                <select class="form-select w-100 mb-0" id="extra_person_bed" name="extra_person_bed" aria-label="State select example" disabled>
+                                <option value="Extraperson">Extraperson</option>
+                                <option value="Extrabed">Extrabed</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-3 col-sm-3">
+                                <div class="input-group mb-4">
+                                    <select class="form-select w-100 mb-0" id="total_extra_person_bed" name="total_extra_person_bed" aria-label="State select example" disabled>
+                                        @for ($i = 1; $i <= 4; $i++)
+                                            <option value="{{ $i }}">{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                            </div>
+                        <div class="col-lg-9 col-sm-9">
+                            <div class="input-group mb-4">
+                                <span class="input-group-text" id="basic-addon1">Rp.</span>
+                                    <input type="text" name="extra_person_bed_price" class="form-control" id="extra_person_bed_price" aria-describedby="emailHelp" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <button class="btn w-100 btn-secondary" type="submit" disabled>Tambah Additional</button>
+                            </div>
+                        </div>
+                        @endif
                     </form>
                 </div>
             </div>
@@ -415,6 +703,7 @@
                     <form method="POST" action="{{ route('admin.reservation.store') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         </br>
+                        @if($customerTmp && $reservationTmp)
                         <div class="col">
                             <label for="discount">Diskon</label>
                             <div class="mb-2">
@@ -553,6 +842,146 @@
                             <input type="text" id="payment_qris_value" name="payment_qris_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
                             <input type="text" name="payment_method_qris_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi QRIS">
                         </div>
+                        @else
+                        <div class="col">
+                            <label for="discount">Diskon</label>
+                            <div class="mb-2">
+                                <select class="form-select w-100 mb-2 " id="discount_type" name="discount_type"
+                                    aria-label="discount_type" disabled>
+                                    <option selected value="">Jenis Diskon</option>
+                                    <option value="Nominal">Nominal</option>
+                                    <option value="Persen">Persen (%)</option>
+                            </div>
+                            <div class="mb-2">
+                                <input type="text" name="discount" placeholder="Diskon" class="form-control " id="discount"
+                                    aria-describedby="emailHelp" disabled>
+                            </div>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <b>Total Price :</b>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-4">
+                                @if ($totalPrice)
+                                    <input type="text" name="total_price" class="form-control " id="total_price"
+                                        value="{{ number_format($totalPrice, 0, ',', '.') }}"
+                                        aria-describedby="total_price" disabled>
+                                @else
+                                    <input type="text" name="total_price" class="form-control " id="total_price"
+                                        aria-describedby="total_price" disabled>
+                                @endif
+                            </div>
+                        </div>
+
+                        <hr color="black">
+                        <div class="col">
+                            <label>Tipe Pembayaran</label>
+                            <select class="form-select w-100 mb-0 " id="payment_category" name="payment_category"
+                                aria-label="payment_category" disabled>
+                                <option selected value="">Tipe Pembayaran</option>
+                                <option value="Down Payment">Down Payment</option>
+                                <option value="Lunas">Lunas</option>
+                            </select>
+                        </div>
+                        <hr color="black">
+                        <div class="col">
+                            <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="payment_method_ota" name="payment_method_ota" disabled>
+                                <p>Pay At OTA</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <select class="form-select w-100 mb-0" id="payment_category_ota" name="payment_category_ota" aria-label="payment_category_ota" disabled>
+                                    <option selected value="">Jenis OTA</option>
+                                    @foreach($paymentOTA as $OTA)
+                                    <option value="{{ $OTA->id }}">{{ $OTA->payment_method }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <input type="text" class="form-control " id="payment_ota_value"
+                                    name="payment_ota_value" placeholder="Nominal Bayar" aria-describedby="emailHelp" disabled>
+                            </div>
+                        </div>
+                        <hr color="black">
+                        <div class="col">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="payment_method_cash" name="payment_method_cash" disabled>
+                                <p>Cash</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <input type="text" name="payment_cash_value" class="form-control "
+                                    id="payment_cash_value" placeholder="Nominal Bayar" aria-describedby="emailHelp" disabled>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-4">
+                                <input type="text" name="change" id="change" class="form-control " id="email"
+                                    placeholder="Nominal Kembali" aria-describedby="emailHelp" disabled>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="payment_method_non_cash" name="payment_method_non_cash" disabled>
+                                <p>Non Cash</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                        <div class="mb-2">
+                            <select class="form-select w-100 mb-0" id="paymentMethod" name="paymentMethod" aria-label="paymentMethod" disabled>
+                                <option selected value="">Metode Pembayaran</option>
+                                <option value="Card">Card</option>
+                                <option value="Qris">QRIS</option>
+                                <option value="Transfer">Transfer</option>
+                            </select>
+                        </div>
+                        </div>
+
+                        <!-- Form select untuk transfer -->
+                        <div class="col paymentOption" id="transferOptions" style="display: none;">
+                            <select class="form-select w-100 mb-2" name="payment_category_transfer" aria-label="transferBank" style="margin-bottom: 10px;">
+                                <option selected value="">Pilih Bank Transfer</option>
+                                    @foreach($paymentTransfer as $transfer)
+                                        <option value="{{ $transfer->id }}">{{ $transfer->payment_method }}</option>
+                                    @endforeach
+                            </select>
+                            <input type="text" id="payment_transfer_value" name="payment_transfer_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                            <input type="text" name="payment_method_transfer_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Transfer">
+                        </div>
+
+                        <!-- Form select untuk card -->
+                        <div class="col paymentOption" id="cardOptions" style="display: none;">
+                            <select class="form-select w-100 mb-2" name="payment_category_card" aria-label="cardType">
+                                <option selected value="">Pilih Jenis Kartu</option>
+                                @foreach($paymentCard as $card)
+                                    <option value="{{ $card->id }}">{{ $card->payment_method }}</option>
+                                @endforeach
+                            </select>
+                            <input type="text" id="payment_card_value" name="payment_card_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                            <input type="text" name="payment_method_card_number" class="form-control mb-2" placeholder="Nomor Kartu">
+                        </div>
+
+                        <!-- Form select untuk qris -->
+                        <div class="col paymentOption" id="qrisOptions" style="display: none;">
+                            <select class="form-select w-100 mb-2" name="payment_category_qris" aria-label="qrisType">
+                                <option selected value="">Pilih Jenis QRIS</option>
+                                    @foreach($paymentQris as $qris)
+                                        <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
+                                    @endforeach
+                            </select>
+                            <input type="text" id="payment_qris_value" name="payment_qris_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                            <input type="text" name="payment_method_qris_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi QRIS">
+                        </div>
+                        @endif
 
                         <!-- End of Form -->
 
@@ -685,12 +1114,36 @@
 <script>
     $(document).ready(function() {
         const customerCheck = $('#customer_check');
+        $('#customer_title').attr('required', 'required');
+        $('#customer_name').attr('required', 'required');
+        $('#customer_identity_type').attr('required', 'required');
+        $('#customer_identity_photo').attr('required', 'required');
+        $('#startWebcamTamuButton').attr('required', 'required');
+        $('#customer_address').attr('required', 'required');
+        $('#customer_phone').attr('required', 'required');
+        $('#customer_email').attr('required', 'required');
         customerCheck.on('change', function() {
                 // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
                 if (this.checked) {
-                    $('#customer_id').removeAttr('disabled');
+                    $('#customer_id').removeAttr('disabled').attr('required', 'required');
+                    $('#customer_title').prop('disabled', true).removeAttr('required');
+                    $('#customer_name').prop('disabled', true).removeAttr('required');
+                    $('#customer_identity_type').prop('disabled', true).removeAttr('required');
+                    $('#customer_identity_photo').prop('disabled', true).removeAttr('required');
+                    $('#startWebcamTamuButton').prop('disabled', true).removeAttr('required');
+                    $('#customer_address').prop('disabled', true).removeAttr('required');
+                    $('#customer_phone').prop('disabled', true).removeAttr('required');
+                    $('#customer_email').prop('disabled', true).removeAttr('required');
                 } else {
-                    $('#customer_id').prop('disabled', true);
+                    $('#customer_id').prop('disabled', true).removeAttr('required');
+                    $('#customer_title').removeAttr('disabled').attr('required', 'required');
+                    $('#customer_name').removeAttr('disabled').attr('required', 'required');
+                    $('#customer_identity_type').removeAttr('disabled').attr('required', 'required');
+                    $('#customer_identity_photo').removeAttr('disabled').attr('required', 'required');
+                    $('#startWebcamTamuButton').removeAttr('disabled').attr('required', 'required');
+                    $('#customer_address').removeAttr('disabled').attr('required', 'required');
+                    $('#customer_phone').removeAttr('disabled').attr('required', 'required');
+                    $('#customer_email').removeAttr('disabled').attr('required', 'required');
                 }
         });
     });
@@ -1063,7 +1516,7 @@ $(document).ready(function() {
             const webcamFeed = document.getElementById('webcamFeedTamu');
             const photoForm = document.getElementById('photoFormTamu');
             const webcamCaptureInput = document.getElementById('webcamCaptureTamu');
-
+            
             let stream = null;
 
             startWebcamButton.addEventListener('click', function() {

@@ -492,6 +492,13 @@ class ReservationService
         }
     }
 
+    public function deleteAdditional($id)
+    {
+        $additionalTmp = PaymentAmenitiesTmp::find($id)->delete();
+
+        return $additionalTmp;
+    }
+
     private function uploadPhotoCustomer($base64Image, $destinationPath)
     {
         $imageData = base64_decode($base64Image);
