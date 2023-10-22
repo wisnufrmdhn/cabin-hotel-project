@@ -19,4 +19,9 @@ class Payment extends Model
     {
         return $this->hasOne(Reservation::class);
     }
+
+    public function downPayment()
+    {
+        return $this->hasOne(DownPayment::class);
+    }
 }

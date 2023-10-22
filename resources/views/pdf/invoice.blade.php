@@ -1,91 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> <!-- Include Bootstrap CSS -->
     <title>Invoice</title>
     <style>
-        /* Define your custom CSS styles here */
         body {
             font-family: Arial, sans-serif;
         }
-        .invoice-header {
-            text-align: center;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
         }
-        .invoice-title {
-            font-size: 24px;
-            font-weight: bold;
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 70px;
+        }
+        .header p {
+            font-size: 14px;
+        }
+        .logo {
+            max-width: 150px;
+            float: right; /* Add this line to float the image to the right */
+        }
+        .invoice-info {
+            text-align: left;
+            margin-top: 10px;
+        }
+        .invoice-info p {
+            font-size: 14px; /* Adjust the font size as needed */
         }
         .invoice-details {
             margin-top: 20px;
-            text-align: left;
         }
-        .invoice-items {
-            margin-top: 20px;
-        }
-        table {
+        .invoice-details table {
             width: 100%;
             border-collapse: collapse;
         }
-        th, td {
-            border: 1px solid #ddd;
+        .invoice-details th, .invoice-details td {
+            border: 1px solid #ccc;
             padding: 8px;
             text-align: left;
         }
-        th {
-            background-color: #f2f2f2;
+        .footer {
+            text-align: left;
+            font-size: 14px;
         }
-        .invoice-summary {
+        .invoice-sign {
+            text-align: center;
             margin-top: 20px;
-            text-align: right;
         }
+        .invoice-sign-row {
+            margin-top: 20px;
+            margin-bottom: 100px;
+        }
+        .invoice-sign-column {
+            width: 45%; /* Use col-xs-4 equivalent width for each column */
+            display: inline-block;
+        }
+        .invoice-sign-column p {
+            margin: 0;
+            font-size: 14px;
+        }
+        
     </style>
 </head>
 <body>
-    <div class="invoice-header">
-        <div class="invoice-title">
-            Invoice
+    <div class="container">
+        <div class="header">
+            <img src="https://thecabinhoteljogja.com/logo.png" alt="Company Logo" class="logo">
+            <p>Yogyakarta, {{ isset($invoice->created_at) ? date('d/m/Y', strtotime($invoice->created_at)) : '' }}</p>
+        </div>
+        <div class="invoice-info">
+            <p>No Nota: <b>{{ $invoice->payment->payment_code ?? '' }}</b></p>
+            <p>Nama: <b>{{ $invoice->customer->customer_title ?? '' }} {{ $invoice->customer->customer_name ?? '' }}</b></p>
+            <p>Check in: <b>{{ $invoice->reservation_start_date ?? '' }}</b></p>
+            <p>Check out: <b>{{ $invoice->reservation_end_date ?? '' }}</b></p>
         </div>
         <div class="invoice-details">
-            <p>No Nota: {{ $invoice->payment->payment_code ?? '' }}</p>
-            <p>Nama: {{ $invoice->customer->customer_name ?? '' }}</p>
-            <p>Check in: {{ $invoice->reservation_start_date ?? '' }}</p>
-            <p>Check out: {{ $invoice->reservation_end_date ?? '' }}</p>
-        </div>
-    </div>
-    <!-- <div class="invoice-items">
-        <table>
-            <thead>
+            <table>
                 <tr>
                     <th>No Cabin</th>
                     <th>Jenis Cabin</th>
                     <th>Jml Org</th>
                     <th>Harga/Cabin</th>
-                    <th>Diskon</th>
-                    <th>Dp&Extra</th>
-                    <th>Subtotal</th>
                 </tr>
-            </thead>
-            <tbody>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="invoice-summary">
-        <p>Total : </p>
-    </div> -->
-    <div class="invoice-details">
+                @foreach($hotelRoomReserved as $rooms)
+                <tr>
+                    <td>{{ $rooms->hotelRoomNumber->room_number ?? '' }}</td>
+                    <td>{{ $rooms->hotelRoomNumber->hotelRoom->room_type ?? '' }}</td>
+                    <td>{{ $rooms->total_guest ?? '' }}</td>
+                    <td> Rp. {{ $rooms->price ?? '' }}</td>
+                </tr>
+                @endforeach
+                <tr>
+                    <td colspan="3"><b>Subtotal</b></td>
+                    <td> Rp. {{ $subtotal ?? 0 }} </td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>Diskon</b></td>
+                    <td> Rp. {{ $invoice->payment->discount ?? 0 }} </td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>DP & Extra</b></td>
+                    <td> Rp. {{ $invoice->payment->downPayment->down_payment ?? 0 }} </td>
+                </tr>
+                <tr>
+                    <td colspan="3"><b>Total</b></td>
+                    <td> Rp. {{ $subtotal - $invoice->payment->discount - $invoice->payment->downPayment->down_payment ?? 0 }} </td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer">
             <p>Pernyataan saya menyatakan</p>
             <p>1. Tidak membawa atau mengkonsumsi narkoba dan turunannya</p>
-            <p>2. Tidak merokok di dalam kamar, jika ketahuan merokok bersedia membayar denda sebesar Rp.50.000</p>
+            <p>2. Tidak merokok di dalam kamar, jika ketahuan merokok bersedia membayar denda sebesar Rp.500.000</p>
+        </div>
+    </br></br>
+        <div class="invoice-sign">
+            <div class="invoice-sign-row">
+                <div class="invoice-sign-column">
+                    <p>Kasir</p>
+                </div>
+            
+                <div class="invoice-sign-column">
+                    <p>Tamu</p>
+                </div>
+            </div>
+            <div class="invoice-sign-row">
+                <div class="invoice-sign-column">
+                    <p><b>{{ $cashier ?? '' }}</b></p>
+                    <hr width="70%">
+                </div>
+                
+                <div class="invoice-sign-column">
+                    <p><b>{{ $invoice->customer->customer_title ?? '' }} {{ $invoice->customer->customer_name ?? '' }}</b></p>
+                    <hr width="70%">
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
