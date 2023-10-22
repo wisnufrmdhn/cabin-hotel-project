@@ -44,7 +44,7 @@ class ReservationService
             $customerId = $customerTmp->customer_tmp_id;
         }else{
             $storeCustomer = Customer::create([
-                'hotel_branch_id'             => $customerTmp->$picHotelBranch->hotel_branch_id,
+                'hotel_branch_id'             => $picHotelBranch->hotel_branch_id,
                 'customer_title'              => $customerTmp->customer_title,
                 'customer_identity_type'      => $customerTmp->customer_identity_type,
                 'customer_name'               => $customerTmp->customer_name,
@@ -94,7 +94,7 @@ class ReservationService
         $request['payment_code']  = 'INV-'.$branch->hotel_code.'-'.$today.'-'.$reservationCount;
 
         $storePayment = Payment::create([
-            'hotel_branch_id'       => $customerTmp->$picHotelBranch->hotel_branch_id,
+            'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
             'discount'              => $request['discount'],
             'total_price'           => $totalPrice,
             'total_price_amenities' => $amenitiesTotalPrice,
@@ -106,7 +106,7 @@ class ReservationService
         if($request['payment_category'] == 'Down Payment')
         {
             $storeDownPayment = DownPayment::create([
-                'hotel_branch_id'       => $customerTmp->$picHotelBranch->hotel_branch_id,
+                'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
                 'payment_id'            => $storePayment->id,
                 'customer_id'           => $customerId,
                 'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
@@ -186,7 +186,7 @@ class ReservationService
                     $request['breakfast_status'] = $payAmenities->breakfast_status;
                 }else{
                     $storePaymentAmenities = PaymentAmenities::create([
-                        'hotel_branch_id'       => $customerTmp->$picHotelBranch->hotel_branch_id,
+                        'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
                         'payment_id'            => $storePayment->id,
                         'amenities_id'          => $payAmenities->amenities_id,
                         'amount'                => $payAmenities->amount,
