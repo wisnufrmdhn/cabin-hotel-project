@@ -9,9 +9,9 @@ elif [ "$1" == "migrate" ]; then
     docker exec -it laravel-app php artisan migrate --seed
 elif [ "$1" == "clear" ]; then
     # Execute the clear commands
-    docker exec -it $container_name php artisan route:clear
-    docker exec -it $container_name php artisan config:clear
-    docker exec -it $container_name php artisan cache:clear
+    docker exec -it laravel-app php artisan route:clear
+    docker exec -it laravel-app php artisan config:clear
+    docker exec -it laravel-app php artisan cache:clear
 else
     echo "Invalid command. Usage: $0 [migrate|migrate:fresh|clear]"
     exit 1
