@@ -399,6 +399,7 @@
                         <div class="col">
                             <select class="form-select w-100 mt-0 " id="reservation_day_category"
                                 name="reservation_day_category" aria-label="reservation_day_category">
+                                <option selected value>Pilih Kategori Hari</option>
                                 <option value="Weekday">Weekday</option>
                                 <option value="Weekend">Weekend</option>
                                 <option value="Weekend">Middle Day</option>
@@ -477,6 +478,7 @@
                         <div class="col">
                             <select class="form-select w-100 mt-0 " id="reservation_day_category"
                                 name="reservation_day_category" aria-label="reservation_day_category" disabled>
+                                <option selected value>Pilih Kategori Hari</option>
                                 <option value="Weekday">Weekday</option>
                                 <option value="Weekend">Weekend</option>
                                 <option value="Weekend">Middle Day</option>
@@ -522,7 +524,7 @@
                         </br>
                         <div class="col">
                             <div class="mb-2">
-                                <button class="btn w-100 btn-secondary" type="submit">Tambah Kamar</button>
+                                <button class="btn w-100 btn-secondary" type="button submit">Tambah Kamar</button>
                             </div>
                         </div>
                     </form>
@@ -707,9 +709,9 @@
                         <div class="col">
                             <label for="discount">Diskon</label>
                             <div class="mb-2">
-                                <select class="form-select w-100 mb-2 " id="discount_type" name="discount_type"
+                                <select class="form-select w-100 mb-2" id="discount_type" name="discount_type"
                                     aria-label="discount_type">
-                                    <option selected value="">Jenis Diskon</option>
+                                    <option selected value>Pilih Jenis Diskon</option>
                                     <option value="Nominal">Nominal</option>
                                     <option value="Persen">Persen (%)</option>
                             </div>
@@ -757,7 +759,7 @@
                         <div class="col">
                             <div class="mb-2">
                                 <select class="form-select w-100 mb-0" id="payment_category_ota" name="payment_category_ota" aria-label="payment_category_ota">
-                                    <option selected value="">Jenis OTA</option>
+                                    <option selected>Pilih Jenis OTA</option>
                                     @foreach($paymentOTA as $OTA)
                                     <option value="{{ $OTA->id }}">{{ $OTA->payment_method }}</option>
                                     @endforeach
@@ -822,7 +824,7 @@
                         <!-- Form select untuk card -->
                         <div class="col paymentOption" id="cardOptions" style="display: none;">
                             <select class="form-select w-100 mb-2" name="payment_category_card" aria-label="cardType">
-                                <option selected value="">Pilih Jenis Kartu</option>
+                                <option selected value>Pilih Jenis Kartu</option>
                                 @foreach($paymentCard as $card)
                                     <option value="{{ $card->id }}">{{ $card->payment_method }}</option>
                                 @endforeach
@@ -834,7 +836,7 @@
                         <!-- Form select untuk qris -->
                         <div class="col paymentOption" id="qrisOptions" style="display: none;">
                             <select class="form-select w-100 mb-2" name="payment_category_qris" aria-label="qrisType">
-                                <option selected value="">Pilih Jenis QRIS</option>
+                                <option selected value>Pilih Jenis QRIS</option>
                                     @foreach($paymentQris as $qris)
                                         <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
                                     @endforeach
@@ -848,7 +850,7 @@
                             <div class="mb-2">
                                 <select class="form-select w-100 mb-2 " id="discount_type" name="discount_type"
                                     aria-label="discount_type" disabled>
-                                    <option selected value="">Jenis Diskon</option>
+                                    <option selected value>Jenis Diskon</option>
                                     <option value="Nominal">Nominal</option>
                                     <option value="Persen">Persen (%)</option>
                             </div>
@@ -896,7 +898,7 @@
                         <div class="col">
                             <div class="mb-2">
                                 <select class="form-select w-100 mb-0" id="payment_category_ota" name="payment_category_ota" aria-label="payment_category_ota" disabled>
-                                    <option selected value="">Jenis OTA</option>
+                                    <option selected value>Pilih Jenis OTA</option>
                                     @foreach($paymentOTA as $OTA)
                                     <option value="{{ $OTA->id }}">{{ $OTA->payment_method }}</option>
                                     @endforeach
@@ -961,7 +963,7 @@
                         <!-- Form select untuk card -->
                         <div class="col paymentOption" id="cardOptions" style="display: none;">
                             <select class="form-select w-100 mb-2" name="payment_category_card" aria-label="cardType">
-                                <option selected value="">Pilih Jenis Kartu</option>
+                                <option selected value>Pilih Jenis Kartu</option>
                                 @foreach($paymentCard as $card)
                                     <option value="{{ $card->id }}">{{ $card->payment_method }}</option>
                                 @endforeach
@@ -973,7 +975,7 @@
                         <!-- Form select untuk qris -->
                         <div class="col paymentOption" id="qrisOptions" style="display: none;">
                             <select class="form-select w-100 mb-2" name="payment_category_qris" aria-label="qrisType">
-                                <option selected value="">Pilih Jenis QRIS</option>
+                                <option selected value>Pilih Jenis QRIS</option>
                                     @foreach($paymentQris as $qris)
                                         <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
                                     @endforeach
@@ -1092,10 +1094,12 @@
                                         </div>
                                     @endif
 
+                                    @if($customerTmp && $reservationTmp)
                                     <div class="col-lg-12 col-sm-12">
                                         </br></br>
                                         <button class="btn w-100 btn-default btn-secondary" type="submit">Simpan</button>
                                     </div>
+                                    @endif
                                     </form>
                                 </div>
                                 <!-- End of Form -->
@@ -1111,6 +1115,11 @@
 @endsection
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+        function zoom() {
+            document.body.style.zoom = "75%" 
+        }
+</script>
 <script>
     $(document).ready(function() {
         const customerCheck = $('#customer_check');
@@ -1268,6 +1277,11 @@
 </script>
 <script>
         $(document).ready(function() {
+            $('#reservation_start_date').prop('required', true);
+            $('#reservation_day_category').attr('required', 'required');
+            $('#hotel_room_id').attr('required', 'required');
+            $('#hotel_room_number_id').attr('required', 'required');
+            $('#total_guest').attr('required', 'required');
             $('#daily').on('change', function() {
                 // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
                 if (this.checked) {
@@ -1275,11 +1289,13 @@
                     $('#mixed').prop('disabled', true);
                     $('#mixed_time_day').prop('disabled', true);
                     $('#mixed_time_hour').prop('disabled', true);
+                    $('#reservation_end_date_daily').attr('required', 'required');
                 } else {
                     $('#result_daily_reservation_end_date, label[for="result_daily_reservation_end_date"]').hide();
                     $('#mixed').prop('disabled', false);
                     $('#mixed_time_day').prop('disabled', false);
                     $('#mixed_time_hour').prop('disabled', false);
+                    $('#reservation_end_date_daily').removeAttr('required');
                 }
             });
 
@@ -1316,10 +1332,14 @@
                     $('#result_mix_reservation').show();
                     $('#daily').prop('disabled', true);
                     $('#reservation_end_date_daily').prop('disabled', true);
+                    $('#mixed_time_day').attr('required', 'required');
+                    $('#mixed_time_hour').attr('required', 'required');
                 } else {
                     $('#result_mix_reservation').hide();
                     $('#daily').prop('disabled', false);
                     $('#reservation_end_date_daily').prop('disabled', false);
+                    $('#mixed_time_day').removeAttr('required');
+                    $('#mixed_time_hour').removeAttr('required');
                 }
             });
 

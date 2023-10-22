@@ -68,7 +68,7 @@
 
 </head>
 
-<body>
+<body onload="zoom()">
 
         <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
         

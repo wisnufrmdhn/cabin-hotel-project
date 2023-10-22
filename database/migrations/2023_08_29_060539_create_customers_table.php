@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->integer('hotel_branch_id');
             $table->enum('customer_title', ['Mr', 'Mrs']);
             $table->enum('customer_identity_type', ['KTP', 'SIM', 'Lainnya']);
             $table->string('customer_name');

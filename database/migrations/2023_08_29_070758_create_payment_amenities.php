@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('payment_amenities', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('hotel_branch_id')->constrained('hotel_branches');
             $table->foreignId('payment_id')->constrained('payments');
             $table->foreignId('amenities_id')->constrained('amenities');
             $table->integer('amount');

@@ -73,7 +73,7 @@ class ReservationController extends Controller
 
                 $totalPrice = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationTmp', 'hotelRoomNumber.hotelRoom')->sum('price');
 
-                $amenitiesTmp = PaymentAmenitiesTmp::where('hotel_branch_id', $pic->hotel_branch_id)->with('amenities')->get();
+                $amenitiesTmp = PaymentAmenitiesTmp::where('hotel_branch_id', $pic->hotel_branch_id)->whereNot('amount', 0)->with('amenities')->get();
 
                 if($amenitiesTmp){
                     $amenitiesTotalPrice = PaymentAmenitiesTmp::where('hotel_branch_id', $pic->hotel_branch_id)->with('amenities')->sum('total_price');
@@ -98,6 +98,22 @@ class ReservationController extends Controller
 
     public function storeCustomer(Request $request)
     {
+        if($request['customer_check'] == 'on'){
+            $request->validate([
+                'customer_id' => 'required',
+            ]);
+        }else{
+            $request->validate([
+                'customer_name' => 'required',
+                'customer_title' => 'required',
+                'customer_identity_type' => 'required',
+                'customer_identity_photo' => 'required',
+                'customer_email' => 'required',
+                'customer_address' => 'required',
+                'customer_phone' => 'required',
+            ]);
+        }
+
         try{    
             $store = $this->service->storeCustomer($request);
         }catch(\Throwable $th){
