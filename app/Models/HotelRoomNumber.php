@@ -20,6 +20,11 @@ class HotelRoomNumber extends Model
         return $this->hasOne(HotelRoomReservedTmp::class);
     }
 
+    public function hotelRoomReserved()
+    {
+        return $this->hasOne(HotelRoomReserved::class);
+    }
+
     public function hotelRoom()
     {
         return $this->belongsTo(HotelRoom::class);
