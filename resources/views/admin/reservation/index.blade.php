@@ -294,6 +294,7 @@
                                 <div class="mb-2">
                                     <label for="email">Hari</label>
                                     <select class="form-select w-100 mb-0" id="mixed_time_day" name="mixed_day" aria-label="State select example" disabled>
+                                        <option selected value>Pilih Jumlah Hari</option>
                                         @for ($i = 0; $i <= 30; $i++)
                                             <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
@@ -305,6 +306,7 @@
                                     <label for="email">Jam</label>
                                     <select class="form-select w-100 mb-0 " id="mixed_time_hour" name="mixed_hour"
                                         aria-label="State select example" disabled>
+                                        <option selected value>Pilih Jumlah Hari</option>
                                         @for ($i = 0; $i <= 24; $i++)
                                             <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
@@ -371,6 +373,7 @@
                                     <label for="email">Hari</label>
                                     <select class="form-select w-100 mb-0 " id="mixed_time_day" name="mixed_day"
                                         aria-label="State select example">
+                                        <option selected value>Pilih Jumlah Hari</option>
                                         @for ($i = 0; $i <= 30; $i++)
                                             <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
@@ -382,6 +385,7 @@
                                     <label for="email">Jam</label>
                                     <select class="form-select w-100 mb-0 " id="mixed_time_hour" name="mixed_hour"
                                         aria-label="State select example">
+                                        <option selected value>Pilih Jumlah Jam</option>
                                         @for ($i = 0; $i <= 24; $i++)
                                             <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
@@ -450,6 +454,7 @@
                                     <label for="email">Hari</label>
                                     <select class="form-select w-100 mb-0 " id="mixed_time_day" name="mixed_day"
                                         aria-label="State select example" disabled>
+                                        <option selected value>Pilih Jumlah Hari</option>
                                         @for ($i = 0; $i <= 30; $i++)
                                             <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
@@ -461,6 +466,7 @@
                                     <label for="email">Jam</label>
                                     <select class="form-select w-100 mb-0 " id="mixed_time_hour" name="mixed_hour"
                                         aria-label="State select example" disabled>
+                                        <option selected value>Pilih Jumlah Hari</option>
                                         @for ($i = 0; $i <= 24; $i++)
                                             <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
@@ -1302,6 +1308,8 @@
 <script>
         $(document).ready(function() {
             $('#reservation_start_date').attr('required', 'required');
+            $('#daily').attr('required', 'required');
+            $('#mixed').attr('required', 'required');
             $('#reservation_day_category').attr('required', 'required');
             $('#hotel_room_id').attr('required', 'required');
             $('#hotel_room_number_id').attr('required', 'required');
@@ -1310,13 +1318,13 @@
                 // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
                 if (this.checked) {
                     $('#result_daily_reservation_end_date, label[for="result_daily_reservation_end_date"]').show();
-                    $('#mixed').prop('disabled', true);
+                    $('#mixed').prop('disabled', true).removeAttr('required');
                     $('#mixed_time_day').prop('disabled', true);
                     $('#mixed_time_hour').prop('disabled', true);
                     $('#reservation_end_date_daily').attr('required', 'required');
                 } else {
                     $('#result_daily_reservation_end_date, label[for="result_daily_reservation_end_date"]').hide();
-                    $('#mixed').prop('disabled', false);
+                    $('#mixed').prop('disabled', false).attr('required', 'required');;
                     $('#mixed_time_day').prop('disabled', false);
                     $('#mixed_time_hour').prop('disabled', false);
                     $('#reservation_end_date_daily').removeAttr('required');
@@ -1354,13 +1362,13 @@
                 // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
                 if (this.checked) {
                     $('#result_mix_reservation').show();
-                    $('#daily').prop('disabled', true);
+                    $('#daily').prop('disabled', true).removeAttr('required');
                     $('#reservation_end_date_daily').prop('disabled', true);
                     $('#mixed_time_day').attr('required', 'required');
                     $('#mixed_time_hour').attr('required', 'required');
                 } else {
                     $('#result_mix_reservation').hide();
-                    $('#daily').prop('disabled', false);
+                    $('#daily').prop('disabled', false).attr('required', 'required');
                     $('#reservation_end_date_daily').prop('disabled', false);
                     $('#mixed_time_day').removeAttr('required');
                     $('#mixed_time_hour').removeAttr('required');
