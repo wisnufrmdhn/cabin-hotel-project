@@ -12,6 +12,7 @@ elif [ "$1" == "clear" ]; then
     docker exec -it laravel-app php artisan route:clear
     docker exec -it laravel-app php artisan config:clear
     docker exec -it laravel-app php artisan cache:clear
+    docker exec -it laravel-app php compose dump-autoload
 else
     echo "Invalid command. Usage: $0 [migrate|migrate:fresh|clear]"
     exit 1
