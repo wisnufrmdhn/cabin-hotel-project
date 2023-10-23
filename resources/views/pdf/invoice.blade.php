@@ -108,7 +108,7 @@
                 </tr>
                 <tr>
                     <td colspan="3"><b>Total</b></td>
-                    <td> Rp. {{ $subtotal - $invoice->payment->discount - $invoice->payment->downPayment->down_payment ?? 0 }} </td>
+                    <td> Rp. {{ $subtotal ?? 0 - $invoice->payment->discount ?? 0 - $invoice->payment->downPayment->down_payment ?? 0 }} </td>
                 </tr>
             </table>
         </div>
