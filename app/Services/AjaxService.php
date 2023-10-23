@@ -21,7 +21,7 @@ class AjaxService
         $roomReservedId = [];
 
         if($reservationTmp){
-            $hotelRoomReservedTmp = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationTmp', 'hotelRoomNumber.hotelRoom')->get();
+            $hotelRoomReservedTmp = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->get();
 
             foreach($hotelRoomReservedTmp as $roomReserved){
                 $roomReservedId[] = $roomReserved->hotel_room_number_id;
