@@ -123,7 +123,7 @@
                         </div>
                         <div class="col">
                             <div class="mb-2">
-                                <input type="text" name="customer_email" class="form-control"
+                                <input type="email" name="customer_email" class="form-control"
                                     id="customer_email" placeholder="Email" aria-describedby="customer_email" disabled>
                             </div>
                         </div>
@@ -227,7 +227,7 @@
                         </div>
                         <div class="col">
                             <div class="mb-2">
-                                <input type="text" name="customer_email" class="form-control "
+                                <input type="email" name="customer_email" class="form-control "
                                     id="customer_email" placeholder="Email" aria-describedby="customer_email">
                             </div>
                         </div>
