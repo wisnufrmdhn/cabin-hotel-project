@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ReservationTmp;
+use App\Models\HotelRoom;
 use App\Models\HotelRoomNumber;
 use App\Models\HotelRoomReservedTmp;
 use App\Models\PicHotelBranch;
