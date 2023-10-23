@@ -409,6 +409,7 @@ class ReservationService
         }else{
             if($breakfastTmp == null){
                 $paymentAmenitiesTmp = PaymentAmenitiesTmp::create([
+                    'customer_tmp_id'  => $customerTmp->id,
                     'hotel_branch_id'  => $picHotelBranch->hotel_branch_id,
                     'amenities_id'     => $breakfast->id,
                     'amount'           => 0,

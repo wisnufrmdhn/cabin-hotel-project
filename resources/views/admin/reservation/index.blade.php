@@ -586,7 +586,8 @@
                             <div class="mb-2">
                                 <label for="email">Breakfast</label>
                                     <select class="form-select w-100 mb-0" id="breakfast" name="breakfast" aria-label="State select example">
-                                    <option selected value="None">None</option>
+                                    <option selected value>Pilih Status Breakfast</option>
+                                    <option value="None">None</option>
                                     <option value="Include">Include</option>
                                     <option value="Exclude">Exclude</option>
                                 </select>
@@ -613,6 +614,7 @@
                             <div class="mb-2">
                             <label for="email">Extra Person & Extra Bed</label>
                                 <select class="form-select w-100 mb-0" id="extra_person_bed" name="extra_person_bed" aria-label="State select example">
+                                <option selected value>Pilih Extraperson / Extrabed</option>
                                 <option value="Extraperson">Extraperson</option>
                                 <option value="Extrabed">Extrabed</option>
                             </select>
@@ -621,7 +623,7 @@
                         <div class="row">
                             <div class="col-lg-3 col-sm-3">
                                 <div class="input-group mb-4">
-                                    <select class="form-select w-100 mb-0" id="total_extra_person_bed" name="total_extra_person_bed" aria-label="State select example">
+                                    <select class="form-select w-100 mb-0" id="total_extra_person_bed" name="total_extra_person_bed" aria-label="State select example" disabled>
                                         @for ($i = 1; $i <= 4; $i++)
                                             <option value="{{ $i }}">{{ $i }}</option>
                                         @endfor
@@ -631,7 +633,7 @@
                         <div class="col-lg-9 col-sm-9">
                             <div class="input-group mb-4">
                                 <span class="input-group-text" id="basic-addon1">Rp.</span>
-                                    <input type="text" name="extra_person_bed_price" class="form-control" id="extra_person_bed_price" aria-describedby="emailHelp">
+                                    <input type="text" name="extra_person_bed_price" class="form-control" id="extra_person_bed_price" aria-describedby="emailHelp" disabled>
                                 </div>
                             </div>
                         </div>
@@ -672,6 +674,7 @@
                             <div class="mb-2">
                             <label for="email">Extra Person & Extra Bed</label>
                                 <select class="form-select w-100 mb-0" id="extra_person_bed" name="extra_person_bed" aria-label="State select example" disabled>
+                                <option selected>Pilih Extraperson / Extrabed</option>
                                 <option value="Extraperson">Extraperson</option>
                                 <option value="Extrabed">Extrabed</option>
                             </select>
@@ -1236,15 +1239,37 @@
 </script>
 <script>
     $(document).ready(function() {
+        $('#breakfast').attr('required', 'required');
+        $('#extra_person_bed').attr('required', 'required');
+        
         $('#breakfast').change(function() {
             // Tampilkan form select tambahan sesuai dengan metode pembayaran yang dipilih
             if ($(this).val() === 'Exclude') {
                 $('#total_breakfast').prop('disabled', false);
-                $('#breakfast_price').prop('disabled', false);
+                $('#breakfast_price').prop('disabled', false).attr('required', 'required');
+                $('#extra_person_bed').removeAttr('required');
+            } else if( $(this).val() ==  null) {
+                $('#total_breakfast').prop('disabled', true);
+                $('#breakfast_price').prop('disabled', true).removeAttr('required');
+                $('#extra_person_bed').attr('required', 'required');
             } else {
                 $('#total_breakfast').prop('disabled', true);
                 $('#breakfast_price').prop('disabled', true);
+                $('#extra_person_bed').removeAttr('required');
             }
+        });
+
+        $('#extra_person_bed').change(function() {
+            // Tampilkan form select tambahan sesuai dengan metode pembayaran yang dipilih
+            if ($(this).val()) {
+                $('#total_extra_person_bed').prop('disabled', false);
+                $('#extra_person_bed_price').prop('disabled', false).attr('required', 'required');
+                $('#breakfast').removeAttr('required');
+            } else {
+                $('#total_extra_person_bed').prop('disabled', true);
+                $('#extra_person_bed_price').prop('disabled', true).removeAttr('required');
+                $('#breakfast').attr('required', 'required');
+            } 
         });
     });
 </script>
