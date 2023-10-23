@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('bank_name')->nullable();
             $table->integer('payment');
             $table->integer('change')->nullable();
-            $table->integer('card_number')->nullable();
+            $table->string('card_number')->nullable();
             $table->string('reference_number')->nullable();
             $table->timestamps();
         });
