@@ -31,7 +31,7 @@ class ReservationController extends Controller
         $user = Auth::user();
         $pic = PicHotelBranch::where('user_id', $user->id)->first();
         $reservationMethod = ReservationMethod::all();
-        $hotelRoomDetails = HotelRoomNumber::where('hotel_branch_id', $pic->hotel_branch_id)->get();
+        $hotelRoomDetails = HotelRoomNumber::where('hotel_branch_id', $pic->hotel_branch_id)->where('room_status_id', 3)->get();
         $roomId = [];
         
         foreach($hotelRoomDetails as $hotelRoomDetail){
