@@ -412,7 +412,7 @@ class ReservationService
                     'customer_tmp_id'  => $customerTmp->id,
                     'hotel_branch_id'  => $picHotelBranch->hotel_branch_id,
                     'amenities_id'     => $breakfast->id,
-                    'amount'           => 0,
+                    'amount'           => 1,
                     'price'            => 0,
                     'total_price'      => 0,
                     'breakfast_status' => $request['breakfast']

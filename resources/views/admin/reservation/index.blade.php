@@ -1091,9 +1091,13 @@
                                                             <tr>
                                                                 <td>{{ $amenities->amenities->amenities }}</td>
                                                                 <td>{{ $amenities->amount }}</td>
+                                                                @if($amenities->total_price > 0)
                                                                 <td>Rp.
                                                                     {{ number_format($amenities->total_price, 2, ',', '.') }}
                                                                 </td>
+                                                                @else
+                                                                <td> {{ $amenities->breakfast_status ?? '' }} </td>
+                                                                @endif
                                                             </tr>
                                                             <!-- End of Item -->
                                                         @endforeach
