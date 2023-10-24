@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\FinanceHeadOfficeController;
+use App\Http\Controllers\BookingListController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\AjaxController;
@@ -23,7 +25,7 @@ Route::get('/', function () {
     return view('login');
 })->name('login');
 
-Route::post('/loginCheck', [AuthController::class, 'loginCheck'])->name('login.post'); 
+Route::post('/loginCheck', [AuthController::class, 'loginCheck'])->name('login.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // This is admin route access
@@ -44,6 +46,12 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::group(['as' => 'finance.', 'prefix' => 'finance'], function () {
             Route::get('/', [FinanceController::class, 'index'])->name('index');
+        });
+        Route::group(['as' => 'bookinglist.', 'prefix' => 'bookinglist'], function () {
+            Route::get('/', [BookingListController::class, 'index'])->name('index');
+        });
+        Route::group(['as' => 'finance-ho.', 'prefix' => 'finance-ho'], function () {
+            Route::get('/', [FinanceHeadOfficeController::class, 'index'])->name('index');
         });
     });
     Route::get('/pdf/invoice/{invoiceId}', [PdfController::class, 'generateInvoice'])->name('pdf.invoices');
