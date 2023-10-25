@@ -24,4 +24,8 @@ class Payment extends Model
     {
         return $this->hasOne(DownPayment::class);
     }
+
+    public function paymentDetail(){
+        return $this->hasOne(PaymentDetail::class);
+    }
 }

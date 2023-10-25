@@ -14,4 +14,9 @@ class ReservationMethod extends Model
     protected $guarded = ['
         id
     '];
+
+    public function reservation()
+    {
+        return $this->hasOne(Reservation::class);
+    }
 }

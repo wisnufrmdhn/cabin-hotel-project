@@ -19,4 +19,9 @@ class Amenities extends Model
     {
         return $this->hasOne(PaymentAmenitiesTmp::class);
     }
+
+    public function paymentAmenities()
+    {
+        return $this->hasOne(PaymentAmenities::class);
+    }
 }

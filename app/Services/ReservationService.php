@@ -185,6 +185,16 @@ class ReservationService
             foreach($paymentAmenitiesTmp as $payAmenities){
                 if($payAmenities->amenities_id == 1){
                     $request['breakfast_status'] = $payAmenities->breakfast_status;
+                    if($payAmenities->total_price > 0){
+                        $storePaymentAmenities = PaymentAmenities::create([
+                            'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
+                            'payment_id'            => $storePayment->id,
+                            'amenities_id'          => $payAmenities->amenities_id,
+                            'amount'                => $payAmenities->amount,
+                            'price'                 => $payAmenities->price,
+                            'total_price'           => $payAmenities->total_price,
+                        ]);
+                    }
                 }else{
                     $storePaymentAmenities = PaymentAmenities::create([
                         'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
@@ -455,7 +465,7 @@ class ReservationService
             if($request['extra_person_bed'] == 'Extraperson'){
                 if($extraPersonTmp){
                     $extraPersonAmount = $extraPersonTmp->amount + $request['total_extra_person_bed'];
-                    $extraPersonTotalPrice = $extraPersonTmp->total_price + $extraPersonTmp->price;
+                    $extraPersonTotalPrice = $extraPersonTmp->total_price + $request['extra_person_bed_price'];
                     $paymentAmenitiesTmp = $extraPersonTmp->update([
                         'amount' => $extraPersonAmount,
                         'total_price' => $extraPersonTotalPrice,

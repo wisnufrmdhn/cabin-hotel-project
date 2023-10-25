@@ -14,4 +14,9 @@ class PaymentMethod extends Model
     protected $guarded = ['
         id
     '];
+
+    public function paymentDetail()
+    {
+        return $this->hasOne(PaymentDetail::class);
+    }
 }

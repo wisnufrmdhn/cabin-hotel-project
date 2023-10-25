@@ -15,9 +15,14 @@ class Reservation extends Model
         'id'
     ];
 
+    public function reservationMethod()
+    {
+        return $this->belongsTo(ReservationMethod::class);
+    }
+
     public function hotelRoomReserved()
     {
-        return $this->hasOne(HotelRoomReserved::class);
+        return $this->hasMany(HotelRoomReserved::class);
     }
 
     public function customer()

@@ -14,4 +14,12 @@ class PaymentDetail extends Model
     protected $guarded = ['
         id
     '];
+
+    public function payment(){
+        return $this->belongsTo(Payment::class);
+    }
+
+    public function paymentMethod(){
+        return $this->belongsTo(PaymentMethod::class);
+    }
 }

@@ -98,6 +98,22 @@
                     <td colspan="3"><b>Subtotal</b></td>
                     <td> Rp. {{ $subtotal ?? 0 }} </td>
                 </tr>
+                @if(count($paymentAmenities) > 0)
+                <tr>
+                    <td><b>No</b></td>
+                    <td><b>Additional</b></td>
+                    <td><b>Jumlah</b></td>
+                    <td><b>Total Harga</b></td>
+                </tr>
+                @endif
+                @foreach($paymentAmenities as $additionals)
+                <tr>
+                    <td>{{ $i++ }}</td>
+                    <td>{{ $additionals->amenities->amenities ?? '' }}</td>
+                    <td>{{ $additionals->amount ?? 0 }}</td>
+                    <td>Rp. {{ $additionals->total_price ?? 0 }}</td>
+                </tr>
+                @endforeach
                 <tr>
                     <td colspan="3"><b>Diskon</b></td>
                     <td> Rp. {{ $discount ?? 0 }} </td>
@@ -108,7 +124,7 @@
                 </tr>
                 <tr>
                     <td colspan="3"><b>Total</b></td>
-                    <td> Rp. {{ ($subtotal ?? 0) - $discount - ($invoice->payment->downPayment->down_payment ?? 0) }} </td>
+                    <td> Rp. {{ ($subtotal ?? 0) + $subtotalAmenities - $discount - ($invoice->payment->downPayment->down_payment ?? 0) }} </td>
                 </tr>
             </table>
         </div>
@@ -117,7 +133,6 @@
             <p>1. Tidak membawa atau mengkonsumsi narkoba dan turunannya</p>
             <p>2. Tidak merokok di dalam kamar, jika ketahuan merokok bersedia membayar denda sebesar Rp.500.000</p>
         </div>
-    </br></br>
         <div class="invoice-sign">
             <div class="invoice-sign-row">
                 <div class="invoice-sign-column">
