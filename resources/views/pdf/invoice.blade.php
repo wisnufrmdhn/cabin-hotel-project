@@ -100,7 +100,7 @@
                 </tr>
                 <tr>
                     <td colspan="3"><b>Diskon</b></td>
-                    <td> Rp. {{ $invoice->payment->discount ?? 0 }} </td>
+                    <td> Rp. {{ $discount ?? 0 }} </td>
                 </tr>
                 <tr>
                     <td colspan="3"><b>DP & Extra</b></td>
@@ -108,7 +108,7 @@
                 </tr>
                 <tr>
                     <td colspan="3"><b>Total</b></td>
-                    <td> Rp. {{ ($subtotal ?? 0) - ($invoice->payment->discount ?? 0) - ($invoice->payment->downPayment->down_payment ?? 0) }} </td>
+                    <td> Rp. {{ ($subtotal ?? 0) - $discount - ($invoice->payment->downPayment->down_payment ?? 0) }} </td>
                 </tr>
             </table>
         </div>

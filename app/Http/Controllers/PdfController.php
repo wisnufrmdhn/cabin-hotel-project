@@ -28,7 +28,14 @@ class PdfController extends Controller
         $hotelRoomReserved = HotelRoomReserved::where('reservation_id', $invoice->id)->with('hotelRoomNumber.HotelRoom')->get();
         $subtotal = HotelRoomReserved::where('reservation_id', $invoice->id)->with('hotelRoomNumber.HotelRoom')->sum('price');
         $cashier = Auth::user()->name;
-        $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'hotelRoomReserved', 'subtotal', 'cashier'));
+
+        $discount = $invoice->payment->discount ?? 0;
+
+        if($invoice->payment->discount < 100){
+            $discount = $subtotal * ($invoice->payment->discount / 100);
+        }
+
+        $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'hotelRoomReserved', 'subtotal', 'cashier', 'discount'));
 
         return $pdf->stream('invoice.pdf');
     }

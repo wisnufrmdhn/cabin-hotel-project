@@ -83,8 +83,9 @@ class ReservationService
         $request['discount'] = $request['discount'] ? (int) preg_replace("/[^0-9]/", "", $request['discount']) : 0;
 
         if($request['discount_type'] == 'Persen'){
-            $request['discount'] = $request['discount'] / 100;
-            $request['total_payment'] = $request['total_payment'] * (1 - $request['discount']);
+            $request['discount'] = $request['discount'];
+            $discountValue = $request['discount'] / 100;
+            $request['total_payment'] = $request['total_payment'] * (1 - $discountValue);
         }else if($request['discount_type'] == 'Nominal'){
             $request['discount'] = $request['discount'];
             $request['total_payment'] = $request['total_payment'] - $request['discount'];
