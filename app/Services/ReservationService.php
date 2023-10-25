@@ -360,7 +360,13 @@ class ReservationService
         }else{
             $priceHour = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('room_duration', $diff)->first();
 
-            $request['price'] = $priceHour->room_rates ?? 0;
+            if($priceHour){
+                $request['price'] = $priceHour->room_rates ?? 0;
+            }else{
+                $priceHourHandling = HotelRoomRate::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->where('hotel_room_id', $hotelRoomId)->where('room_duration', 24)->first();
+
+                $request['price'] = $priceHourHandling->room_rates ?? 0;
+            }
         }
 
         
