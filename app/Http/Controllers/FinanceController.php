@@ -28,7 +28,21 @@ class FinanceController extends Controller
 
     public function index()
     {
-        return view('admin.finance.index');
+        $user = Auth::user();
+        $pic = PicHotelBranch::where('user_id', $user->id)->first();
+        $query = Reservation::query();
+
+        $reservation = $query->where('hotel_branch_id', $pic->hotel_branch_id)->with('payment.paymentDetail.paymentMethod', 'customer', 'payment.downPayment', 'hotelRoomReserved', 'reservationMethod',)->paginate(10);
+        
+        return view('admin.finance.index', compact('reservation'));
+    }
+
+    public function getFinanceDataBranch()
+    {
+        $user = Auth::user();
+        $pic = PicHotelBranch::where('user_id', $user->id)->first();
+        
+        $reservation = Reservation::where('hotel_branch_id', $pic->hotel_branch_id)->with('payment.paymentDetail', 'customer', 'payment.downPayment', 'hotelRoomReserved')->get();
     }
 
 }
