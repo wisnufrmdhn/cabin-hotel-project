@@ -32,17 +32,17 @@ class PdfController extends Controller
         $subtotal = HotelRoomReserved::where('reservation_id', $invoice->id)->with('hotelRoomNumber.HotelRoom')->sum('price');
         $cashier = Auth::user()->name;
 
-        $discount = $invoice->payment->discount ?? 0;
-
-        if($invoice->payment->discount < 100){
-            $discount = $subtotal * ($invoice->payment->discount / 100);
-        }   
+        $discount = $invoice->payment->discount ?? 0; 
 
         $subtotalAmenities = 0;
 
         if(count($paymentAmenities) > 0){
             $subtotalAmenities = PaymentAmenities::where('payment_id', $invoice->payment->id)->with('amenities')->sum('total_price') ?? 0;
         }
+
+        if($invoice->payment->discount < 100){
+            $discount = ($subtotal + $subtotalAmenities) * ($invoice->payment->discount / 100);
+        }  
 
         $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'hotelRoomReserved', 'subtotal', 'cashier', 'discount', 'paymentAmenities', 'subtotalAmenities', 'i'));
 
