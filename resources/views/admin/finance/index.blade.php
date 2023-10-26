@@ -191,13 +191,13 @@
         <div class="table-responsive">
             <table style="text-align: center" class="table table-hover table-bordered">
                 <thead style="vertical-align: middle">
-                    <tr>
+                <tr>
                         <th rowspan="2" class="border-gray-200">ID Bill</th>
                         <th rowspan="2" class="border-gray-200">Status</th>
                         <th rowspan="2" class="border-gray-200">Nama</th>
                         <th rowspan="2" class="border-gray-200">Type Tamu</th>
-                        <th class="border-gray-200">Metode <br>Pembayaran</th>
-                        <th rowspan="2" class="border-gray-200">Nominal</th>
+                        <th colspan="4" class="border-gray-200">Metode <br>Pembayaran</th>
+                        <th rowspan="2" class="border-gray-200">Harga <br>Total</th>
                         <th rowspan="2" class="border-gray-200">No <br>Kamar</th>
                         <th rowspan="2" class="border-gray-200">Type</th>
                         {{-- <th colspan="2" class="border-gray-200">CheckIn</th>
@@ -205,27 +205,78 @@
                         <th rowspan="2" class="border-gray-200">Durasi</th>
                         <th colspan="4" class="border-gray-200">Additional</th> --}}
                     </tr>
-                    
+                    <tr>
+                        <th>DP</th>
+                        <th>Nominal</th>
+                        <th>Lunas</th>
+                        <th>Nominal</th>
+                        {{-- <th>Tanggal</th>
+                        <th>Jam</th>
+                        <th>Tanggal</th>
+                        <th>Jam</th>
+                        <th>Breakfast</th>
+                        <th>Harga</th>
+                        <th>Extra-Bed</th>
+                        <th>Harga</th> --}}
+                    </tr>
                 </thead>
                 <tbody>
                     <!-- Item -->
-                    @foreach($reservation as $reservationData)
                     <tr>
                         {{-- <td><a
                                 href="#" data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
                         </td> --}}
                         <td><span data-bs-toggle="modal"data-bs-target="#modal-detail"
-                                class="fw-normal">{{ $reservationData->payment->payment_code ?? '' }}</span></td>
-                        <td><span class="fw-bold text-warning">{{ $reservationData->status ?? '' }}</span></td>
-                        <td><span class="fw-normal">{{ $reservationData->customer->customer_name ?? '' }}</span></td>
-                        <td><span class="fw-normal">{{ $reservationData->reservationMethod->reservation_method ?? '' }}</span></td>
-                        <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
-                        <td><span class="fw-normal">{{ $reservationData->payment->total_price ?? '' }}</span></td>
-                        <td><span class="fw-normal">{{ $reservationData->payment->total_payment ?? '' }}</span></td>
+                                class="fw-normal">Nota_00001223</span></td>
+                        <td><span class="fw-bold text-warning">Due</span></td>
+                        <td><span class="fw-normal">Anang</span></td>
+                        <td><span class="fw-normal">Reservation Guest</span></td>
+                        <td><span class="fw-normal">Cash</span></td>
+                        <td><span class="fw-bold">Rp 300.000</span></td>
+                        <td><span class="fw-normal">Non Cash</span></td>
                         <td><span class="fw-bold">Rp 200.000</span></td>
-                        
+                        <td><span class="fw-bold">Rp 500.000</span></td>
+                        <td>102</td>
+                        <td>Deluxe</td>
                     </tr>
-                    @endforeach
+                    <!-- Item -->
+                    <!-- Item -->
+                    <tr>
+                        {{-- <td><a
+                                href="#"data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
+                        </td> --}}
+                        <td><span class="fw-normal">Nota_00001223</span></td>
+                        <td><span class="fw-bold text-warning">Due</span></td>
+                        <td><span class="fw-normal">Anang</span></td>
+                        <td><span class="fw-normal">Reservation Guest</span></td>
+                        <td><span class="fw-normal">-</span></td>
+                        <td><span class="fw-bold">-</span></td>
+                        <td><span class="fw-normal">Non Cash</span></td>
+                        <td><span class="fw-bold">Rp 500.000</span></td>
+                        <td><span class="fw-bold">Rp 500.000</span></td>
+                        <td>102</td>
+                        <td>Deluxe</td>
+                    </tr>
+                    <!-- Item -->
+                    <!-- Item -->
+                    <tr>
+                        {{-- <td><a
+                                href="#"data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
+                        </td> --}}
+                        <td><span class="fw-normal">Nota_00001223</span></td>
+                        <td><span class="fw-bold text-warning">Due</span></td>
+                        <td><span class="fw-normal">Anang</span></td>
+                        <td><span class="fw-normal">Reservation Guest</span></td>
+                        <td><span class="fw-normal">Cash</span></td>
+                        <td><span class="fw-bold">Rp 300.000</span></td>
+                        <td><span class="fw-normal">Non Cash</span></td>
+                        <td><span class="fw-bold">Rp 200.000</span></td>
+                        <td><span class="fw-bold">Rp 500.000</span></td>
+                        <td data-bs-toggle="tooltip" data-bs-placement="bottom" title="No Kamar dan Tipe kamar berurutan"
+                                >102 </td>
+                        <td>Deluxe </td>
+
+                    </tr>
                     <!-- Item -->
                 </tbody>
             </table>
