@@ -31,10 +31,12 @@
                             </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
+                            @foreach($reservation as $reservationData)
                             <div class="d-none d-sm-block">
                                 <h2 class="h6 text-gray-400 mb-0">Room Income</h2>
-                                <h3 class="fw-extrabold mb-2">Rp 3,143,594</h3>
+                                <h3 class="fw-extrabold mb-2">{{ $reservationData->payment->total_payment ?? '' }}</h3>
                             </div>
+                            @endforeach
                             <small class="d-flex align-items-center text-gray-500">
                                 Feb 1 - Apr 1,
                                 <svg class="icon icon-xxs text-gray-500 ms-2 me-1" fill="currentColor" viewBox="0 0 20 20"
@@ -218,12 +220,10 @@
                         <td><span class="fw-normal">{{ $reservationData->customer->customer_name ?? '' }}</span></td>
                         <td><span class="fw-normal">{{ $reservationData->reservationMethod->reservation_method ?? '' }}</span></td>
                         <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
-                        <td><span class="fw-normal">{{ $reservationData->payment->total_payment ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ $reservationData->payment->total_price ?? '' }}</span></td>
                         <td><span class="fw-normal">{{ $reservationData->payment->total_payment ?? '' }}</span></td>
                         <td><span class="fw-bold">Rp 200.000</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td>102</td>
-                        <td>Deluxe</td>
+                        
                     </tr>
                     @endforeach
                     <!-- Item -->

@@ -19,6 +19,42 @@ class PicHotelBranchSeeder extends Seeder
             [
                 'hotel_branch_id' => 1,
                 'user_id' => 2,
+            ],
+            [
+                'hotel_branch_id' => 2,
+                'user_id' => 3,
+            ],
+            [
+                'hotel_branch_id' => 3,
+                'user_id' => 4,
+            ],
+            [
+                'hotel_branch_id' => 4,
+                'user_id' => 5,
+            ],
+            [
+                'hotel_branch_id' => 5,
+                'user_id' => 6,
+            ],
+            [
+                'hotel_branch_id' => 6,
+                'user_id' => 7,
+            ],
+            [
+                'hotel_branch_id' => 7,
+                'user_id' => 8,
+            ],
+            [
+                'hotel_branch_id' => 8,
+                'user_id' => 9,
+            ],
+            [
+                'hotel_branch_id' => 9,
+                'user_id' => 10,
+            ],
+            [
+                'hotel_branch_id' => 10,
+                'user_id' => 11,
             ]
         ];
 

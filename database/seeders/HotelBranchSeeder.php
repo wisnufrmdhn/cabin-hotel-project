@@ -21,6 +21,52 @@ class HotelBranchSeeder extends Seeder
                 'hotel_address' => 'Jl. Juminahan No.48, Purwokinanti, Pakualaman, Kota Yogyakarta',
                 'hotel_code' => 'PWK',
             ],
+            [
+                'hotel_name' => 'The Cabin Gandekan',
+                'hotel_address' => 'Kota Yogyakarta',
+                'hotel_code' => 'GDK',
+            ],
+            [
+                'hotel_name' => 'The Cabin Ambassador',
+                'hotel_address' => 'Kota Yogyakarta',
+                'hotel_code' => 'ABD',
+            ],
+            [
+                'hotel_name' => 'The Cabin Bhayangkara',
+                'hotel_address' => 'Kota Yogyakarta',
+                'hotel_code' => 'BHK',
+            ],
+            [
+                'hotel_name' => 'The Cabin Grand',
+                'hotel_address' => 'Kota Yogyakarta',
+                'hotel_code' => 'GRD',
+            ],
+            [
+                'hotel_name' => 'The Cabin Mantrijeron',
+                'hotel_address' => 'Kota Yogyakarta',
+                'hotel_code' => 'MTR',
+            ],
+            [
+                'hotel_name' => 'The Cabin RRU',
+                'hotel_address' => 'Kota Yogyakarta',
+                'hotel_code' => 'RRU',
+            ],
+            [
+                'hotel_name' => 'The Cabin Sagan',
+                'hotel_address' => 'Kota Yogyakarta',
+                'hotel_code' => 'GRD',
+            ],
+            [
+                'hotel_name' => 'The Cabin Sutomo',
+                'hotel_address' => 'Kota Yogyakarta',
+                'hotel_code' => 'STM',
+            ],
+            [
+                'hotel_name' => 'The Cabin Tanjung',
+                'hotel_address' => 'Kota Yogyakarta',
+                'hotel_code' => 'TJG',
+            ],
+            
         ];
 
         foreach ($hotelBranches as $key => $value) {
