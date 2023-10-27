@@ -14,7 +14,9 @@ use App\Models\HotelRoomReservedTmp;
 use App\Models\ReservationTmp;
 use App\Models\PaymentAmenitiesTmp;
 use App\Models\Reservation;
+use App\Models\DownPayment;
 use App\Models\Payment;
+use App\Models\HotelRoomReserved;
 use App\Models\PaymentDetail;
 use App\Models\HotelBranch;
 use Carbon\Carbon;
@@ -35,6 +37,20 @@ class FinanceController extends Controller
         $branchId = $pic->hotel_branch_id;
         $paymentMethod = PaymentMethod::all();
         $query = Reservation::query();
+
+        $getReservation = $query->where('hotel_branch_id', $pic->hotel_branch_id)->get();
+        $reservationId = [];
+        $paymentId = [];
+
+        foreach ($getReservation as $reservationData) {
+            $reservationId[] = $reservationData->id;
+            $paymentId[] = $reservationData->payment_id;
+        }   
+
+        $totalIncomeRoom = HotelRoomReserved::whereIn('reservation_id', $reservationId)->sum('price');
+        $totalIncomeRoom = number_format($totalIncomeRoom, 0, ',', '.');
+        $totalDownPayment = DownPayment::whereIn('payment_id', $paymentId)->sum('down_payment');
+        $totalDownPayment = number_format($totalDownPayment, 0, ',', '.');
 
         // Apply filters based on dropdown selections
         if ($request->filled('payment_check')) {
@@ -68,7 +84,7 @@ class FinanceController extends Controller
             $reservation = $query->where('hotel_branch_id', $pic->hotel_branch_id)->with('payment.paymentDetail.paymentMethod', 'customer', 'payment.downPayment', 'hotelRoomReserved', 'reservationMethod',)->paginate(10);
         }
         
-        return view('admin.finance.index', compact('reservation', 'paymentMethod'));
+        return view('admin.finance.index', compact('reservation', 'paymentMethod', 'totalIncomeRoom', 'totalDownPayment'));
     }
 
     public function getFinanceDataBranch()
