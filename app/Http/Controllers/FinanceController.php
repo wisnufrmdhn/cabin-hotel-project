@@ -54,35 +54,25 @@ class FinanceController extends Controller
 
         // Apply filters based on dropdown selections
         if ($request->filled('payment_check')) {
-            $payment = Payment::where('payment_check', $request['payment_check'])->
-            whereHas('reservation', function ($query) use ($branchId) {
-                    $query->where('hotel_branch_id', $branchId);
-            })->get();
 
-            $idPayment = [];
+            $paymentCheck = $request['payment_check'];
 
-            foreach ($payment as $item) {
-                $idPayment[] = $item->id;
-            }
-
-            $reservation = $query->where('hotel_branch_id', $pic->hotel_branch_id)->whereIn('payment_id', $idPayment)->with('payment.paymentDetail.paymentMethod', 'customer', 'payment.downPayment', 'hotelRoomReserved', 'reservationMethod',)->paginate(10);
-        }else if($request->filled('payment_method_id')){
+            $query->whereHas('payment', function ($query) use ($paymentCheck) {
+                $query->where('payment_check', $paymentCheck);
+            });
+        }
+        
+        if($request->filled('payment_method_id')){
             $paymentMethodId = $request['payment_method_id'];
 
-            $payment = Payment::whereHas('paymentDetail', function ($query) use ($paymentMethodId) {
-                $query->where('payment_method_id', $paymentMethodId);
-            })->get();
-
-            $idPayment = [];
-
-            foreach ($payment as $item) {
-                $idPayment[] = $item->id;
-            }
-
-            $reservation = $query->where('hotel_branch_id', $pic->hotel_branch_id)->whereIn('payment_id', $idPayment)->with('payment.paymentDetail.paymentMethod', 'customer', 'payment.downPayment', 'hotelRoomReserved', 'reservationMethod',)->paginate(10);
-        }else{
-            $reservation = $query->where('hotel_branch_id', $pic->hotel_branch_id)->with('payment.paymentDetail.paymentMethod', 'customer', 'payment.downPayment', 'hotelRoomReserved', 'reservationMethod',)->paginate(10);
+            $query->whereHas('payment', function ($query) use ($paymentMethodId) {
+                $query->whereHas('paymentDetail', function ($query) use ($paymentMethodId) {
+                    $query->where('payment_method_id', $paymentMethodId);
+                });
+            });
         }
+
+        $reservation = $query->where('hotel_branch_id', $pic->hotel_branch_id)->with('payment.paymentDetail.paymentMethod', 'customer', 'payment.downPayment', 'hotelRoomReserved', 'reservationMethod',)->paginate(10);
         
         return view('admin.finance.index', compact('reservation', 'paymentMethod', 'totalIncomeRoom', 'totalDownPayment'));
     }
