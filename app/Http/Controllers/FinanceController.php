@@ -54,7 +54,6 @@ class FinanceController extends Controller
 
         // Apply filters based on dropdown selections
         if ($request->filled('payment_check')) {
-
             $paymentCheck = $request['payment_check'];
 
             $query->whereHas('payment', function ($query) use ($paymentCheck) {
@@ -70,6 +69,19 @@ class FinanceController extends Controller
                     $query->where('payment_method_id', $paymentMethodId);
                 });
             });
+        }
+
+        // Apply filters based on dropdown selections
+        if ($request->filled('checkin')) {
+            $checkin = $request['checkin'];
+
+            $query->whereDate('reservation_start_date', $checkin);
+        }
+
+        if ($request->filled('checkout')) {
+            $checkout = $request['checkout'];
+
+            $query->whereDate('reservation_end_date', $checkout);
         }
 
         $reservation = $query->where('hotel_branch_id', $pic->hotel_branch_id)->with('payment.paymentDetail.paymentMethod', 'customer', 'payment.downPayment', 'hotelRoomReserved', 'reservationMethod',)->paginate(10);

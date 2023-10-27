@@ -169,18 +169,10 @@
         <form action="{{ route('admin.finance.index') }}" method="GET">
         @csrf
         <div class="d-flex mb-3">
-                <select class="form-select me-3 pe-5 fmxw-200" aria-label="Message select example">
-                    <option selected>Tanggal Check in</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete User</option>
-                </select>
-                <select class="form-select me-3 pe-5 fmxw-200" aria-label="Message select example">
-                    <option selected>Tanggal Check out</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete User</option>
-                </select>
+                <p class=" me-1 pe-1 fmxw-200">Check In :</p>
+                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin"></input>
+                <p class=" me-1 pe-1 fmxw-200">Check Out :</p>
+                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkout"></input>
                 <select class="form-select me-3 pe-5 fmxw-200" name="payment_method_id" aria-label="Message select example">
                     <option selected value>Metode Pembayaran</option>
                     @foreach($paymentMethod as $method)
