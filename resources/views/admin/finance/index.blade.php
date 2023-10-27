@@ -31,12 +31,10 @@
                             </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
-                            @foreach($reservation as $reservationData)
                             <div class="d-none d-sm-block">
                                 <h2 class="h6 text-gray-400 mb-0">Room Income</h2>
-                                <h3 class="fw-extrabold mb-2">{{ $reservationData->payment->total_payment ?? '' }}</h3>
+                                <h3 class="fw-extrabold mb-2">Rp. 0</h3>
                             </div>
-                            @endforeach
                             <small class="d-flex align-items-center text-gray-500">
                                 Feb 1 - Apr 1,
                                 <svg class="icon icon-xxs text-gray-500 ms-2 me-1" fill="currentColor" viewBox="0 0 20 20"
@@ -166,29 +164,38 @@
     <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">
         <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
             <h3>Pemasukan Kamar</h3>
-            <div class="d-flex mb-3">
-                <select class="form-select me-3 pe-5 fmxw-200" aria-label="Message select example">
-                    <option selected>Filter Date</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete User</option>
-                </select>
-                <select class="form-select me-3 pe-5 fmxw-200" aria-label="Message select example">
-                    <option selected>Filter Payment</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete User</option>
-                </select>
-                <select class="form-select pe-5 fmxw-200" aria-label="Message select example">
-                    <option selected>Filter Name</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete User</option>
-                </select>
-                <button class="btn btn-sm px-3 btn-secondary ms-3">Apply</button>
-            </div>
         </div>
         <div class="table-responsive">
+        <form action="{{ route('admin.finance.index') }}" method="GET">
+        @csrf
+        <div class="d-flex mb-3">
+                <select class="form-select me-3 pe-5 fmxw-200" aria-label="Message select example">
+                    <option selected>Tanggal Check in</option>
+                    <option value="1">Send Email</option>
+                    <option value="2">Change Group</option>
+                    <option value="3">Delete User</option>
+                </select>
+                <select class="form-select me-3 pe-5 fmxw-200" aria-label="Message select example">
+                    <option selected>Tanggal Check out</option>
+                    <option value="1">Send Email</option>
+                    <option value="2">Change Group</option>
+                    <option value="3">Delete User</option>
+                </select>
+                <select class="form-select me-3 pe-5 fmxw-200" name="payment_method_id" aria-label="Message select example">
+                    <option selected value>Metode Pembayaran</option>
+                    @foreach($paymentMethod as $method)
+                    <option value="{{$method->id}}">{{ $method->payment_method }}</option>
+                    @endforeach
+                </select>
+                <select class="form-select pe-5 fmxw-200" name="payment_check" aria-label="Message select example">
+                    <option selected value>Status</option>
+                    <option value="Oncheck">Oncheck</option>
+                    <option value="Valid">Valid</option>
+                    <option value="Invalid">Invalid</option>
+                </select>   
+                <button class="btn btn-sm px-3 btn-secondary ms-3">Apply</button>
+            </div>
+            </form>
             <table style="text-align: center" class="table table-hover table-bordered">
                 <thead style="vertical-align: middle">
                 <tr>
@@ -222,61 +229,65 @@
                 </thead>
                 <tbody>
                     <!-- Item -->
+                    @foreach($reservation as $reservationData)
                     <tr>
                         {{-- <td><a
                                 href="#" data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
                         </td> --}}
                         <td><span data-bs-toggle="modal"data-bs-target="#modal-detail"
-                                class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-warning">Due</span></td>
-                        <td><span class="fw-normal">Anang</span></td>
-                        <td><span class="fw-normal">Reservation Guest</span></td>
-                        <td><span class="fw-normal">Cash</span></td>
-                        <td><span class="fw-bold">Rp 300.000</span></td>
-                        <td><span class="fw-normal">Non Cash</span></td>
-                        <td><span class="fw-bold">Rp 200.000</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td>102</td>
-                        <td>Deluxe</td>
-                    </tr>
-                    <!-- Item -->
-                    <!-- Item -->
-                    <tr>
-                        {{-- <td><a
-                                href="#"data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
-                        </td> --}}
-                        <td><span class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-warning">Due</span></td>
-                        <td><span class="fw-normal">Anang</span></td>
-                        <td><span class="fw-normal">Reservation Guest</span></td>
-                        <td><span class="fw-normal">-</span></td>
-                        <td><span class="fw-bold">-</span></td>
-                        <td><span class="fw-normal">Non Cash</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td>102</td>
-                        <td>Deluxe</td>
-                    </tr>
-                    <!-- Item -->
-                    <!-- Item -->
-                    <tr>
-                        {{-- <td><a
-                                href="#"data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
-                        </td> --}}
-                        <td><span class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-warning">Due</span></td>
-                        <td><span class="fw-normal">Anang</span></td>
-                        <td><span class="fw-normal">Reservation Guest</span></td>
-                        <td><span class="fw-normal">Cash</span></td>
-                        <td><span class="fw-bold">Rp 300.000</span></td>
-                        <td><span class="fw-normal">Non Cash</span></td>
-                        <td><span class="fw-bold">Rp 200.000</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td data-bs-toggle="tooltip" data-bs-placement="bottom" title="No Kamar dan Tipe kamar berurutan"
-                                >102 </td>
-                        <td>Deluxe </td>
+                                class="fw-normal">{{ $reservationData->payment->payment_code ?? '' }}</span></td>
+                        <td><span class="fw-bold text-warning">{{ $reservationData->payment->payment_check ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ $reservationData->customer->customer_name ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ $reservationData->reservationMethod->reservation_method ?? '' }}</span></td>
+
+                        @if($reservationData->payment->payment_status == 'Lunas')
+                        <td><span class="fw-normal">Tidak</span></td>
+                        <td><span class="fw-normal">Rp. 0</span></td>
+                        <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
+                        <td><span class="fw-normal">Rp. {{ $reservationData->payment->total_payment ?? 0 }}</span></td>
+                        <td><span class="fw-normal">Rp. {{ ($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0) }}</span></td>
+                        @elseif($reservationData->payment->payment_status == 'DP')
+                        <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ $reservationData->payment->downPayment->down_payment ?? 0 }}</span></td>
+                        <td><span class="fw-normal">Tidak</span></td>
+                        <td><span class="fw-normal">Rp. 0</span></td>
+                        <td><span class="fw-bold">Rp. {{ ($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0) }}</span></td>
+                        @else
+                        <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ $reservationData->payment->downPayment->down_payment ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
+                        <td><span class="fw-normal">Rp. {{ $reservationData->payment->total_payment ?? 0 }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ ($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0) }}</span></td>
+                        @endif
+                        
+                        <td><span class="fw-bold">
+                            @foreach($reservationData->hotelRoomReserved as $reservedRooms)
+                            @if($reservationData->hotelRoomReserved->count() > 1)
+                                @if ($loop->last)
+                                    {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }} 
+                                @else
+                                    {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }} &
+                                @endif
+                            @else
+                                {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }}
+                            @endif
+                            @endforeach
+                        </span></td>
+                        <td><span class="fw-bold">@foreach($reservationData->hotelRoomReserved as $reservedRooms)
+                            @if($reservationData->hotelRoomReserved->count() > 1)
+                                @if ($loop->last)
+                                    {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }}
+                                @else
+                                    {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }} &
+                                @endif
+                            @else
+                                {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }}
+                            @endif
+                            @endforeach
+                        </span></td>
 
                     </tr>
+                    @endforeach
                     <!-- Item -->
                 </tbody>
             </table>
@@ -347,7 +358,7 @@
                         <th rowspan="2" class="border-gray-200">Status</th>
                         <th rowspan="2" class="border-gray-200">Nama</th>
                         <th rowspan="2" class="border-gray-200">Type Tamu</th>
-                        <th colspan="4" class="border-gray-200">Metode <br>Pembayaran</th>
+                        <th colspan="2" class="border-gray-200">Metode <br>Pembayaran</th>
                         <th rowspan="2" class="border-gray-200">Harga <br>Total</th>
                         <th rowspan="2" class="border-gray-200">No <br>Kamar</th>
                         <th rowspan="2" class="border-gray-200">Type</th>
@@ -358,8 +369,6 @@
                     </tr>
                     <tr>
                         <th>DP</th>
-                        <th>Nominal</th>
-                        <th>Lunas</th>
                         <th>Nominal</th>
                         {{-- <th>Tanggal</th>
                         <th>Jam</th>
@@ -373,61 +382,52 @@
                 </thead>
                 <tbody>
                     <!-- Item -->
+                    @foreach($reservation as $reservationData)
+                    @if($reservationData->payment->downPayment !== null)
                     <tr>
                         {{-- <td><a
                                 href="#" data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
                         </td> --}}
                         <td><span data-bs-toggle="modal"data-bs-target="#modal-detail"
-                                class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-success">Claimed</span></td>
-                        <td><span class="fw-normal">Anang</span></td>
-                        <td><span class="fw-normal">Reservation Guest</span></td>
-                        <td><span class="fw-normal">Cash</span></td>
-                        <td><span class="fw-bold">Rp 300.000</span></td>
-                        <td><span class="fw-normal">Non Cash</span></td>
-                        <td><span class="fw-bold">Rp 200.000</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td>102</td>
-                        <td>Deluxe</td>
-                    </tr>
-                    <!-- Item -->
-                    <!-- Item -->
-                    <tr>
-                        {{-- <td><a
-                                href="#"data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
-                        </td> --}}
-                        <td><span class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-success">Claimed</span></td>
-                        <td><span class="fw-normal">Anang</span></td>
-                        <td><span class="fw-normal">Reservation Guest</span></td>
-                        <td><span class="fw-normal">-</span></td>
-                        <td><span class="fw-bold">-</span></td>
-                        <td><span class="fw-normal">Non Cash</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td>102</td>
-                        <td>Deluxe</td>
-                    </tr>
-                    <!-- Item -->
-                    <!-- Item -->
-                    <tr>
-                        {{-- <td><a
-                                href="#"data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
-                        </td> --}}
-                        <td><span class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-success">Claimed</span></td>
-                        <td><span class="fw-normal">Anang</span></td>
-                        <td><span class="fw-normal">Reservation Guest</span></td>
-                        <td><span class="fw-normal">Cash</span></td>
-                        <td><span class="fw-bold">Rp 300.000</span></td>
-                        <td><span class="fw-normal">Non Cash</span></td>
-                        <td><span class="fw-bold">Rp 200.000</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td>102</td>
-                        <td>Deluxe</td>
+                                class="fw-normal">{{ $reservationData->payment->payment_code ?? '' }}</span></td>
+                        <td><span class="fw-bold text-success">{{ $reservationData->payment->downPayment->status ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ $reservationData->customer->customer_name ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ $reservationData->reservationMethod->reservation_method ?? '' }}</span></td>
+                        @if($reservationData->payment->payment_status == 'DP')
+                        <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ $reservationData->payment->downPayment->down_payment ?? 0 }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ ($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0) }}</span></td>
+                        @endif
+                        
+                        <td><span class="fw-bold">
+                            @foreach($reservationData->hotelRoomReserved as $reservedRooms)
+                            @if($reservationData->hotelRoomReserved->count() > 1)
+                                @if ($loop->last)
+                                    {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }} 
+                                @else
+                                    {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }} &
+                                @endif
+                            @else
+                                {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }}
+                            @endif
+                            @endforeach
+                        </span></td>
+                        <td><span class="fw-bold">@foreach($reservationData->hotelRoomReserved as $reservedRooms)
+                            @if($reservationData->hotelRoomReserved->count() > 1)
+                                @if ($loop->last)
+                                    {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }}
+                                @else
+                                    {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }} &
+                                @endif
+                            @else
+                                {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }}
+                            @endif
+                            @endforeach
+                        </span></td>
 
                     </tr>
-                    <!-- Item -->
+                    @endif
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -921,3 +921,10 @@
     </div>
     <!-- End of Modal Content -->
 @endsection
+@push('scripts')
+<script type="text/javascript">
+        function zoom() {
+            document.body.style.zoom = "80%" 
+        }
+</script>
+@endpush

@@ -94,18 +94,20 @@ class ReservationService
         $request['total_payment'] = $request['payment_cash_value'] +  $request['payment_card_value'] + $request['payment_qris_value'] + $request['payment_transfer_value'];
         $request['payment_code']  = 'INV-'.$branch->hotel_code.'-'.$today.'-'.$reservationCount;
 
-        $storePayment = Payment::create([
-            'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
-            'discount'              => $request['discount'],
-            'total_price'           => $totalPrice,
-            'total_price_amenities' => $amenitiesTotalPrice,
-            'total_payment'         => $request['total_payment'],
-            'change'                => $request['change'] ? (int) preg_replace("/[^0-9]/", "", $request['change']) : 0,
-            'payment_code'          => $request['payment_code']
-        ]);
-
         if($request['payment_category'] == 'Down Payment')
         {
+            $storePayment = Payment::create([
+                'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
+                'discount'              => $request['discount'],
+                'total_price'           => $totalPrice,
+                'total_price_amenities' => $amenitiesTotalPrice,
+                'total_payment'         => $request['total_payment'],
+                'change'                => $request['change'] ? (int) preg_replace("/[^0-9]/", "", $request['change']) : 0,
+                'payment_code'          => $request['payment_code'],
+                'payment_status'        => 'DP',
+                'payment_check'         => 'Oncheck'
+            ]);
+
             $storeDownPayment = DownPayment::create([
                 'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
                 'payment_id'            => $storePayment->id,
@@ -114,6 +116,18 @@ class ReservationService
                 'down_payment'          => $request['total_payment'],
                 'status'                => 'New',
                 'claim_date'            => null,
+            ]);
+        }else{
+            $storePayment = Payment::create([
+                'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
+                'discount'              => $request['discount'],
+                'total_price'           => $totalPrice,
+                'total_price_amenities' => $amenitiesTotalPrice,
+                'total_payment'         => $request['total_payment'],
+                'change'                => $request['change'] ? (int) preg_replace("/[^0-9]/", "", $request['change']) : 0,
+                'payment_code'          => $request['payment_code'],
+                'payment_status'        => 'Lunas',
+                'payment_check'         => 'Oncheck'
             ]);
         }
 

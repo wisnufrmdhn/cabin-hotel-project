@@ -22,6 +22,8 @@ return new class extends Migration
             $table->integer('total_payment')->nullable();
             $table->integer('change')->nullable();
             $table->string('payment_image')->nullable();
+            $table->enum('payment_check', ['Valid', 'Invalid', 'Oncheck'])->nullable();
+            $table->enum('payment_status', ['Lunas', 'DP', 'Lunas + DP'])->nullable();
             $table->timestamps();
         });
     }
