@@ -168,7 +168,7 @@
         <div class="table-responsive">
         <form action="{{ route('admin.finance.index') }}" method="GET">
         @csrf
-        <div class="d-flex mb-3">
+        <div class="d-flex mb-3" >
                 <p class=" me-1 pe-1 fmxw-200">Check In :</p>
                 <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin"></input>
                 <p class=" me-1 pe-1 fmxw-200">Check Out :</p>

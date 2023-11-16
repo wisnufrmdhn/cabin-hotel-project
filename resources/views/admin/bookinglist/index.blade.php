@@ -402,6 +402,75 @@
                                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled></textarea>
                                     </div>
                                 </div>
+                                <div class="col">
+                                    <div class="mb-3 mt-4">
+                                        <label for="email">Tipe Pembayaran</label>
+                                        <input class="form-control" id="email" type="email" placeholder="Lunas" disabled>
+                                    </div>
+                                    <div class="mb-3 mt-3">
+                                        <label for="email">Metode Pembayaran</label>
+                                        <select class="form-select w-100 mb-0" id="paymentMethod" name="paymentMethod" aria-label="paymentMethod">
+                                            <option selected value="">Metode Pembayaran</option>
+                                            <option value="Cash">Cash</option>
+                                            <option value="Card">Card</option>
+                                            <option value="Qris">QRIS</option>
+                                            <option value="Transfer">Transfer</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3 mt-2">
+                                                                                    <!-- Form select untuk cash -->
+                                    <div class="=col paymentOption" id="cashOptions" style="display: none">
+                                        <div class="col">
+                                            <div class="mb-2">
+                                                <input type="text" name="payment_cash_value" class="form-control "
+                                                    id="payment_cash_value" placeholder="Nominal Bayar" aria-describedby="emailHelp" >
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-4">
+                                                <input type="text" name="change" id="change" class="form-control " id="email"
+                                                    placeholder="Nominal Kembali" aria-describedby="emailHelp" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                            <!-- Form select untuk transfer -->
+                                    <div class="col paymentOption" id="transferOptions" style="display: none;">
+                                        <select class="form-select w-100 mb-2"  id="payment_category_transfer" name="payment_category_transfer" aria-label="transferBank" style="margin-bottom: 10px;">
+                                            <option selected value="">Pilih Bank Transfer</option>
+                                                @foreach($paymentTransfer as $transfer)
+                                                    <option value="{{ $transfer->id }}">{{ $transfer->payment_method }}</option>
+                                                @endforeach
+                                        </select>
+                                        <input type="text" id="payment_transfer_value" name="payment_transfer_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                                        <input type="text" id="payment_method_transfer_reference" name="payment_method_transfer_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Transfer">
+                                    </div>
+            
+                                    <!-- Form select untuk card -->
+                                    <div class="col paymentOption" id="cardOptions" style="display: none;">
+                                        <select class="form-select w-100 mb-2" id="payment_category_card" name="payment_category_card" aria-label="cardType">
+                                            <option selected value>Pilih Jenis Kartu</option>
+                                            @foreach($paymentCard as $card)
+                                                <option value="{{ $card->id }}">{{ $card->payment_method }}</option>
+                                            @endforeach
+                                        </select>
+                                        <input type="text" id="payment_card_value" name="payment_card_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                                        <input type="text" id="payment_method_card_number" name="payment_method_card_number" class="form-control mb-2" placeholder="Nomor Kartu">
+                                    </div>
+            
+                                    <!-- Form select untuk qris -->
+                                    <div class="col paymentOption" id="qrisOptions" style="display: none;">
+                                        <select class="form-select w-100 mb-2" id="payment_category_qris" name="payment_category_qris" aria-label="qrisType">
+                                            <option selected value>Pilih Jenis QRIS</option>
+                                                @foreach($paymentQris as $qris)
+                                                    <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
+                                                @endforeach
+                                        </select>
+                                        <input type="text" id="payment_qris_value" name="payment_qris_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                                        <input type="text" id="payment_method_qris_reference" name="payment_method_qris_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi QRIS">
+                                    </div>
+                                    {{-- @endif --}}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between" style="vertical-align: middle">
@@ -423,3 +492,57 @@
 </div>
 <!-- End of Modal Content -->
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+        function zoom() {
+            document.body.style.zoom = "75%" 
+        }
+</script>
+<script>
+    $(document).ready(function() {
+        $('#paymentMethod').change(function() {
+            $('.paymentOption').hide(); // Sembunyikan semua form select tambahan
+
+            // Tampilkan form select tambahan sesuai dengan metode pembayaran yang dipilih
+            if ($(this).val() === 'Transfer') {
+                $('#transferOptions').show();
+                $('#payment_category_transfer').attr('required', 'required');
+                $('#payment_transfer_value').attr('required', 'required');
+                $('#payment_method_transfer_reference').attr('required', 'required');
+                $('#payment_category_card').removeAttr('required');
+                $('#payment_card_value').removeAttr('required');
+                $('#payment_method_card_number').removeAttr('required');
+                $('#payment_category_qris').removeAttr('required');
+                $('#payment_qris_value').removeAttr('required');
+                $('#payment_method_qris_reference').removeAttr('required');
+            } else if ($(this).val() === 'Card') {
+                $('#cardOptions').show();
+                $('#payment_category_card').attr('required', 'required');
+                $('#payment_card_value').attr('required', 'required');
+                $('#payment_method_card_number').attr('required', 'required');
+                $('#payment_category_qris').removeAttr('required');
+                $('#payment_qris_value').removeAttr('required');
+                $('#payment_method_qris_reference').removeAttr('required');
+                $('#payment_category_transfer').removeAttr('required');
+                $('#payment_transfer_value').removeAttr('required');
+                $('#payment_method_transfer_reference').removeAttr('required');
+            } else if ($(this).val() === 'Qris') {
+                $('#qrisOptions').show();
+                $('#payment_category_qris').attr('required', 'required');
+                $('#payment_qris_value').attr('required', 'required');
+                $('#payment_method_qris_reference').attr('required', 'required');
+                $('#payment_category_transfer').removeAttr('required');
+                $('#payment_transfer_value').removeAttr('required');
+                $('#payment_method_transfer_reference').removeAttr('required');
+                $('#payment_category_card').removeAttr('required');
+                $('#payment_card_value').removeAttr('required');
+                $('#payment_method_card_number').removeAttr('required');
+            } else if ($(this).val() === 'Cash') {
+                $('#cashOptions').show();
+            }
+        });
+    });
+</script>
+@endpush
