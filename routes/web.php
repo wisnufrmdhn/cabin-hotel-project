@@ -61,3 +61,6 @@ Route::group(['as' => 'ajax.', 'prefix' => 'ajax'], function () {
     Route::get('/getListCustomers', [AjaxController::class, 'getListCustomers'])->name('list-customers');
     Route::get('/getRoomNumbers/{roomType}', [AjaxController::class, 'getRoomNumbers'])->name('room-numbers');
 });
+
+Route::get('/reservation/{reservationId}', [AjaxController::class, 'getReservationData'])->name('get-reservation');
+Route::put('/reservation/{reservationId}/{status}', [AjaxController::class, 'updateReservationData'])->name('update-reservation');
