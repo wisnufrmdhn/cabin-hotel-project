@@ -41,7 +41,7 @@ class AjaxController extends Controller
         $reservation = Reservation::where('reservation_code', $reservationCode)->with('customer')->first();
 
         if($reservation){
-            $hotelRoomReserved = HotelRoomReserved::where('reservation_id', $reservation->id)->get();
+            $hotelRoomReserved = HotelRoomReserved::where('reservation_id', $reservation->id)->with('hotelRoomNumber')->get();
             return response()->json([
                 "reservation" => $reservation,
                 "hotel_room" => $hotelRoomReserved
