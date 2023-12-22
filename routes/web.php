@@ -62,5 +62,8 @@ Route::group(['as' => 'ajax.', 'prefix' => 'ajax'], function () {
     Route::get('/getRoomNumbers/{roomType}', [AjaxController::class, 'getRoomNumbers'])->name('room-numbers');
 });
 
-Route::get('/reservation/{reservationId}', [AjaxController::class, 'getReservationData'])->name('get-reservation');
-Route::put('/reservation/{reservationId}/{status}', [AjaxController::class, 'updateReservationData'])->name('update-reservation');
+Route::group(['as' => 'endpoint.', 'prefix' => 'endpoint'], function () {
+    Route::get('/reservation/{reservationId}', [AjaxController::class, 'getReservationData'])->name('get-reservation');
+    Route::put('/reservation/{reservationId}/{status}', [AjaxController::class, 'updateReservationData'])->name('update-reservation');
+    Route::get('/update-reservation/{reservationId}/{status}', [AjaxController::class, 'updateReservationData'])->name('get-update-reservation');
+});
