@@ -42,6 +42,10 @@ class AjaxController extends Controller
 
         if($reservation){
             $hotelRoomReserved = HotelRoomReserved::where('reservation_id', $reservation->id)->with('hotelRoomNumber')->get();
+            foreach ($hotelRoomReserved as $room) {
+                // Update room_number in hotel_room_number object
+                $room->hotelRoomNumber->room_number = sprintf('%04d', $room->hotelRoomNumber->room_number);
+            }
             return response()->json([
                 "reservation" => $reservation,
                 "hotel_room" => $hotelRoomReserved

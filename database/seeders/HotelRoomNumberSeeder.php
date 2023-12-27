@@ -315,7 +315,67 @@ class HotelRoomNumberSeeder extends Seeder
                 'room_number' => 111,
                 'room_status_id' => 3
             ],
-
+            // =======================11
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 3,
+                'room_number' => 102,
+                'room_status_id' => 3
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 3,
+                'room_number' => 103,
+                'room_status_id' => 3
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 3,
+                'room_number' => 301,
+                'room_status_id' => 3
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 3,
+                'room_number' => 302,
+                'room_status_id' => 3
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 2,
+                'room_number' => 101,
+                'room_status_id' => 3
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 2,
+                'room_number' => 105,
+                'room_status_id' => 3
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 2,
+                'room_number' => 201,
+                'room_status_id' => 3
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 2,
+                'room_number' => 202,
+                'room_status_id' => 3
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 1,
+                'room_number' => 203,
+                'room_status_id' => 3
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 1,
+                'room_number' => 303,
+                'room_status_id' => 3
+            ],
         ];
 
         foreach ($hotelRoomNumber as $key => $value) {

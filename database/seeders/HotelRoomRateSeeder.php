@@ -266,6 +266,44 @@ class HotelRoomRateSeeder extends Seeder
                 'room_duration' => 24
             ],
              // ==========================10
+             // ==========================11
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 1,
+                'room_rates' => 100000,
+                'room_duration' => 8
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 1,
+                'room_rates' => 220000,
+                'room_duration' => 24
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 2,
+                'room_rates' => 155000,
+                'room_duration' => 8
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 2,
+                'room_rates' => 285000,
+                'room_duration' => 24
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 3,
+                'room_rates' => 80000,
+                'room_duration' => 8
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'hotel_room_id' => 3,
+                'room_rates' => 200000,
+                'room_duration' => 24
+            ],
+             // ==========================10
         ];
 
         foreach ($hotelRoomRate as $key => $value) {

@@ -82,7 +82,12 @@ class UserSeeder extends Seeder
                 'role_id' => '2',
                 'password' => bcrypt('123456'),
             ],
-
+            [
+                'name' => 'admin-ngupasan',
+                'email' => 'admin.ngupasan@gmail.com',
+                'role_id' => '2',
+                'password' => bcrypt('123456'),
+            ],
         ];
 
         foreach ($user as $key => $value) {

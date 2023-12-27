@@ -55,6 +55,10 @@ class PicHotelBranchSeeder extends Seeder
             [
                 'hotel_branch_id' => 10,
                 'user_id' => 11,
+            ],
+            [
+                'hotel_branch_id' => 11,
+                'user_id' => 12,
             ]
         ];
 
