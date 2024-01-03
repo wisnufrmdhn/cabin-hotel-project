@@ -91,12 +91,12 @@
                     <td>{{ $rooms->hotelRoomNumber->room_number ?? '' }}</td>
                     <td>{{ $rooms->hotelRoomNumber->hotelRoom->room_type ?? '' }}</td>
                     <td>{{ $rooms->total_guest ?? '' }}</td>
-                    <td> Rp. {{ $rooms->price ?? '' }}</td>
+                    <td> Rp. {{ number_format($rooms->price ?? 0, 0, ',', '.') }}</td>
                 </tr>
                 @endforeach
                 <tr>
                     <td colspan="3"><b>Subtotal</b></td>
-                    <td> Rp. {{ $subtotal ?? 0 }} </td>
+                    <td> Rp. {{ number_format($subtotal ?? 0, 0, ',', '.') }} </td>
                 </tr>
                 @if(count($paymentAmenities) > 0)
                 <tr>
@@ -111,20 +111,20 @@
                     <td>{{ $i++ }}</td>
                     <td>{{ $additionals->amenities->amenities ?? '' }}</td>
                     <td>{{ $additionals->amount ?? 0 }}</td>
-                    <td>Rp. {{ $additionals->total_price ?? 0 }}</td>
+                    <td>Rp. {{ number_format($additionals->total_price ?? 0, 0, ',', '.') }} </td>
                 </tr>
                 @endforeach
                 <tr>
                     <td colspan="3"><b>Diskon</b></td>
-                    <td> Rp. {{ $discount ?? 0 }} </td>
+                    <td> Rp. {{ number_format($discount ?? 0, 0, ',', '.') }} </td>
                 </tr>
                 <tr>
                     <td colspan="3"><b>DP & Extra</b></td>
-                    <td> Rp. {{ $invoice->payment->downPayment->down_payment ?? 0 }} </td>
+                    <td> Rp. {{ number_format($invoice->payment->downPayment->down_payment ?? 0 ?? 0, 0, ',', '.') }}</td>
                 </tr>
                 <tr>
                     <td colspan="3"><b>Total</b></td>
-                    <td> Rp. {{ ($subtotal ?? 0) + $subtotalAmenities - $discount - ($invoice->payment->downPayment->down_payment ?? 0) }} </td>
+                    <td> Rp. {{  number_format(($subtotal ?? 0) + $subtotalAmenities - $discount - ($invoice->payment->downPayment->down_payment ?? 0)  ?? 0 ?? 0, 0, ',', '.') }} </td>
                 </tr>
             </table>
         </div>
