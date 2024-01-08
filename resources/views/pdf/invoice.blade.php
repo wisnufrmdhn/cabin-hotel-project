@@ -74,6 +74,7 @@
         </div>
         <div class="invoice-info">
             <p>No Nota: <b>{{ $invoice->payment->payment_code ?? '' }}</b></p>
+            <p>No Reservasi: <b>{{ $invoice->reservation_code ?? '' }}</b></p>
             <p>Nama: <b>{{ $invoice->customer->customer_title ?? '' }} {{ $invoice->customer->customer_name ?? '' }}</b></p>
             <p>Check in: <b>{{ $invoice->reservation_start_date ?? '' }}</b></p>
             <p>Check out: <b>{{ $invoice->reservation_end_date ?? '' }}</b></p>
