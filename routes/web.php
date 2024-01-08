@@ -57,6 +57,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/pdf/invoice/{invoiceId}', [PdfController::class, 'generateInvoice'])->name('pdf.invoices');
 });
 
+// This is financeHO route access
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['as' => 'financeHO.', 'prefix' => 'financeHO', 'middleware' => ['loginCheck:financeHO']], function () {
+        Route::get('/', [FinanceHeadOfficeController::class, 'index'])->name('index');
+    });
+});
+
 Route::group(['as' => 'ajax.', 'prefix' => 'ajax'], function () {
     Route::get('/getListCustomers', [AjaxController::class, 'getListCustomers'])->name('list-customers');
     Route::get('/getRoomNumbers/{roomType}', [AjaxController::class, 'getRoomNumbers'])->name('room-numbers');

@@ -73,6 +73,14 @@ class FinanceController extends Controller
         }
 
         // Apply filters based on dropdown selections
+        if ($request->filled('payment_date')) {
+            $paymentDate = $request['payment_date'];
+
+            $query->whereHas('payment', function ($query) use ($paymentDate) {
+                $query->whereDate('updated_at', $paymentDate);
+            });
+        }
+
         if ($request->filled('checkin')) {
             $checkin = $request['checkin'];
 
@@ -105,6 +113,14 @@ class FinanceController extends Controller
         }
 
         // Apply filters based on dropdown selections
+        if ($request->filled('payment_date_dp')) {
+            $paymentDate = $request['payment_date_dp'];
+
+            $queryDP->whereHas('payment', function ($queryDP) use ($paymentDate) {
+                $queryDP->whereDate('updated_at', $paymentDate);
+            });
+        }
+
         if ($request->filled('checkin_dp')) {
             $checkin = $request['checkin_dp'];
 

@@ -131,30 +131,18 @@
      <!-- Tabel Room Income Start -->
      <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">
         <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
-            <h3>Generate Report</h3>
+            <h3>Generate Laporan Finance</h3>
         </div>
         </br>
         <div class="table-responsive">
         <form action="{{ route('admin.finance.index') }}" method="GET">
         @csrf
         <div class="d-flex mb-3" >
-                <p class=" me-1 pe-1 fmxw-200">From :</p>
+                <p class=" me-1 pe-1 fmxw-200">Dari :</p>
                 <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin"></input>
-                <p class=" me-1 pe-1 fmxw-200">To :</p>
+                <p class=" me-1 pe-1 fmxw-200">Sampai :</p>
                 <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkout"></input>
-                <select class="form-select me-3 pe-5 fmxw-200" name="payment_method_id" aria-label="Message select example">
-                    <option selected value>Metode Pembayaran</option>
-                    @foreach($paymentMethod as $method)
-                    <option value="{{$method->id}}">{{ $method->payment_method }}</option>
-                    @endforeach
-                </select>
-                <select class="form-select pe-5 fmxw-200" name="payment_check" aria-label="Message select example">
-                    <option selected value>Status</option>
-                    <option value="Oncheck">Oncheck</option>
-                    <option value="Valid">Valid</option>
-                    <option value="Invalid">Invalid</option>
-                </select>   
-                <button class="btn btn-sm px-3 btn-secondary ms-3">Apply</button>
+                <button class="btn btn-sm px-3 btn-secondary ms-3">Generate</button>
             </div>
             </form>
         </div>
@@ -171,6 +159,8 @@
         <form action="{{ route('admin.finance.index') }}" method="GET">
         @csrf
         <div class="d-flex mb-3" >
+                <p class=" me-1 pe-1 fmxw-200">Tanggal Pembayaran :</p>
+                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="payment_date"></input>
                 <p class=" me-1 pe-1 fmxw-200">Check In :</p>
                 <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin"></input>
                 <p class=" me-1 pe-1 fmxw-200">Check Out :</p>
@@ -194,6 +184,7 @@
                 <thead style="vertical-align: middle">
                 <tr>
                         <th rowspan="2" class="border-gray-200">ID Bill</th>
+                        <th rowspan="2" class="border-gray-200">Tanggal Pembayaran</th>
                         <th rowspan="2" class="border-gray-200">Status</th>
                         <th rowspan="2" class="border-gray-200">Nama</th>
                         <th rowspan="2" class="border-gray-200">Type Tamu</th>
@@ -230,6 +221,7 @@
                         </td> --}}
                         <td><span data-bs-toggle="modal"data-bs-target="#modal-detail"
                                 class="fw-normal">{{ $reservationData->payment->payment_code ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ \Carbon\Carbon::parse($reservationData->payment->updated_at ?? '')->timezone('Asia/Bangkok')->isoFormat('DD MMMM YYYY') }}</span></td>
                         <td><span class="fw-bold text-warning">{{ $reservationData->payment->payment_check ?? '' }}</span></td>
                         <td><span class="fw-normal">{{ $reservationData->customer->customer_name ?? '' }}</span></td>
                         <td><span class="fw-normal">{{ $reservationData->reservationMethod->reservation_method ?? '' }}</span></td>
@@ -238,20 +230,20 @@
                         <td><span class="fw-normal">Tidak</span></td>
                         <td><span class="fw-normal">Rp. 0</span></td>
                         <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
-                        <td><span class="fw-normal">Rp. {{ $reservationData->payment->total_payment ?? 0 }}</span></td>
-                        <td><span class="fw-normal">Rp. {{ ($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0) }}</span></td>
+                        <td><span class="fw-normal">Rp. {{ number_format($reservationData->payment->total_payment ?? 0, 0, ',', '.') }}</span></td>
+                        <td><span class="fw-normal">Rp. {{ number_format(($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0), 0, ',', '.') }}</span></td>
                         @elseif($reservationData->payment->payment_status == 'DP')
                         <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
-                        <td><span class="fw-bold">Rp. {{ $reservationData->payment->downPayment->down_payment ?? 0 }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ number_format($reservationData->payment->downPayment->down_payment ?? 0, 0, ',', '.')}}</span></td>
                         <td><span class="fw-normal">Tidak</span></td>
                         <td><span class="fw-normal">Rp. 0</span></td>
-                        <td><span class="fw-bold">Rp. {{ ($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0) }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ number_format(($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0), 0, ',', '.') }}</span></td>
                         @else
                         <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
                         <td><span class="fw-bold">Rp. {{ $reservationData->payment->downPayment->down_payment ?? '' }}</span></td>
                         <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
-                        <td><span class="fw-normal">Rp. {{ $reservationData->payment->total_payment ?? 0 }}</span></td>
-                        <td><span class="fw-bold">Rp. {{ ($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0) }}</span></td>
+                        <td><span class="fw-normal">Rp. {{ number_format($reservationData->payment->total_payment ?? 0, 0, ',', '.') }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ number_format(($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0), 0, ',', '.') }}</span></td>
                         @endif
                         
                         <td><span class="fw-bold">
@@ -307,6 +299,8 @@
         <form action="{{ route('admin.finance.index') }}" method="GET">
         @csrf
         <div class="d-flex mb-3" >
+                <p class=" me-1 pe-1 fmxw-200">Tanggal Pembayaran :</p>
+                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="payment_date_dp"></input>
                 <p class=" me-1 pe-1 fmxw-200">Check In :</p>
                 <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin_dp"></input>
                 <p class=" me-1 pe-1 fmxw-200">Check Out :</p>
@@ -330,6 +324,7 @@
                 <thead style="vertical-align: middle">
                 <tr>
                         <th rowspan="2" class="border-gray-200">ID Bill</th>
+                        <th rowspan="2" class="border-gray-200">Tanggal Pembayaran</th>
                         <th rowspan="2" class="border-gray-200">Status</th>
                         <th rowspan="2" class="border-gray-200">Nama</th>
                         <th rowspan="2" class="border-gray-200">Type Tamu</th>
@@ -364,6 +359,7 @@
                         </td> --}}
                         <td><span data-bs-toggle="modal"data-bs-target="#modal-detail"
                                 class="fw-normal">{{ $downPayments->payment->payment_code ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ \Carbon\Carbon::parse($downPayments->payment->updated_at ?? '')->timezone('Asia/Bangkok')->isoFormat('DD MMMM YYYY') }}</span></td>
                         <td><span class="fw-bold text-warning">{{ $downPayments->payment->payment_check ?? '' }}</span></td>
                         <td><span class="fw-normal">{{ $downPayments->customer->customer_name ?? '' }}</span></td>
                         <td><span class="fw-normal">{{ $downPayments->reservationMethod->reservation_method ?? '' }}</span></td>
