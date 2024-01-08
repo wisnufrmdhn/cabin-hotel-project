@@ -4,7 +4,7 @@
     <div class="py-4">
         <div class="d-flex justify-content-between w-100 flex-wrap">
             <div class="mb-0 mb-lg-0">
-                <h1 class="h4">Laporan</h1>
+                <h1 class="h4">Finance Head Office</h1>
             </div>
         </div>
     </div>
@@ -19,40 +19,26 @@
                         <div
                             class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
                             <div class="icon-shape icon-shape-primary rounded me-4 me-sm-0">
-                                <svg class="icon" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                    viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                     <path
-                                        d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z">
-                                    </path>
+                                        d="M320 32c0-9.9-4.5-19.2-12.3-25.2S289.8-1.4 280.2 1l-179.9 45C79 51.3 64 70.5 64 92.5V448H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H96 288h32V480 32zM256 256c0 17.7-10.7 32-24 32s-24-14.3-24-32s10.7-32 24-32s24 14.3 24 32zm96-128h96V480c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H512V128c0-35.3-28.7-64-64-64H352v64z" />
                                 </svg>
                             </div>
                             <div class="d-sm-none">
-                                <h2 class="h5">OTA Income</h2>
-                                <h3 class="fw-extrabold mb-1">Rp 3,143,594</h3>
+                                <h2 class="h5">Room Income</h2>
+                                <h6 class="fw-extrabold mb-1">Rp 3,143,594</h6>
                             </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                             <div class="d-none d-sm-block">
-                                <h2 class="h6 text-gray-400 mb-0">OTA Income</h2>
-                                <h3 class="fw-extrabold mb-2">Rp 3,143,594</h3>
+                                <h2 class="h6 text-gray-400 mb-0">Room Income</h2>
+                                <h6 class="fw-extrabold mb-2">Rp. {{ $totalIncomeRoom }}</h6>
                             </div>
-                            <small class="d-flex align-items-center text-gray-500">
-                                Feb 1 - Apr 1,
-                                <svg class="icon icon-xxs text-gray-500 ms-2 me-1" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                                USA
-                            </small>
                             <div class="small d-flex mt-1">
-                                <div>Since last month <svg class="icon icon-xs text-success" fill="currentColor"
+                                <div>Dalam Sebulan Terakhir <svg class="icon icon-xs text-success" fill="currentColor"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
-                                            clip-rule="evenodd"></path>
-                                    </svg><span class="text-success fw-bolder">22%</span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -66,40 +52,26 @@
                         <div
                             class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
                             <div class="icon-shape icon-shape-secondary rounded me-4 me-sm-0">
-                                <svg class="icon" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M10 2a4 4 0 00-4 4v1H5a1 1 0 00-.994.89l-1 9A1 1 0 004 18h12a1 1 0 00.994-1.11l-1-9A1 1 0 0015 7h-1V6a4 4 0 00-4-4zm2 5V6a2 2 0 10-4 0v1h4zm-6 3a1 1 0 112 0 1 1 0 01-2 0zm7-1a1 1 0 100 2 1 1 0 000-2z"
-                                        clip-rule="evenodd"></path>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                    viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                    <path
+                                        d="M64 32C28.7 32 0 60.7 0 96v32H576V96c0-35.3-28.7-64-64-64H64zM576 224H0V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V224zM112 352h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm112 16c0-8.8 7.2-16 16-16H368c8.8 0 16 7.2 16 16s-7.2 16-16 16H240c-8.8 0-16-7.2-16-16z" />
                                 </svg>
                             </div>
                             <div class="d-sm-none">
-                                <h2 class="fw-extrabold h5">Cash Income</h2>
-                                <h3 class="mb-1">Rp 3,143,594</h3>
+                                <h2 class="fw-extrabold h5">Down Payment</h2>
+                                <h6 class="mb-1">Rp 3,143,594</h6>
                             </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                             <div class="d-none d-sm-block">
-                                <h2 class="h6 text-gray-400 mb-0">Cash Income</h2>
-                                <h3 class="fw-extrabold mb-2">Rp 3,143,594</h3>
+                                <h2 class="h6 text-gray-400 mb-0">Down Payment</h2>
+                                <h6 class="fw-extrabold mb-2">Rp. {{ $totalDownPayment }}</h6>
                             </div>
-                            <small class="d-flex align-items-center text-gray-500">
-                                Feb 1 - Apr 1,
-                                <svg class="icon icon-xxs text-gray-500 ms-2 me-1" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                                GER
-                            </small>
                             <div class="small d-flex mt-1">
-                                <div>Since last month <svg class="icon icon-xs text-danger" fill="currentColor"
+                                <div>Dalam Sebulan Terakhir <svg class="icon icon-xs text-success" fill="currentColor"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                            clip-rule="evenodd"></path>
-                                    </svg><span class="text-danger fw-bolder">2%</span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -113,33 +85,26 @@
                         <div
                             class="col-12 col-xl-5 text-xl-center mb-3 mb-xl-0 d-flex align-items-center justify-content-xl-center">
                             <div class="icon-shape icon-shape-tertiary rounded me-4 me-sm-0">
-                                <svg class="icon" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 0l-2 2a1 1 0 101.414 1.414L8 10.414l1.293 1.293a1 1 0 001.414 0l4-4z"
-                                        clip-rule="evenodd"></path>
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em"
+                                    viewBox="0 0 640 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                    <path
+                                        d="M96 64c0-17.7 14.3-32 32-32H448h64c70.7 0 128 57.3 128 128s-57.3 128-128 128H480c0 53-43 96-96 96H192c-53 0-96-43-96-96V64zM480 224h32c35.3 0 64-28.7 64-64s-28.7-64-64-64H480V224zM32 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32z" />
                                 </svg>
                             </div>
                             <div class="d-sm-none">
-                                <h2 class="fw-extrabold h5">Non Cash Income</h2>
-                                <h3 class="mb-1">Rp 3,143,594</h3>
+                                <h2 class="fw-extrabold h5">Food & Beverage</h2>
+                                <h6 class="mb-1">Rp. 0</h6>
                             </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                             <div class="d-none d-sm-block">
-                                <h2 class="h6 text-gray-400 mb-0">Non Cash Income</h2>
-                                <h3 class="fw-extrabold mb-2">Rp 3,143,594</h3>
+                                <h2 class="h6 text-gray-400 mb-0">Food & Beverage</h2>
+                                <h6 class="fw-extrabold mb-2">Rp. 0</h6>
                             </div>
-                            <small class="text-gray-500">
-                                Feb 1 - Apr 1
-                            </small>
                             <div class="small d-flex mt-1">
-                                <div>Since last month <svg class="icon icon-xs text-success" fill="currentColor"
+                                <div>Dalam Sebulan Terakhir <svg class="icon icon-xs text-success" fill="currentColor"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z"
-                                            clip-rule="evenodd"></path>
-                                    </svg><span class="text-success fw-bolder">4%</span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -163,186 +128,65 @@
     </div> --}}
     <!-- Search Filter End -->
 
-    <!-- Tabel Room Income Start -->
-    <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">
+     <!-- Tabel Room Income Start -->
+     <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">
         <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
-            <h3>Pemasukan Kamar</h3>
-            <div class="d-flex mb-3">
-                <select class="form-select me-3 pe-5 fmxw-200" aria-label="Message select example">
-                    <option selected>Filter Date</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete User</option>
-                </select>
-                <select class="form-select me-3 pe-5 fmxw-200" aria-label="Message select example">
-                    <option selected>Filter Payment</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete User</option>
-                </select>
-                <select class="form-select pe-5 fmxw-200" aria-label="Message select example">
-                    <option selected>Filter Name</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete User</option>
-                </select>
-                <button class="btn btn-sm px-3 btn-secondary ms-3">Apply</button>
-            </div>
+            <h3>Generate Laporan Finance</h3>
         </div>
+        </br>
         <div class="table-responsive">
-            <table style="text-align: center" class="table table-hover table-bordered">
-                <thead style="vertical-align: middle">
-                    <tr>
-                        <th rowspan="2" class="border-gray-200">ID Bill</th>
-                        <th rowspan="2" class="border-gray-200">Status</th>
-                        <th rowspan="2" class="border-gray-200">Nama</th>
-                        <th rowspan="2" class="border-gray-200">Type Tamu</th>
-                        <th colspan="4" class="border-gray-200">Metode <br>Pembayaran</th>
-                        <th rowspan="2" class="border-gray-200">Harga <br>Total</th>
-                        <th rowspan="2" class="border-gray-200">No <br>Kamar</th>
-                        <th rowspan="2" class="border-gray-200">Type</th>
-                        {{-- <th colspan="2" class="border-gray-200">CheckIn</th>
-                        <th colspan="2" class="border-gray-200">CheckOut</th>
-                        <th rowspan="2" class="border-gray-200">Durasi</th>
-                        <th colspan="4" class="border-gray-200">Additional</th> --}}
-                    </tr>
-                    <tr>
-                        <th>DP</th>
-                        <th>Nominal</th>
-                        <th>Lunas</th>
-                        <th>Nominal</th>
-                        {{-- <th>Tanggal</th>
-                        <th>Jam</th>
-                        <th>Tanggal</th>
-                        <th>Jam</th>
-                        <th>Breakfast</th>
-                        <th>Harga</th>
-                        <th>Extra-Bed</th>
-                        <th>Harga</th> --}}
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Item -->
-                    <tr>
-                        {{-- <td><a
-                                href="#" data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
-                        </td> --}}
-                        <td><span data-bs-toggle="modal"data-bs-target="#modal-detail"
-                                class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-warning">Due</span></td>
-                        <td><span class="fw-normal">Anang</span></td>
-                        <td><span class="fw-normal">Reservation Guest</span></td>
-                        <td><span class="fw-normal">Cash</span></td>
-                        <td><span class="fw-bold">Rp 300.000</span></td>
-                        <td><span class="fw-normal">Non Cash</span></td>
-                        <td><span class="fw-bold">Rp 200.000</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td>102</td>
-                        <td>Deluxe</td>
-                    </tr>
-                    <!-- Item -->
-                    <!-- Item -->
-                    <tr>
-                        {{-- <td><a
-                                href="#"data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
-                        </td> --}}
-                        <td><span class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-warning">Due</span></td>
-                        <td><span class="fw-normal">Anang</span></td>
-                        <td><span class="fw-normal">Reservation Guest</span></td>
-                        <td><span class="fw-normal">-</span></td>
-                        <td><span class="fw-bold">-</span></td>
-                        <td><span class="fw-normal">Non Cash</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td>102</td>
-                        <td>Deluxe</td>
-                    </tr>
-                    <!-- Item -->
-                    <!-- Item -->
-                    <tr>
-                        {{-- <td><a
-                                href="#"data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
-                        </td> --}}
-                        <td><span class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-warning">Due</span></td>
-                        <td><span class="fw-normal">Anang</span></td>
-                        <td><span class="fw-normal">Reservation Guest</span></td>
-                        <td><span class="fw-normal">Cash</span></td>
-                        <td><span class="fw-bold">Rp 300.000</span></td>
-                        <td><span class="fw-normal">Non Cash</span></td>
-                        <td><span class="fw-bold">Rp 200.000</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td>102</td>
-                        <td>Deluxe</td>
-
-                    </tr>
-                    <!-- Item -->
-                </tbody>
-            </table>
-        </div>
-
-        <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination mb-0">
-                    <li class="page-item">
-                        <a class="page-link" href="#">Previous</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">4</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">5</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="align-item-right"><b>Pendapatan Total : </b><b class="text-success">Rp 100.000.000</b></div>
+        <form action="{{ route('admin.finance.index') }}" method="GET">
+        @csrf
+        <div class="d-flex mb-3" >
+                <p class=" me-1 pe-1 fmxw-200">Dari :</p>
+                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin"></input>
+                <p class=" me-1 pe-1 fmxw-200">Sampai :</p>
+                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkout"></input>
+                <button class="btn btn-sm px-3 btn-secondary ms-3">Generate</button>
+            </div>
+            </form>
         </div>
     </div>
     <!-- Tabel Room Income End -->
 
-    <!-- Tabel DP Start -->
+    <!-- Tabel Room Income Start -->
     <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">
         <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
-            <h3>Daftar DP</h3>
-            <div class="d-flex mb-3">
-                <select class="form-select me-3 fmxw-200" aria-label="Message select example">
-                    <option selected>Filter Name</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete User</option>
+            <h3>Pemasukan Kamar</h3>
+        </div>
+        </br>
+        <div class="table-responsive">
+        <form action="{{ route('admin.finance.index') }}" method="GET">
+        @csrf
+        <div class="d-flex mb-3" >
+                <p class=" me-1 pe-1 fmxw-200">Check In :</p>
+                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin"></input>
+                <p class=" me-1 pe-1 fmxw-200">Check Out :</p>
+                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkout"></input>
+                <select class="form-select me-3 pe-5 fmxw-200" name="payment_method_id" aria-label="Message select example">
+                    <option selected value>Metode Pembayaran</option>
+                    @foreach($paymentMethod as $method)
+                    <option value="{{$method->id}}">{{ $method->payment_method }}</option>
+                    @endforeach
                 </select>
-                <select class="form-select me-3 fmxw-200" aria-label="Message select example">
-                    <option selected>Filter ID</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete User</option>
+                <select class="form-select me-3 pe-5 fmxw-200" name="payment_method_id" aria-label="Message select example">
+                    <option selected value>Cabang</option>
+                    @foreach($hotelBranch as $branches)
+                    <option value="{{$branches->id}}">{{ $branches->hotel_name }}</option>
+                    @endforeach
                 </select>
-                <select class="form-select fmxw-200" aria-label="Message select example">
-                    <option selected>Filter Status</option>
-                    <option value="1">Send Email</option>
-                    <option value="2">Change Group</option>
-                    <option value="3">Delete User</option>
-                </select>
+                <select class="form-select pe-5 fmxw-200" name="payment_check" aria-label="Message select example">
+                    <option selected value>Status</option>
+                    <option value="Oncheck">Oncheck</option>
+                    <option value="Valid">Valid</option>
+                    <option value="Invalid">Invalid</option>
+                </select>   
                 <button class="btn btn-sm px-3 btn-secondary ms-3">Apply</button>
             </div>
-        </div>
-        <div class="table-responsive">
+            </form>
             <table style="text-align: center" class="table table-hover table-bordered">
                 <thead style="vertical-align: middle">
-                    <tr>
+                <tr>
                         <th rowspan="2" class="border-gray-200">ID Bill</th>
                         <th rowspan="2" class="border-gray-200">Status</th>
                         <th rowspan="2" class="border-gray-200">Nama</th>
@@ -373,98 +217,206 @@
                 </thead>
                 <tbody>
                     <!-- Item -->
+                    @foreach($reservation as $reservationData)
                     <tr>
                         {{-- <td><a
                                 href="#" data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
                         </td> --}}
                         <td><span data-bs-toggle="modal"data-bs-target="#modal-detail"
-                                class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-success">Claimed</span></td>
-                        <td><span class="fw-normal">Anang</span></td>
-                        <td><span class="fw-normal">Reservation Guest</span></td>
-                        <td><span class="fw-normal">Cash</span></td>
-                        <td><span class="fw-bold">Rp 300.000</span></td>
-                        <td><span class="fw-normal">Non Cash</span></td>
-                        <td><span class="fw-bold">Rp 200.000</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td>102</td>
-                        <td>Deluxe</td>
-                    </tr>
-                    <!-- Item -->
-                    <!-- Item -->
-                    <tr>
-                        {{-- <td><a
-                                href="#"data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
-                        </td> --}}
-                        <td><span class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-success">Claimed</span></td>
-                        <td><span class="fw-normal">Anang</span></td>
-                        <td><span class="fw-normal">Reservation Guest</span></td>
-                        <td><span class="fw-normal">-</span></td>
-                        <td><span class="fw-bold">-</span></td>
-                        <td><span class="fw-normal">Non Cash</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td>102</td>
-                        <td>Deluxe</td>
-                    </tr>
-                    <!-- Item -->
-                    <!-- Item -->
-                    <tr>
-                        {{-- <td><a
-                                href="#"data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
-                        </td> --}}
-                        <td><span class="fw-normal">Nota_00001223</span></td>
-                        <td><span class="fw-bold text-success">Claimed</span></td>
-                        <td><span class="fw-normal">Anang</span></td>
-                        <td><span class="fw-normal">Reservation Guest</span></td>
-                        <td><span class="fw-normal">Cash</span></td>
-                        <td><span class="fw-bold">Rp 300.000</span></td>
-                        <td><span class="fw-normal">Non Cash</span></td>
-                        <td><span class="fw-bold">Rp 200.000</span></td>
-                        <td><span class="fw-bold">Rp 500.000</span></td>
-                        <td>102</td>
-                        <td>Deluxe</td>
+                                class="fw-normal">{{ $reservationData->payment->payment_code ?? '' }}</span></td>
+                        <td><span class="fw-bold text-warning">{{ $reservationData->payment->payment_check ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ $reservationData->customer->customer_name ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ $reservationData->reservationMethod->reservation_method ?? '' }}</span></td>
+
+                        @if($reservationData->payment->payment_status == 'Lunas')
+                        <td><span class="fw-normal">Tidak</span></td>
+                        <td><span class="fw-normal">Rp. 0</span></td>
+                        <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
+                        <td><span class="fw-normal">Rp. {{ $reservationData->payment->total_payment ?? 0 }}</span></td>
+                        <td><span class="fw-normal">Rp. {{ ($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0) }}</span></td>
+                        @elseif($reservationData->payment->payment_status == 'DP')
+                        <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ $reservationData->payment->downPayment->down_payment ?? 0 }}</span></td>
+                        <td><span class="fw-normal">Tidak</span></td>
+                        <td><span class="fw-normal">Rp. 0</span></td>
+                        <td><span class="fw-bold">Rp. {{ ($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0) }}</span></td>
+                        @else
+                        <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ $reservationData->payment->downPayment->down_payment ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
+                        <td><span class="fw-normal">Rp. {{ $reservationData->payment->total_payment ?? 0 }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ ($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0) }}</span></td>
+                        @endif
+                        
+                        <td><span class="fw-bold">
+                            @foreach($reservationData->hotelRoomReserved as $reservedRooms)
+                            @if($reservationData->hotelRoomReserved->count() > 1)
+                                @if ($loop->last)
+                                    {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }} 
+                                @else
+                                    {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }} &
+                                @endif
+                            @else
+                                {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }}
+                            @endif
+                            @endforeach
+                        </span></td>
+                        <td><span class="fw-bold">@foreach($reservationData->hotelRoomReserved as $reservedRooms)
+                            @if($reservationData->hotelRoomReserved->count() > 1)
+                                @if ($loop->last)
+                                    {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }}
+                                @else
+                                    {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }} &
+                                @endif
+                            @else
+                                {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }}
+                            @endif
+                            @endforeach
+                        </span></td>
 
                     </tr>
+                    @endforeach
                     <!-- Item -->
                 </tbody>
             </table>
         </div>
-
+        
         <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
             <nav aria-label="Page navigation example">
                 <ul class="pagination mb-0">
-                    <li class="page-item">
-                        <a class="page-link" href="#">Previous</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item active">
-                        <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">4</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">5</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
+                    {{ $reservation->links('vendor.pagination.default') }}
                 </ul>
             </nav>
-            <div class="align-item-right"><b>Pendapatan Total : </b><b class="text-success">Rp 100.000.000</b></div>
+            <!-- <div class="align-item-right"><b>Pendapatan Total Hari Ini : </b><b class="text-success">Rp 100.000.000</b></div> -->
         </div>
     </div>
-    <!-- Tabel DP Income End -->
+    <!-- Tabel Room Income End -->
+
+    <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">
+        <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+            <h3>Daftar DP</h3>
+        </div>
+        </br>
+        <div class="table-responsive">
+        <form action="{{ route('admin.finance.index') }}" method="GET">
+        @csrf
+        <div class="d-flex mb-3" >
+                <p class=" me-1 pe-1 fmxw-200">Check In :</p>
+                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin_dp"></input>
+                <p class=" me-1 pe-1 fmxw-200">Check Out :</p>
+                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkout_dp"></input>
+                <select class="form-select me-3 pe-5 fmxw-200" name="payment_method_id_dp" aria-label="Message select example">
+                    <option selected value>Metode Pembayaran</option>
+                    @foreach($paymentMethod as $method)
+                    <option value="{{$method->id}}">{{ $method->payment_method }}</option>
+                    @endforeach
+                </select>
+                <select class="form-select me-3 pe-5 fmxw-200" name="hotel_branch_dp" aria-label="Message select example">
+                    <option selected value>Cabang</option>
+                    @foreach($hotelBranch as $branches)
+                    <option value="{{$branches->id}}">{{ $branches->hotel_name }}</option>
+                    @endforeach
+                </select>
+                <select class="form-select pe-5 fmxw-200" name="payment_check_dp" aria-label="Message select example">
+                    <option selected value>Status</option>
+                    <option value="Oncheck">Oncheck</option>
+                    <option value="Valid">Valid</option>
+                    <option value="Invalid">Invalid</option>
+                </select>   
+                <button class="btn btn-sm px-3 btn-secondary ms-3">Apply</button>
+            </div>
+            </form>
+            <table style="text-align: center" class="table table-hover table-bordered">
+                <thead style="vertical-align: middle">
+                <tr>
+                        <th rowspan="2" class="border-gray-200">ID Bill</th>
+                        <th rowspan="2" class="border-gray-200">Status</th>
+                        <th rowspan="2" class="border-gray-200">Nama</th>
+                        <th rowspan="2" class="border-gray-200">Type Tamu</th>
+                        <th colspan="2" class="border-gray-200">Metode <br>Pembayaran</th>
+                        <th rowspan="2" class="border-gray-200">Harga <br>Total</th>
+                        <th rowspan="2" class="border-gray-200">No <br>Kamar</th>
+                        <th rowspan="2" class="border-gray-200">Type</th>
+                        {{-- <th colspan="2" class="border-gray-200">CheckIn</th>
+                        <th colspan="2" class="border-gray-200">CheckOut</th>
+                        <th rowspan="2" class="border-gray-200">Durasi</th>
+                        <th colspan="4" class="border-gray-200">Additional</th> --}}
+                    </tr>
+                    <tr>
+                        <th>DP</th>
+                        <th>Nominal</th>
+                        {{-- <th>Tanggal</th>
+                        <th>Jam</th>
+                        <th>Tanggal</th>
+                        <th>Jam</th>
+                        <th>Breakfast</th>
+                        <th>Harga</th>
+                        <th>Extra-Bed</th>
+                        <th>Harga</th> --}}
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Item -->
+                    @foreach($downPayment as $downPayments)
+                    <tr>
+                        {{-- <td><a
+                                href="#" data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
+                        </td> --}}
+                        <td><span data-bs-toggle="modal"data-bs-target="#modal-detail"
+                                class="fw-normal">{{ $downPayments->payment->payment_code ?? '' }}</span></td>
+                        <td><span class="fw-bold text-warning">{{ $downPayments->payment->payment_check ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ $downPayments->customer->customer_name ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ $downPayments->reservationMethod->reservation_method ?? '' }}</span></td>
+
+                        <td><span class="fw-normal">{{ $downPayments->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ number_format($downPayments->payment->downPayment->down_payment ?? 0 , 0, ',', '.') }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ number_format(($downPayments->payment->total_price ?? 0) + ($downPayments->payment->total_price_amenities ?? 0) - ($downPayments->payment->discount ?? 0), 0, ',', '.') }}</span></td>
+                        
+                        <td><span class="fw-bold">
+                            @foreach($downPayments->hotelRoomReserved as $reservedRooms)
+                            @if($downPayments->hotelRoomReserved->count() > 1)
+                                @if ($loop->last)
+                                    {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }} 
+                                @else
+                                    {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }} &
+                                @endif
+                            @else
+                                {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }}
+                            @endif
+                            @endforeach
+                        </span></td>
+                        <td><span class="fw-bold">@foreach($downPayments->hotelRoomReserved as $reservedRooms)
+                            @if($downPayments->hotelRoomReserved->count() > 1)
+                                @if ($loop->last)
+                                    {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }}
+                                @else
+                                    {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }} &
+                                @endif
+                            @else
+                                {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }}
+                            @endif
+                            @endforeach
+                        </span></td>
+
+                    </tr>
+                    @endforeach
+                    <!-- Item -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination mb-0">
+                    {{ $downPayment->links('vendor.pagination.default') }}
+                </ul>
+            </nav>
+            <!-- <div class="align-item-right"><b>Pendapatan Total Hari Ini : </b><b class="text-success">Rp 100.000.000</b></div> -->
+        </div>
+    </div>
 
     <!-- Tabel F&B Income Start -->
-    <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">
+    <!-- <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">
         <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
             <h3>Pemasukan FNB</h3>
             {{-- <div class="d-flex mb-3">
@@ -505,7 +457,6 @@
 
                 </thead>
                 <tbody>
-                    <!-- Item -->
                     <tr>
                         {{-- <td><a
                                 href="#" data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
@@ -516,8 +467,6 @@
                         <td><span class="fw-normal">Frestea</span></td>
                         <td><span class="fw-bold">Rp 300.000</span></td>
                     </tr>
-                    <!-- Item -->
-                    <!-- Item -->
                     <tr>
                         {{-- <td><a
                                 href="#"data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
@@ -528,8 +477,6 @@
                         <td><span class="fw-normal">Frestea</span></td>
                         <td><span class="fw-bold">Rp 300.000</span></td>
                     </tr>
-                    <!-- Item -->
-                    <!-- Item -->
                     <tr>
                         {{-- <td><a
                                 href="#"data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
@@ -540,7 +487,7 @@
                         <td><span class="fw-normal">Frestea</span></td>
                         <td><span class="fw-bold">Rp 300.000</span></td>
                     </tr>
-                    <!-- Item -->
+
                 </tbody>
             </table>
         </div>
@@ -573,7 +520,7 @@
             </nav>
             <div class="align-item-right"><b>Pendapatan Total : </b><b class="text-success">Rp 100.000.000</b></div>
         </div>
-    </div>
+    </div> -->
     <!-- Tabel F&B Income End -->
 
     <!-- Modal Content -->
@@ -921,3 +868,10 @@
     </div>
     <!-- End of Modal Content -->
 @endsection
+@push('scripts')
+<script type="text/javascript">
+        function zoom() {
+            document.body.style.zoom = "80%" 
+        }
+</script>
+@endpush
