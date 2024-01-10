@@ -48,9 +48,12 @@ class FinanceController extends Controller
             $paymentId[] = $reservationData->payment_id;
         }   
 
-        $totalIncomeRoom = HotelRoomReserved::whereIn('reservation_id', $reservationId)->sum('price');
+        $dateNow = Carbon::now('Asia/Bangkok')->isoFormat('DD MMMM YYYY');
+        $dateQuery = Carbon::now()->toDateString();
+        
+        $totalIncomeRoom = Payment::whereIn('id', $paymentId)->where('created_at', $dateQuery)->sum('total_payment');
         $totalIncomeRoom = number_format($totalIncomeRoom, 0, ',', '.');
-        $totalDownPayment = DownPayment::whereIn('payment_id', $paymentId)->sum('down_payment');
+        $totalDownPayment = DownPayment::whereIn('payment_id', $paymentId)->where('created_at', $dateQuery)->sum('down_payment');
         $totalDownPayment = number_format($totalDownPayment, 0, ',', '.');
 
         // Apply filters based on dropdown selections
@@ -139,7 +142,7 @@ class FinanceController extends Controller
             $queryDP->where('payment_status', 'DP');
         })->with('payment.paymentDetail.paymentMethod', 'customer', 'payment.downPayment', 'hotelRoomReserved', 'reservationMethod',)->paginate(10);
 
-        return view('admin.finance.index', compact('reservation', 'downPayment', 'paymentMethod', 'totalIncomeRoom', 'totalDownPayment'));
+        return view('admin.finance.index', compact('reservation', 'downPayment', 'paymentMethod', 'totalIncomeRoom', 'totalDownPayment', 'dateNow'));
     }
 
     public function getFinanceDataBranch()

@@ -25,18 +25,14 @@
                                         d="M320 32c0-9.9-4.5-19.2-12.3-25.2S289.8-1.4 280.2 1l-179.9 45C79 51.3 64 70.5 64 92.5V448H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H96 288h32V480 32zM256 256c0 17.7-10.7 32-24 32s-24-14.3-24-32s10.7-32 24-32s24 14.3 24 32zm96-128h96V480c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H512V128c0-35.3-28.7-64-64-64H352v64z" />
                                 </svg>
                             </div>
-                            <div class="d-sm-none">
-                                <h2 class="h5">Room Income</h2>
-                                <h6 class="fw-extrabold mb-1">Rp 3,143,594</h6>
-                            </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                             <div class="d-none d-sm-block">
-                                <h2 class="h6 text-gray-400 mb-0">Room Income</h2>
+                                <h2 class="h6 text-gray-400 mb-0">Total Room Income</h2>
                                 <h6 class="fw-extrabold mb-2">Rp. {{ $totalIncomeRoom }}</h6>
                             </div>
                             <div class="small d-flex mt-1">
-                                <div>Dalam Sebulan Terakhir <svg class="icon icon-xs text-success" fill="currentColor"
+                                <div>Dalam {{ $dateNow }} <svg class="icon icon-xs text-success" fill="currentColor"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 </div>
                             </div>
@@ -58,18 +54,14 @@
                                         d="M64 32C28.7 32 0 60.7 0 96v32H576V96c0-35.3-28.7-64-64-64H64zM576 224H0V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V224zM112 352h64c8.8 0 16 7.2 16 16s-7.2 16-16 16H112c-8.8 0-16-7.2-16-16s7.2-16 16-16zm112 16c0-8.8 7.2-16 16-16H368c8.8 0 16 7.2 16 16s-7.2 16-16 16H240c-8.8 0-16-7.2-16-16z" />
                                 </svg>
                             </div>
-                            <div class="d-sm-none">
-                                <h2 class="fw-extrabold h5">Down Payment</h2>
-                                <h6 class="mb-1">Rp 3,143,594</h6>
-                            </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                             <div class="d-none d-sm-block">
-                                <h2 class="h6 text-gray-400 mb-0">Down Payment</h2>
+                                <h2 class="h6 text-gray-400 mb-0">Total Down Payment</h2>
                                 <h6 class="fw-extrabold mb-2">Rp. {{ $totalDownPayment }}</h6>
                             </div>
                             <div class="small d-flex mt-1">
-                                <div>Dalam Sebulan Terakhir <svg class="icon icon-xs text-success" fill="currentColor"
+                                <div>Dalam {{ $dateNow }} <svg class="icon icon-xs text-success" fill="currentColor"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 </div>
                             </div>
@@ -91,10 +83,6 @@
                                         d="M96 64c0-17.7 14.3-32 32-32H448h64c70.7 0 128 57.3 128 128s-57.3 128-128 128H480c0 53-43 96-96 96H192c-53 0-96-43-96-96V64zM480 224h32c35.3 0 64-28.7 64-64s-28.7-64-64-64H480V224zM32 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32z" />
                                 </svg>
                             </div>
-                            <div class="d-sm-none">
-                                <h2 class="fw-extrabold h5">Food & Beverage</h2>
-                                <h6 class="mb-1">Rp. 0</h6>
-                            </div>
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                             <div class="d-none d-sm-block">
@@ -102,7 +90,7 @@
                                 <h6 class="fw-extrabold mb-2">Rp. 0</h6>
                             </div>
                             <div class="small d-flex mt-1">
-                                <div>Dalam Sebulan Terakhir <svg class="icon icon-xs text-success" fill="currentColor"
+                                <div>Dalam {{ $dateNow }} <svg class="icon icon-xs text-success" fill="currentColor"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 </div>
                             </div>
