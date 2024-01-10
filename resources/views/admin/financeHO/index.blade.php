@@ -32,11 +32,11 @@
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                             <div class="d-none d-sm-block">
-                                <h2 class="h6 text-gray-400 mb-0">Room Income</h2>
+                                <h2 class="h6 text-gray-400 mb-0">Total Room Income</h2>
                                 <h6 class="fw-extrabold mb-2">Rp. {{ $totalIncomeRoom }}</h6>
                             </div>
                             <div class="small d-flex mt-1">
-                                <div>Dalam Sebulan Terakhir <svg class="icon icon-xs text-success" fill="currentColor"
+                                <div>Dalam {{ $dateNow }} <svg class="icon icon-xs text-success" fill="currentColor"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 </div>
                             </div>
@@ -65,11 +65,11 @@
                         </div>
                         <div class="col-12 col-xl-7 px-xl-0">
                             <div class="d-none d-sm-block">
-                                <h2 class="h6 text-gray-400 mb-0">Down Payment</h2>
+                                <h2 class="h6 text-gray-400 mb-0">Total Down Payment</h2>
                                 <h6 class="fw-extrabold mb-2">Rp. {{ $totalDownPayment }}</h6>
                             </div>
                             <div class="small d-flex mt-1">
-                                <div>Dalam Sebulan Terakhir <svg class="icon icon-xs text-success" fill="currentColor"
+                                <div>Dalam {{ $dateNow }} <svg class="icon icon-xs text-success" fill="currentColor"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                                 <h6 class="fw-extrabold mb-2">Rp. 0</h6>
                             </div>
                             <div class="small d-flex mt-1">
-                                <div>Dalam Sebulan Terakhir <svg class="icon icon-xs text-success" fill="currentColor"
+                                <div>Dalam {{ $dateNow }} <svg class="icon icon-xs text-success" fill="currentColor"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 </div>
                             </div>
@@ -129,22 +129,50 @@
     <!-- Search Filter End -->
 
      <!-- Tabel Room Income Start -->
-     <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">
-        <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
-            <h3>Generate Laporan Finance</h3>
-        </div>
-        </br>
-        <div class="table-responsive">
-        <form action="{{ route('admin.finance.index') }}" method="GET">
-        @csrf
-        <div class="d-flex mb-3" >
-                <p class=" me-1 pe-1 fmxw-200">Dari :</p>
-                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin"></input>
-                <p class=" me-1 pe-1 fmxw-200">Sampai :</p>
-                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkout"></input>
-                <button class="btn btn-sm px-3 btn-secondary ms-3">Generate</button>
+     <div class="row mb-0">
+        <div class="col-12 col-sm-6 col-xl-6 mb-4">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+                    <h3>Generate Laporan Finance PDF</h3>
+                </div>
+                </br>
+                <div class="table-responsive">
+                <form action="{{ route('admin.finance.report.front-office') }}" method="POST">
+                @csrf
+                <div class="d-flex mb-3" >
+                        <p class=" me-1 pe-1 fmxw-200">Dari :</p>
+                        <input type="date" class="form-control me-3 pe-5 fmxw-200" id="pdf_from" name="pdf_from"></input>
+                        <p class=" me-1 pe-1 fmxw-200">Sampai :</p>
+                        <input type="date" class="form-control me-3 pe-5 fmxw-200" id="pdf_to" name="pdf_to"></input>
+                        <button class="btn btn-sm px-3 btn-secondary ms-3" type="submit">Generate</button>
+                    </div>
+                    </form>
+                </div>
+                </div>
             </div>
-            </form>
+        </div>
+        <div class="col-12 col-sm-6 col-xl-6 mb-4">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+                    <h3>Generate Laporan Finance Excel</h3>
+                </div>
+                </br>
+                <div class="table-responsive">
+                <form action="{{ route('admin.finance.report.export-excel.front-office') }}" method="POST">
+                @csrf
+                <div class="d-flex mb-3" >
+                        <p class=" me-1 pe-1 fmxw-200">Dari :</p>
+                        <input type="date" class="form-control me-3 pe-5 fmxw-200" name="excel_from"></input>
+                        <p class=" me-1 pe-1 fmxw-200">Sampai :</p>
+                        <input type="date" class="form-control me-3 pe-5 fmxw-200" name="excel_to"></input>
+                        <button class="btn btn-sm px-3 btn-secondary ms-3">Generate</button>
+                    </div>
+                    </form>
+                </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Tabel Room Income End -->
@@ -159,6 +187,8 @@
         <form action="{{ route('admin.finance.index') }}" method="GET">
         @csrf
         <div class="d-flex mb-3" >
+                <p class=" me-1 pe-1 fmxw-200">Tanggal Pembayaran :</p>
+                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="payment_date"></input>
                 <p class=" me-1 pe-1 fmxw-200">Check In :</p>
                 <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin"></input>
                 <p class=" me-1 pe-1 fmxw-200">Check Out :</p>
@@ -188,6 +218,7 @@
                 <thead style="vertical-align: middle">
                 <tr>
                         <th rowspan="2" class="border-gray-200">ID Bill</th>
+                        <th rowspan="2" class="border-gray-200">Tanggal Pembayaran</th>
                         <th rowspan="2" class="border-gray-200">Status</th>
                         <th rowspan="2" class="border-gray-200">Nama</th>
                         <th rowspan="2" class="border-gray-200">Type Tamu</th>
@@ -224,6 +255,7 @@
                         </td> --}}
                         <td><span data-bs-toggle="modal"data-bs-target="#modal-detail"
                                 class="fw-normal">{{ $reservationData->payment->payment_code ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ \Carbon\Carbon::parse($reservationData->payment->updated_at ?? '')->timezone('Asia/Bangkok')->isoFormat('DD MMMM YYYY') }}</span></td>
                         <td><span class="fw-bold text-warning">{{ $reservationData->payment->payment_check ?? '' }}</span></td>
                         <td><span class="fw-normal">{{ $reservationData->customer->customer_name ?? '' }}</span></td>
                         <td><span class="fw-normal">{{ $reservationData->reservationMethod->reservation_method ?? '' }}</span></td>
@@ -232,20 +264,20 @@
                         <td><span class="fw-normal">Tidak</span></td>
                         <td><span class="fw-normal">Rp. 0</span></td>
                         <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
-                        <td><span class="fw-normal">Rp. {{ $reservationData->payment->total_payment ?? 0 }}</span></td>
-                        <td><span class="fw-normal">Rp. {{ ($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0) }}</span></td>
+                        <td><span class="fw-normal">Rp. {{ number_format($reservationData->payment->total_payment ?? 0, 0, ',', '.') }}</span></td>
+                        <td><span class="fw-normal">Rp. {{ number_format(($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0), 0, ',', '.') }}</span></td>
                         @elseif($reservationData->payment->payment_status == 'DP')
                         <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
-                        <td><span class="fw-bold">Rp. {{ $reservationData->payment->downPayment->down_payment ?? 0 }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ number_format($reservationData->payment->downPayment->down_payment ?? 0, 0, ',', '.')}}</span></td>
                         <td><span class="fw-normal">Tidak</span></td>
                         <td><span class="fw-normal">Rp. 0</span></td>
-                        <td><span class="fw-bold">Rp. {{ ($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0) }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ number_format(($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0), 0, ',', '.') }}</span></td>
                         @else
                         <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
                         <td><span class="fw-bold">Rp. {{ $reservationData->payment->downPayment->down_payment ?? '' }}</span></td>
                         <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
-                        <td><span class="fw-normal">Rp. {{ $reservationData->payment->total_payment ?? 0 }}</span></td>
-                        <td><span class="fw-bold">Rp. {{ ($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0) }}</span></td>
+                        <td><span class="fw-normal">Rp. {{ number_format($reservationData->payment->total_payment ?? 0, 0, ',', '.') }}</span></td>
+                        <td><span class="fw-bold">Rp. {{ number_format(($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0), 0, ',', '.') }}</span></td>
                         @endif
                         
                         <td><span class="fw-bold">
@@ -301,6 +333,8 @@
         <form action="{{ route('admin.finance.index') }}" method="GET">
         @csrf
         <div class="d-flex mb-3" >
+                <p class=" me-1 pe-1 fmxw-200">Tanggal Pembayaran :</p>
+                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="payment_date"></input>
                 <p class=" me-1 pe-1 fmxw-200">Check In :</p>
                 <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin_dp"></input>
                 <p class=" me-1 pe-1 fmxw-200">Check Out :</p>
@@ -330,6 +364,7 @@
                 <thead style="vertical-align: middle">
                 <tr>
                         <th rowspan="2" class="border-gray-200">ID Bill</th>
+                        <th rowspan="2" class="border-gray-200">Tanggal Pembayaran</th>
                         <th rowspan="2" class="border-gray-200">Status</th>
                         <th rowspan="2" class="border-gray-200">Nama</th>
                         <th rowspan="2" class="border-gray-200">Type Tamu</th>
@@ -364,6 +399,7 @@
                         </td> --}}
                         <td><span data-bs-toggle="modal"data-bs-target="#modal-detail"
                                 class="fw-normal">{{ $downPayments->payment->payment_code ?? '' }}</span></td>
+                        <td><span class="fw-normal">{{ \Carbon\Carbon::parse($downPayments->payment->updated_at ?? '')->timezone('Asia/Bangkok')->isoFormat('DD MMMM YYYY') }}</span></td>
                         <td><span class="fw-bold text-warning">{{ $downPayments->payment->payment_check ?? '' }}</span></td>
                         <td><span class="fw-normal">{{ $downPayments->customer->customer_name ?? '' }}</span></td>
                         <td><span class="fw-normal">{{ $downPayments->reservationMethod->reservation_method ?? '' }}</span></td>

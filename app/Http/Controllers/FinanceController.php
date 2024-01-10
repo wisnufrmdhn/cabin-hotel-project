@@ -145,14 +145,6 @@ class FinanceController extends Controller
         return view('admin.finance.index', compact('reservation', 'downPayment', 'paymentMethod', 'totalIncomeRoom', 'totalDownPayment', 'dateNow'));
     }
 
-    public function getFinanceDataBranch()
-    {
-        $user = Auth::user();
-        $pic = PicHotelBranch::where('user_id', $user->id)->first();
-        
-        $reservation = Reservation::where('hotel_branch_id', $pic->hotel_branch_id)->with('payment.paymentDetail', 'customer', 'payment.downPayment', 'hotelRoomReserved')->get();
-    }
-
     public function reportFrontOffice(Request $request)
     {
         $from = $request['pdf_from'];

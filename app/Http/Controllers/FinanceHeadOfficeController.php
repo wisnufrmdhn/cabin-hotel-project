@@ -33,9 +33,10 @@ class FinanceHeadOfficeController extends Controller
 
     public function index(Request $request)
     {
-        $user = Auth::user();
-        $paymentMethod = PaymentMethod::all();
         $hotelBranch = HotelBranch::all();
+        $user = Auth::user();
+        $pic = PicHotelBranch::where('user_id', $user->id)->first();
+        $paymentMethod = PaymentMethod::all();
         $query = Reservation::query();
         $queryDP = Reservation::query();
 
@@ -48,9 +49,12 @@ class FinanceHeadOfficeController extends Controller
             $paymentId[] = $reservationData->payment_id;
         }   
 
-        $totalIncomeRoom = HotelRoomReserved::whereIn('reservation_id', $reservationId)->sum('price');
+        $dateNow = Carbon::now('Asia/Bangkok')->isoFormat('DD MMMM YYYY');
+        $dateQuery = Carbon::now()->toDateString();
+        
+        $totalIncomeRoom = Payment::whereIn('id', $paymentId)->whereDate('created_at', $dateQuery)->sum('total_payment');
         $totalIncomeRoom = number_format($totalIncomeRoom, 0, ',', '.');
-        $totalDownPayment = DownPayment::whereIn('payment_id', $paymentId)->sum('down_payment');
+        $totalDownPayment = DownPayment::whereIn('payment_id', $paymentId)->whereDate('created_at', $dateQuery)->sum('down_payment');
         $totalDownPayment = number_format($totalDownPayment, 0, ',', '.');
 
         // Apply filters based on dropdown selections
@@ -73,6 +77,14 @@ class FinanceHeadOfficeController extends Controller
         }
 
         // Apply filters based on dropdown selections
+        if ($request->filled('payment_date')) {
+            $paymentDate = $request['payment_date'];
+
+            $query->whereHas('payment', function ($query) use ($paymentDate) {
+                $query->whereDate('updated_at', $paymentDate);
+            });
+        }
+
         if ($request->filled('checkin')) {
             $checkin = $request['checkin'];
 
@@ -105,6 +117,14 @@ class FinanceHeadOfficeController extends Controller
         }
 
         // Apply filters based on dropdown selections
+        if ($request->filled('payment_date_dp')) {
+            $paymentDate = $request['payment_date_dp'];
+
+            $queryDP->whereHas('payment', function ($queryDP) use ($paymentDate) {
+                $queryDP->whereDate('updated_at', $paymentDate);
+            });
+        }
+
         if ($request->filled('checkin_dp')) {
             $checkin = $request['checkin_dp'];
 
@@ -123,6 +143,6 @@ class FinanceHeadOfficeController extends Controller
             $queryDP->where('payment_status', 'DP');
         })->with('payment.paymentDetail.paymentMethod', 'customer', 'payment.downPayment', 'hotelRoomReserved', 'reservationMethod',)->paginate(10);
 
-        return view('admin.financeHO.index', compact('reservation', 'downPayment', 'paymentMethod', 'totalIncomeRoom', 'totalDownPayment', 'hotelBranch'));
+        return view('admin.financeHO.index', compact('reservation', 'downPayment', 'paymentMethod', 'totalIncomeRoom', 'totalDownPayment', 'dateNow', 'hotelBranch'));
     }
 }
