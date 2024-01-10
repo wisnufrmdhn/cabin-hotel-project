@@ -8,6 +8,7 @@ use App\Http\Controllers\FinanceHeadOfficeController;
 use App\Http\Controllers\BookingListController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\AjaxController;
 
 /*
@@ -47,6 +48,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::group(['as' => 'finance.', 'prefix' => 'finance'], function () {
             Route::get('/', [FinanceController::class, 'index'])->name('index');
             Route::post('/report/front-office', [FinanceController::class, 'reportFrontOffice'])->name('report.front-office');
+            Route::post('/report/export-excel/front-office', [FinanceController::class, 'reportExcelFrontOffice'])->name('report.export-excel.front-office');
         });
         Route::group(['as' => 'bookinglist.', 'prefix' => 'bookinglist'], function () {
             Route::get('/', [BookingListController::class, 'index'])->name('index');
@@ -57,6 +59,7 @@ Route::group(['middleware' => ['auth']], function () {
     });
     Route::get('/pdf/invoice/{invoiceId}', [PdfController::class, 'generateInvoice'])->name('pdf.invoices');
     Route::get('/pdf/report/finance-fo/{from?}/{to?}', [PdfController::class, 'generateReportFinanceFO'])->name('pdf.report.finance-fo');
+    Route::get('/excel/report/finance-fo/{from?}/{to?}', [ExcelController::class, 'exportReportFinanceFO'])->name('excel.report.finance-fo');
 });
 
 // This is financeHO route access

@@ -160,4 +160,10 @@ class FinanceController extends Controller
         return redirect()->route('pdf.report.finance-fo', ['from' => $from, 'to' => $to]);
     }
 
+    public function reportExcelFrontOffice(Request $request)
+    {
+        $from = $request['excel_from'];
+        $to = $request['excel_to'];
+        return redirect()->route('excel.report.finance-fo', ['from' => $from, 'to' => $to]);
+    }
 }

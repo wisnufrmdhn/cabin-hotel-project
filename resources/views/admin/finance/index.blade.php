@@ -146,13 +146,13 @@
                 </div>
                 </br>
                 <div class="table-responsive">
-                <form action="{{ route('admin.finance.index') }}" method="GET">
+                <form action="{{ route('admin.finance.report.export-excel.front-office') }}" method="POST">
                 @csrf
                 <div class="d-flex mb-3" >
                         <p class=" me-1 pe-1 fmxw-200">Dari :</p>
-                        <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin"></input>
+                        <input type="date" class="form-control me-3 pe-5 fmxw-200" name="excel_from"></input>
                         <p class=" me-1 pe-1 fmxw-200">Sampai :</p>
-                        <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkout"></input>
+                        <input type="date" class="form-control me-3 pe-5 fmxw-200" name="excel_to"></input>
                         <button class="btn btn-sm px-3 btn-secondary ms-3">Generate</button>
                     </div>
                     </form>
