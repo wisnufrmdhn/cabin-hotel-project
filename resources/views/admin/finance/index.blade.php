@@ -127,27 +127,52 @@
         </div>
     </div> --}}
     <!-- Search Filter End -->
-
-     <!-- Tabel Room Income Start -->
-     <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">
-        <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
-            <h3>Generate Laporan Finance</h3>
-        </div>
-        </br>
-        <div class="table-responsive">
-        <form action="{{ route('admin.finance.index') }}" method="GET">
-        @csrf
-        <div class="d-flex mb-3" >
-                <p class=" me-1 pe-1 fmxw-200">Dari :</p>
-                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin"></input>
-                <p class=" me-1 pe-1 fmxw-200">Sampai :</p>
-                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkout"></input>
-                <button class="btn btn-sm px-3 btn-secondary ms-3">Generate</button>
+    <div class="row mb-0">
+        <div class="col-12 col-sm-6 col-xl-6 mb-4">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+                    <h3>Generate Laporan Finance PDF</h3>
+                </div>
+                </br>
+                <div class="table-responsive">
+                <form action="{{ route('admin.finance.report.front-office') }}" method="POST">
+                @csrf
+                <div class="d-flex mb-3" >
+                        <p class=" me-1 pe-1 fmxw-200">Dari :</p>
+                        <input type="date" class="form-control me-3 pe-5 fmxw-200" id="pdf_from" name="pdf_from"></input>
+                        <p class=" me-1 pe-1 fmxw-200">Sampai :</p>
+                        <input type="date" class="form-control me-3 pe-5 fmxw-200" id="pdf_to" name="pdf_to"></input>
+                        <button class="btn btn-sm px-3 btn-secondary ms-3" type="submit">Generate</button>
+                    </div>
+                    </form>
+                </div>
+                </div>
             </div>
-            </form>
+        </div>
+        <div class="col-12 col-sm-6 col-xl-6 mb-4">
+            <div class="card border-0 shadow">
+                <div class="card-body">
+                <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+                    <h3>Generate Laporan Finance Excel</h3>
+                </div>
+                </br>
+                <div class="table-responsive">
+                <form action="{{ route('admin.finance.index') }}" method="GET">
+                @csrf
+                <div class="d-flex mb-3" >
+                        <p class=" me-1 pe-1 fmxw-200">Dari :</p>
+                        <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin"></input>
+                        <p class=" me-1 pe-1 fmxw-200">Sampai :</p>
+                        <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkout"></input>
+                        <button class="btn btn-sm px-3 btn-secondary ms-3">Generate</button>
+                    </div>
+                    </form>
+                </div>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- Tabel Room Income End -->
 
     <!-- Tabel Room Income Start -->
     <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">

@@ -150,4 +150,11 @@ class FinanceController extends Controller
         $reservation = Reservation::where('hotel_branch_id', $pic->hotel_branch_id)->with('payment.paymentDetail', 'customer', 'payment.downPayment', 'hotelRoomReserved')->get();
     }
 
+    public function reportFrontOffice(Request $request)
+    {
+        $from = $request['pdf_from'];
+        $to = $request['pdf_to'];
+        return redirect()->route('pdf.report.finance-fo', ['from' => $from, 'to' => $to]);
+    }
+
 }

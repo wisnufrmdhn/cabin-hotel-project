@@ -13,6 +13,7 @@ use App\Services\ReservationService;
 use App\Models\CustomerTmp;
 use App\Models\HotelRoomReservedTmp;
 use App\Models\ReservationTmp;
+use App\Models\Payment;
 use App\Models\PaymentAmenitiesTmp;
 use App\Models\Reservation;
 use App\Models\HotelBranch;
@@ -47,5 +48,21 @@ class PdfController extends Controller
         $pdf = PDF::loadView('pdf.invoice', compact('invoice', 'hotelRoomReserved', 'subtotal', 'cashier', 'discount', 'paymentAmenities', 'subtotalAmenities', 'i'));
 
         return $pdf->stream('invoice.pdf');
+    }
+
+    public function generateReportFinanceFO($from, $to)
+    {
+        $i = 1;
+        $user = Auth::user();
+        $pic = PicHotelBranch::where('user_id', $user->id)->first();
+        $branch = HotelBranch::where('id', $pic->hotel_branch_id)->first();
+        $branchName = $branch->hotel_name;
+
+        $payment = Payment::whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to)->with('downPayment')->get();
+        $totalPayment = number_format(Payment::whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to)->with('downPayment')->sum('total_payment'), 0, ',', '.');
+
+        $pdf = PDF::loadView('pdf.finance-fo', compact('i', 'branchName', 'from', 'to', 'payment', 'totalPayment'));
+
+        return $pdf->stream('report-finance-fo.pdf');
     }
 }

@@ -46,6 +46,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::group(['as' => 'finance.', 'prefix' => 'finance'], function () {
             Route::get('/', [FinanceController::class, 'index'])->name('index');
+            Route::post('/report/front-office', [FinanceController::class, 'reportFrontOffice'])->name('report.front-office');
         });
         Route::group(['as' => 'bookinglist.', 'prefix' => 'bookinglist'], function () {
             Route::get('/', [BookingListController::class, 'index'])->name('index');
@@ -55,6 +56,7 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
     Route::get('/pdf/invoice/{invoiceId}', [PdfController::class, 'generateInvoice'])->name('pdf.invoices');
+    Route::get('/pdf/report/finance-fo/{from?}/{to?}', [PdfController::class, 'generateReportFinanceFO'])->name('pdf.report.finance-fo');
 });
 
 // This is financeHO route access
