@@ -51,9 +51,9 @@ class FinanceController extends Controller
         $dateNow = Carbon::now('Asia/Bangkok')->isoFormat('DD MMMM YYYY');
         $dateQuery = Carbon::now()->toDateString();
         
-        $totalIncomeRoom = Payment::whereIn('id', $paymentId)->where('created_at', $dateQuery)->sum('total_payment');
+        $totalIncomeRoom = Payment::whereIn('id', $paymentId)->whereDate('created_at', $dateQuery)->sum('total_payment');
         $totalIncomeRoom = number_format($totalIncomeRoom, 0, ',', '.');
-        $totalDownPayment = DownPayment::whereIn('payment_id', $paymentId)->where('created_at', $dateQuery)->sum('down_payment');
+        $totalDownPayment = DownPayment::whereIn('payment_id', $paymentId)->whereDate('created_at', $dateQuery)->sum('down_payment');
         $totalDownPayment = number_format($totalDownPayment, 0, ',', '.');
 
         // Apply filters based on dropdown selections
