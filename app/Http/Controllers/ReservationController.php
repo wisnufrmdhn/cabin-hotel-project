@@ -127,9 +127,14 @@ class ReservationController extends Controller
     {
         try{    
             $store = $this->service->storeRoomOrder($request);
+
+            if (isset($store['error'])) {
+                // there's already duplicate reservation within the specified UTC date range
+                return redirect()->back()->withErrors(['error' => $store['error']]);
+            }
         }catch(\Throwable $th){
             return $th;
-            return redirect()->route('admin.reservation.index')->with('error', 'Room order failed to add');
+            return redirect()->back()->withErrors(['error' => $th]);
         }
         return redirect()->route('admin.reservation.index')->with('success', 'Room order added successfully');
     }

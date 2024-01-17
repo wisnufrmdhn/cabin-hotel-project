@@ -12,7 +12,7 @@
 @push('css')
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
-@section('content')
+@section('content') 
     <div class="py-4">
         <div class="d-flex justify-content-between w-100 flex-wrap">
             <div class="mb-3 mb-lg-0">
@@ -20,6 +20,12 @@
             </div>
         </div>
     </div>
+    <!-- Add this in your Blade view where you want to display the error -->
+    @if($errors->has('error'))
+        <div class="alert alert-danger">
+            {{ $errors->first('error') }}
+        </div>
+    @endif
     <div class="reservasi">
         <div class="row">
             <div class="col p-3 bg-dark border-end">

@@ -313,6 +313,7 @@ class ReservationService
 
     public function storeRoomOrder($request)
     {
+        $excludedStatuses = ['Checkout', 'Canceled'];
         $user = Auth::user();
         $picHotelBranch = PicHotelBranch::where('user_id', $user->id)->first();
         $customerTmp = CustomerTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->first();
@@ -326,6 +327,23 @@ class ReservationService
             $request['reservation_start_date'] = $request['reservation_start_date_daily'];
             //convert day and hour to datetime with carbon
             $request['reservation_end_date'] = Carbon::parse($request['reservation_start_date_daily'])->addDays($request['mixed_day'])->addHours($request['mixed_hour']);
+        }
+
+        $checkInDateTime = Carbon::parse($request['reservation_start_date']);
+        $checkOutDateTime = Carbon::parse($request['reservation_end_date']);
+        // Check if there's any reservation data within the date range
+        $hasReservationWithinRange = Reservation::where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
+            $query->where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
+                $query->whereBetween('reservation_start_date', [$checkInDateTime, $checkOutDateTime])
+                    ->orWhereBetween('reservation_end_date', [$checkInDateTime, $checkOutDateTime]);
+            })->orWhere(function ($query) use ($checkInDateTime, $checkOutDateTime) {
+                $query->where('reservation_start_date', '<=', $checkInDateTime)
+                    ->where('reservation_end_date', '>=', $checkOutDateTime);
+            });
+        })->exists();
+
+        if ($hasReservationWithinRange) {
+            return ['error' => 'Tambah kamar gagal sudah ada reservasi kamar di tanggal dan nomor kamar yang dipilih'];
         }
 
         if(!$reservationTmp){
