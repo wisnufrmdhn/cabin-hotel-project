@@ -20,10 +20,11 @@
             </div>
         </div>
     </div>
-    <!-- Add this in your Blade view where you want to display the error -->
     @if($errors->has('error'))
-        <div class="alert alert-danger">
-            {{ $errors->first('error') }}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span class="fas fa-bullhorn me-1"></span>
+            <strong>{{ $errors->first('error') }}</strong>
+            <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
     <div class="reservasi">
