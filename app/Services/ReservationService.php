@@ -329,17 +329,17 @@ class ReservationService
             $request['reservation_end_date'] = Carbon::parse($request['reservation_start_date_daily'])->addDays($request['mixed_day'])->addHours($request['mixed_hour']);
         }
 
-        $checkInDateTime = Carbon::parse($request['reservation_start_date']);
-        $checkOutDateTime = Carbon::parse($request['reservation_end_date']);
+        $checkInDateTime = date('Y-m-d', strtotime($request['reservation_start_date'])); 
+        $checkOutDateTime = date('Y-m-d', strtotime($request['reservation_end_date'])); 
+    
         // Check if there's any reservation data within the date range
-        $hasReservationWithinRange = Reservation::where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
+        $hasReservationWithinRange = Reservation::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->whereNotIn('status', $excludedStatuses)->with('hotelRoomReserved')->where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
             $query->where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
-                $query->whereBetween('reservation_start_date', [$checkInDateTime, $checkOutDateTime])
-                    ->orWhereBetween('reservation_end_date', [$checkInDateTime, $checkOutDateTime]);
-            })->orWhere(function ($query) use ($checkInDateTime, $checkOutDateTime) {
-                $query->where('reservation_start_date', '<=', $checkInDateTime)
-                    ->where('reservation_end_date', '>=', $checkOutDateTime);
+                $query->whereDate('reservation_start_date', '>=', $checkInDateTime)
+                    ->whereDate('reservation_start_date', '<=', $checkOutDateTime);
             });
+        })->whereHas('hotelRoomReserved', function ($query) use ($request) {
+            $query->where('hotel_room_number_id', $request['hotel_room_number_id']);
         })->exists();
 
         if ($hasReservationWithinRange) {
