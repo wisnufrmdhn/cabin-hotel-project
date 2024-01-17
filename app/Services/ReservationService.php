@@ -343,7 +343,7 @@ class ReservationService
         })->exists();
 
         if ($hasReservationWithinRange) {
-            return ['error' => 'Tambah kamar gagal sudah ada reservasi kamar di tanggal dan nomor kamar yang dipilih'];
+            return ['error' => 'Tambah kamar gagal karena sudah ada reservasi kamar di tanggal dan nomor kamar yang dipilih'];
         }
 
         if(!$reservationTmp){
