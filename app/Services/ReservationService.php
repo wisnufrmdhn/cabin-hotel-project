@@ -337,6 +337,9 @@ class ReservationService
             $query->where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
                 $query->whereDate('reservation_start_date', '>=', $checkInDateTime)
                     ->whereDate('reservation_start_date', '<=', $checkOutDateTime);
+                })->orWhere(function ($query) use ($checkInDateTime, $checkOutDateTime) {
+                    $query->whereDate('reservation_end_date', '>=', $checkInDateTime)
+                        ->whereDate('reservation_end_date', '<=', $checkOutDateTime);
             });
         })->whereHas('hotelRoomReserved', function ($query) use ($request) {
             $query->where('hotel_room_number_id', $request['hotel_room_number_id']);
