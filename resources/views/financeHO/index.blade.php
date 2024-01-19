@@ -1,4 +1,4 @@
-@extends('admin.layout.template')
+@extends('layout.template')
 @section('content')
     <!-- Header Start -->
     <div class="py-4">
@@ -138,7 +138,7 @@
                 </div>
                 </br>
                 <div class="table-responsive">
-                <form action="{{ route('admin.finance.report.front-office') }}" method="POST">
+                <form action="{{ route('financeHO.report.head-office') }}" method="POST">
                 @csrf
                 <div class="d-flex mb-3" >
                         <p class=" me-1 pe-1 fmxw-200">Dari :</p>
@@ -160,7 +160,7 @@
                 </div>
                 </br>
                 <div class="table-responsive">
-                <form action="{{ route('admin.finance.report.export-excel.front-office') }}" method="POST">
+                <form action="{{ route('financeHO.report.export-excel.head-office') }}" method="POST">
                 @csrf
                 <div class="d-flex mb-3" >
                         <p class=" me-1 pe-1 fmxw-200">Dari :</p>
@@ -184,7 +184,7 @@
         </div>
         </br>
         <div class="table-responsive">
-        <form action="{{ route('admin.finance.index') }}" method="GET">
+        <form action="{{ route('financeHO.index') }}" method="GET">
         @csrf
         <div class="d-flex mb-3" >
                 <p class=" me-1 pe-1 fmxw-200">Tanggal Pembayaran :</p>
@@ -199,8 +199,9 @@
                     <option value="{{$method->id}}">{{ $method->payment_method }}</option>
                     @endforeach
                 </select>
-                <select class="form-select me-3 pe-5 fmxw-200" name="payment_method_id" aria-label="Message select example">
+                <select class="form-select me-3 pe-5 fmxw-200" name="hotel_branch" aria-label="Message select example">
                     <option selected value>Cabang</option>
+                    <option value>Cabang</option>
                     @foreach($hotelBranch as $branches)
                     <option value="{{$branches->id}}">{{ $branches->hotel_name }}</option>
                     @endforeach
@@ -330,7 +331,7 @@
         </div>
         </br>
         <div class="table-responsive">
-        <form action="{{ route('admin.finance.index') }}" method="GET">
+        <form action="{{ route('financeHO.index') }}" method="GET">
         @csrf
         <div class="d-flex mb-3" >
                 <p class=" me-1 pe-1 fmxw-200">Tanggal Pembayaran :</p>
@@ -347,6 +348,7 @@
                 </select>
                 <select class="form-select me-3 pe-5 fmxw-200" name="hotel_branch_dp" aria-label="Message select example">
                     <option selected value>Cabang</option>
+                    <option value="All">Semua Cabang</option>
                     @foreach($hotelBranch as $branches)
                     <option value="{{$branches->id}}">{{ $branches->hotel_name }}</option>
                     @endforeach

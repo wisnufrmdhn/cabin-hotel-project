@@ -183,7 +183,7 @@
                 </li>
                 @else
                 <li class="nav-item">
-                    <a href="{{ route('admin.finance.index') }}" class="nav-link">
+                    <a href="{{ route('financeHO.index') }}" class="nav-link">
                         <span class="sidebar-icon"><svg class="icon icon-xs me-2" fill="currentColor"
                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path>
@@ -435,4 +435,4 @@
             Sidebar end
         ***********************************-->
         @yield('content')
-        @include('admin.layout.footer')
+        @include('layout.footer')

@@ -53,9 +53,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::group(['as' => 'bookinglist.', 'prefix' => 'bookinglist'], function () {
             Route::get('/', [BookingListController::class, 'index'])->name('index');
         });
-        Route::group(['as' => 'finance-ho.', 'prefix' => 'finance-ho'], function () {
-            Route::get('/', [FinanceHeadOfficeController::class, 'index'])->name('index');
-        });
     });
     Route::get('/pdf/invoice/{invoiceId}', [PdfController::class, 'generateInvoice'])->name('pdf.invoices');
     Route::get('/pdf/report/finance-fo/{from?}/{to?}', [PdfController::class, 'generateReportFinanceFO'])->name('pdf.report.finance-fo');
@@ -66,6 +63,8 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['as' => 'financeHO.', 'prefix' => 'financeHO', 'middleware' => ['loginCheck:financeHO']], function () {
         Route::get('/', [FinanceHeadOfficeController::class, 'index'])->name('index');
+        Route::post('/report/head-office', [FinanceHeadOfficeController::class, 'reportHeadOffice'])->name('report.head-office');
+        Route::post('/report/export-excel/head-office', [FinanceHeadOfficeController::class, 'reportExcelHeadOffice'])->name('report.export-excel.head-office');
     });
 });
 

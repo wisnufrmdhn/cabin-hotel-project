@@ -1,4 +1,4 @@
-@extends('admin.layout.template')
+@extends('layout.template')
 @section('content')
     <!-- Header Start -->
     <div class="py-4">

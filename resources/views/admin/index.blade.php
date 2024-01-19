@@ -1,4 +1,4 @@
-@extends('admin.layout.template')
+@extends('layout.template')
 @section('content') 
             <div class="py-4">
                 <div class="dropdown">
