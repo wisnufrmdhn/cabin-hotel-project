@@ -33,7 +33,6 @@ class FinanceHeadOfficeController extends Controller
 
     public function index(Request $request)
     {
-        $hotelBranch = HotelBranch::all();
         $user = Auth::user();
         $pic = PicHotelBranch::where('user_id', $user->id)->first();
         $paymentMethod = PaymentMethod::all();
@@ -85,6 +84,17 @@ class FinanceHeadOfficeController extends Controller
             });
         }
 
+        if ($request->filled('hotel_branch')) {
+            
+            $hotelBranch = $request['hotel_branch'];
+
+            if($hotelBranch == 'All'){
+                $query->whereNot('hotel_branch_id', $hotelBranch);
+            }else{
+                $query->where('hotel_branch_id', $hotelBranch);
+            }
+        }
+
         if ($request->filled('checkin')) {
             $checkin = $request['checkin'];
 
@@ -130,9 +140,9 @@ class FinanceHeadOfficeController extends Controller
             $hotelBranch = $request['hotel_branch_dp'];
 
             if($hotelBranch == 'All'){
-                $query->whereNot('hotel_branch_id', $hotelBranch);
+                $queryDP->whereNot('hotel_branch_id', $hotelBranch);
             }else{
-                $query->where('hotel_branch_id', $hotelBranch);
+                $queryDP->where('hotel_branch_id', $hotelBranch);
             }
         }
 
@@ -153,6 +163,8 @@ class FinanceHeadOfficeController extends Controller
         $downPayment = $queryDP->whereHas('payment', function ($queryDP) {
             $queryDP->where('payment_status', 'DP');
         })->with('payment.paymentDetail.paymentMethod', 'customer', 'payment.downPayment', 'hotelRoomReserved', 'reservationMethod',)->paginate(10);
+
+        $hotelBranch = HotelBranch::all();
 
         return view('financeHO.index', compact('reservation', 'downPayment', 'paymentMethod', 'totalIncomeRoom', 'totalDownPayment', 'dateNow', 'hotelBranch'));
     }
