@@ -281,13 +281,21 @@ class ReservationService
         }else{
             // Upload customer photo and identity photo
             // Get the base64-encoded image data from the request
-            $customerPhotoBase64 = $request->input('customer_photo');
-            $customerIdentityPhotoBase64 = $request['customer_identity_photo'];
+            if($request->filled('customer_photo')){
+                $customerPhotoBase64 = $request->input('customer_photo');
+                $customerIdentityPhotoBase64 = $request['customer_identity_photo'];
 
-            $customerPhoto = $this->uploadPhotoCustomer($customerPhotoBase64, 'img/customer/customer_photos');
-            $customerIdentityPhoto = $this->uploadFile($customerIdentityPhotoBase64, 'img/customer/identity_photos');
-            $request['customer_identity_photo_url'] = $customerIdentityPhoto;
-            $request['customer_photo_url'] = $customerPhoto;
+                $customerPhoto = $this->uploadPhotoCustomer($customerPhotoBase64, 'img/customer/customer_photos');
+                $customerIdentityPhoto = $this->uploadFile($customerIdentityPhotoBase64, 'img/customer/identity_photos');
+                $request['customer_identity_photo_url'] = $customerIdentityPhoto;
+                $request['customer_photo_url'] = $customerPhoto;
+            }else{
+                $customerIdentityPhotoBase64 = $request['customer_identity_photo'];
+
+                $customerIdentityPhoto = $this->uploadFile($customerIdentityPhotoBase64, 'img/customer/identity_photos');
+                $request['customer_identity_photo_url'] = $customerIdentityPhoto;
+                $request['customer_photo_url'] = "NONE";
+            }
 
             //filter request only for customer data
             $customer = $request->only([
