@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laporan Finance FO</title>
+    <title>Laporan Finance HO</title>
     <style>
         body {
             font-family: Arial, sans-serif;

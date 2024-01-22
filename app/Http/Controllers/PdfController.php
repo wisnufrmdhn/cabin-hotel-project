@@ -57,12 +57,35 @@ class PdfController extends Controller
         $pic = PicHotelBranch::where('user_id', $user->id)->first();
         $branch = HotelBranch::where('id', $pic->hotel_branch_id)->first();
         $branchName = $branch->hotel_name;
+        $branchCode = $branch->hotel_code;
 
-        $payment = Payment::whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to)->with('downPayment')->get();
-        $totalPayment = number_format(Payment::whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to)->with('downPayment')->sum('total_payment'), 0, ',', '.');
+        $payment = Payment::where('payment_code', 'like', '%' . $branchCode . '%')->whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to)->with('downPayment')->get();
+        $totalPayment = number_format(Payment::where('payment_code', 'like', '%' . $branchCode . '%')->whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to)->with('downPayment')->sum('total_payment'), 0, ',', '.');
 
         $pdf = PDF::loadView('pdf.finance-fo', compact('i', 'branchName', 'from', 'to', 'payment', 'totalPayment'));
 
         return $pdf->stream('report-finance-fo.pdf');
+    }
+
+    public function generateReportFinanceHO($from, $to, $branch)
+    {
+        $i = 1;
+        $user = Auth::user();
+        
+        if($branch == 'All'){
+            $branchName = 'Semua Cabang';
+            $payment = Payment::whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to)->with('downPayment')->get();
+            $totalPayment = number_format(Payment::whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to)->with('downPayment')->sum('total_payment'), 0, ',', '.');
+        }else{
+            $hotelBranch = HotelBranch::where('id', $branch)->first();
+            $branchName = $hotelBranch->hotel_name;
+            $branchCode = $hotelBranch->hotel_code;
+            $payment = Payment::where('payment_code', 'like', '%' . $branchCode . '%')->whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to)->with('downPayment')->get();
+            $totalPayment = number_format(Payment::where('payment_code', 'like', '%' . $branchCode . '%')->whereDate('created_at', '>=', $from)->whereDate('created_at', '<=', $to)->with('downPayment')->sum('total_payment'), 0, ',', '.');
+        }
+
+        $pdf = PDF::loadView('pdf.finance-ho', compact('i', 'branchName', 'from', 'to', 'payment', 'totalPayment'));
+
+        return $pdf->stream('report-finance-ho.pdf');
     }
 }

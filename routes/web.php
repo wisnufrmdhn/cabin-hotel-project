@@ -57,6 +57,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/pdf/invoice/{invoiceId}', [PdfController::class, 'generateInvoice'])->name('pdf.invoices');
     Route::get('/pdf/report/finance-fo/{from?}/{to?}', [PdfController::class, 'generateReportFinanceFO'])->name('pdf.report.finance-fo');
     Route::get('/excel/report/finance-fo/{from?}/{to?}', [ExcelController::class, 'exportReportFinanceFO'])->name('excel.report.finance-fo');
+    Route::get('/pdf/report/finance-ho/{from?}/{to?}/{branch?}', [PdfController::class, 'generateReportFinanceHO'])->name('pdf.report.finance-ho');
 });
 
 // This is financeHO route access

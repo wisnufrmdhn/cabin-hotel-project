@@ -168,4 +168,12 @@ class FinanceHeadOfficeController extends Controller
 
         return view('financeHO.index', compact('reservation', 'downPayment', 'paymentMethod', 'totalIncomeRoom', 'totalDownPayment', 'dateNow', 'hotelBranch'));
     }
+
+    public function reportHeadOffice(Request $request)
+    {
+        $from = $request['pdf_from'];
+        $to = $request['pdf_to'];
+        $branch = $request['pdf_hotel_branch'];
+        return redirect()->route('pdf.report.finance-ho', ['from' => $from, 'to' => $to, 'branch' => $branch]);
+    }
 }

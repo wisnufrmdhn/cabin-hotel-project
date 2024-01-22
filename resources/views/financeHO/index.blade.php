@@ -145,6 +145,13 @@
                         <input type="date" class="form-control me-3 pe-5 fmxw-200" id="pdf_from" name="pdf_from"></input>
                         <p class=" me-1 pe-1 fmxw-200">Sampai :</p>
                         <input type="date" class="form-control me-3 pe-5 fmxw-200" id="pdf_to" name="pdf_to"></input>
+                        <select class="form-select me-3 pe-5 fmxw-200" name="pdf_hotel_branch" aria-label="Message select example">
+                            <option selected value>Cabang</option>
+                            <option value="All"> Semua Cabang</option>
+                            @foreach($hotelBranch as $branches)
+                            <option value="{{$branches->id}}">{{ $branches->hotel_name }}</option>
+                            @endforeach
+                        </select>
                         <button class="btn btn-sm px-3 btn-secondary ms-3" type="submit">Generate</button>
                     </div>
                     </form>
@@ -201,7 +208,7 @@
                 </select>
                 <select class="form-select me-3 pe-5 fmxw-200" name="hotel_branch" aria-label="Message select example">
                     <option selected value>Cabang</option>
-                    <option value>Cabang</option>
+                    <option value="All"> Semua Cabang</option>
                     @foreach($hotelBranch as $branches)
                     <option value="{{$branches->id}}">{{ $branches->hotel_name }}</option>
                     @endforeach
