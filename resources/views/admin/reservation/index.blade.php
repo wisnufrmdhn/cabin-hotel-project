@@ -821,6 +821,7 @@
                                 <option value="Card">Card</option>
                                 <option value="Qris">QRIS</option>
                                 <option value="Transfer">Transfer</option>
+                                <option value="VA">Virtual Account</option>
                             </select>
                         </div>
                         </div>
@@ -835,6 +836,18 @@
                             </select>
                             <input type="text" id="payment_transfer_value" name="payment_transfer_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
                             <input type="text" id="payment_method_transfer_reference" name="payment_method_transfer_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Transfer">
+                        </div>
+
+                        <!-- Form select untuk virtual account -->
+                        <div class="col paymentOption" id="VAOptions" style="display: none;">
+                            <select class="form-select w-100 mb-2"  id="payment_category_va" name="payment_category_va" aria-label="virtualAccount" style="margin-bottom: 10px;">
+                                <option selected value="">Pilih Virtual Account</option>
+                                    @foreach($paymentVA as $va)
+                                        <option value="{{ $va->id }}">{{ $va->payment_method }}</option>
+                                    @endforeach
+                            </select>
+                            <input type="text" id="payment_va_value" name="payment_va_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                            <input type="text" id="payment_method_va_reference" name="payment_method_va_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Virtual Account">
                         </div>
 
                         <!-- Form select untuk card -->
@@ -960,6 +973,7 @@
                                 <option value="Card">Card</option>
                                 <option value="Qris">QRIS</option>
                                 <option value="Transfer">Transfer</option>
+                                <option value="VA">Virtual Account</option>
                             </select>
                         </div>
                         </div>
@@ -974,6 +988,18 @@
                             </select>
                             <input type="text" id="payment_transfer_value" name="payment_transfer_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
                             <input type="text" id="payment_method_transfer_reference" name="payment_method_transfer_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Transfer">
+                        </div>
+
+                        <!-- Form select untuk virtual account -->
+                        <div class="col paymentOption" id="VAOptions" style="display: none;">
+                            <select class="form-select w-100 mb-2"  id="payment_category_va" name="payment_category_va" aria-label="virtualAccount" style="margin-bottom: 10px;">
+                                <option selected value="">Pilih Virtual Account</option>
+                                    @foreach($paymentVA as $va)
+                                        <option value="{{ $va->id }}">{{ $va->payment_method }}</option>
+                                    @endforeach
+                            </select>
+                            <input type="text" id="payment_va_value" name="payment_va_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                            <input type="text" id="payment_method_va_reference" name="payment_method_va_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Virtual Account">
                         </div>
 
                         <!-- Form select untuk card -->
@@ -1244,6 +1270,20 @@
                 $('#payment_category_card').removeAttr('required');
                 $('#payment_card_value').removeAttr('required');
                 $('#payment_method_card_number').removeAttr('required');
+            }else if ($(this).val() === 'VA') {
+                $('#VAOptions').show();
+                $('#payment_category_va').attr('required', 'required');
+                $('#payment_va_value').attr('required', 'required');
+                $('#payment_method_va_reference').attr('required', 'required');
+                $('#payment_category_transfer').removeAttr('required');
+                $('#payment_transfer_value').removeAttr('required');
+                $('#payment_method_transfer_reference').removeAttr('required');
+                $('#payment_category_card').removeAttr('required');
+                $('#payment_card_value').removeAttr('required');
+                $('#payment_method_card_number').removeAttr('required');
+                $('#payment_category_qris').removeAttr('required');
+                $('#payment_qris_value').removeAttr('required');
+                $('#payment_method_qris_reference').removeAttr('required');
             }
         });
     });
@@ -1296,6 +1336,8 @@
                 $('#cardOptions').show();
             } else if ($(this).val() === 'Qris') {
                 $('#qrisOptions').show();
+            }else if ($(this).val() === 'VA') {
+                $('#VAOptions').show();
             }
         });
     });

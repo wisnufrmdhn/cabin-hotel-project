@@ -103,6 +103,33 @@ class PaymentMethodSeeder extends Seeder
             [
                 'payment_method' => 'OTA Lainnya',
             ],
+            [
+                'payment_method' => 'VA BCA',
+            ],
+            [
+                'payment_method' => 'VA BRI',
+            ],
+            [
+                'payment_method' => 'VA BNI',
+            ],
+            [
+                'payment_method' => 'VA Mandiri',
+            ],
+            [
+                'payment_method' => 'VA CIMB',
+            ],
+            [
+                'payment_method' => 'VA BSI',
+            ],
+            [
+                'payment_method' => 'VA Danamon',
+            ],
+            [
+                'payment_method' => 'VA Permata',
+            ],
+            [
+                'payment_method' => 'VA by Doku',
+            ],
         ];
 
         foreach ($paymentMethods as $key => $value) {
