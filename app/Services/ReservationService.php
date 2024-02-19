@@ -73,11 +73,12 @@ class ReservationService
         $request['payment_card_value'] = $request['payment_card_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_card_value']) : 0;
         $request['payment_qris_value'] = $request['payment_qris_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_qris_value']) : 0;
         $request['payment_transfer_value'] = $request['payment_transfer_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_transfer_value']) : 0;
+        $request['payment_va_value'] = $request['payment_va_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_va_value']) : 0;
 
         if($request['payment_method_ota']){
             $request['total_payment'] = $request['payment_ota_value'];
         }else{
-            $request['total_payment'] = $request['payment_cash_value'] +  $request['payment_card_value'] + $request['payment_qris_value'] + $request['payment_transfer_value'];
+            $request['total_payment'] = $request['payment_cash_value'] +  $request['payment_card_value'] + $request['payment_qris_value'] + $request['payment_transfer_value'] + $request['payment_va_value'];
         }
 
         $request['discount'] = $request['discount'] ? (int) preg_replace("/[^0-9]/", "", $request['discount']) : 0;
@@ -118,24 +119,38 @@ class ReservationService
                 'claim_date'            => null,
             ]);
         }else{
-            $storePayment = Payment::create([
-                'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
-                'discount'              => $request['discount'],
-                'total_price'           => $totalPrice,
-                'total_price_amenities' => $amenitiesTotalPrice,
-                'total_payment'         => $request['total_payment'],
-                'change'                => $request['change'] ? (int) preg_replace("/[^0-9]/", "", $request['change']) : 0,
-                'payment_code'          => $request['payment_code'],
-                'payment_status'        => 'Lunas',
-                'payment_check'         => 'Oncheck'
-            ]);
+            if($customerTmp->reservation_method_id == 1){ //if customer type walk in
+                $storePayment = Payment::create([
+                    'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
+                    'discount'              => $request['discount'],
+                    'total_price'           => $totalPrice,
+                    'total_price_amenities' => $amenitiesTotalPrice,
+                    'total_payment'         => $request['total_payment'],
+                    'change'                => $request['change'] ? (int) preg_replace("/[^0-9]/", "", $request['change']) : 0,
+                    'payment_code'          => $request['payment_code'],
+                    'payment_status'        => 'Lunas',
+                    'payment_check'         => 'Oncheck'
+                ]);
+            }else{
+                $storePayment = Payment::create([
+                    'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
+                    'discount'              => $request['discount'],
+                    'total_price'           => $totalPrice,
+                    'total_price_amenities' => $amenitiesTotalPrice,
+                    'total_payment'         => $request['total_payment'],
+                    'change'                => $request['change'] ? (int) preg_replace("/[^0-9]/", "", $request['change']) : 0,
+                    'payment_code'          => $request['payment_code'],
+                    'payment_status'        => 'DP Langsung Lunas',
+                    'payment_check'         => 'Oncheck'
+                ]);
+            }
         }
 
         if($request['payment_method_ota']){
             $storePaymentDetailOta = PaymentDetail::create([
                 'payment_id'            => $storePayment->id,
                 'payment_method_id'     => $request['payment_category_ota'],
-                'payment'               => $request['payment_ota_value'],
+                'payment_detail_value'  => $request['payment_ota_value'],
                 'change'                => null,
                 'bank_name'             => null,
                 'card_number'           => null,
@@ -147,7 +162,7 @@ class ReservationService
             $storePaymentDetailCash = PaymentDetail::create([
                 'payment_id'            => $storePayment->id,
                 'payment_method_id'     => 1,
-                'payment'               => $request['payment_cash_value'],
+                'payment_detail_value'  => $request['payment_cash_value'],
                 'change'                => $request['change'] ? (int) preg_replace("/[^0-9]/", "", $request['change']) : 0,
                 'bank_name'             => null,
                 'card_number'           => null,
@@ -160,7 +175,7 @@ class ReservationService
                 $storePaymentDetailCard = PaymentDetail::create([
                     'payment_id'            => $storePayment->id,
                     'payment_method_id'     => $request['payment_category_card'],
-                    'payment'               => $request['payment_card_value'],
+                    'payment_detail_value'  => $request['payment_card_value'],
                     'change'                => null,
                     'bank_name'             => null,
                     'card_number'           => $request['payment_method_card_number'],
@@ -172,7 +187,7 @@ class ReservationService
                 $storePaymentDetailQris = PaymentDetail::create([
                     'payment_id'            => $storePayment->id,
                     'payment_method_id'     => $request['payment_category_qris'],
-                    'payment'               => $request['payment_qris_value'],
+                    'payment_detail_value'  => $request['payment_qris_value'],
                     'change'                => null,
                     'bank_name'             => null,
                     'card_number'           => null,
@@ -184,11 +199,23 @@ class ReservationService
                 $storePaymentDetailTransfer = PaymentDetail::create([
                     'payment_id'            => $storePayment->id,
                     'payment_method_id'     => $request['payment_category_transfer'],
-                    'payment'               => $request['payment_transfer_value'],
+                    'payment_detail_value'  => $request['payment_transfer_value'],
                     'change'                => null,
                     'bank_name'             => null,
                     'card_number'           => null,
                     'reference_number'      => $request['payment_method_transfer_reference'],
+                ]);
+            }
+
+            if($request['payment_category_va']){
+                $storePaymentDetailTransfer = PaymentDetail::create([
+                    'payment_id'            => $storePayment->id,
+                    'payment_method_id'     => $request['payment_category_va'],
+                    'payment_detail_value'  => $request['payment_va_value'],
+                    'change'                => null,
+                    'bank_name'             => null,
+                    'card_number'           => null,
+                    'reference_number'      => $request['payment_method_va_reference'],
                 ]);
             }
         }

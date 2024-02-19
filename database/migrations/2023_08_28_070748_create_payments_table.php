@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('change')->nullable();
             $table->string('payment_image')->nullable();
             $table->enum('payment_check', ['Valid', 'Invalid', 'Oncheck'])->nullable();
-            $table->enum('payment_status', ['Lunas', 'DP', 'Lunas + DP'])->nullable();
+            $table->enum('payment_status', ['Lunas', 'DP langsung lunas', 'DP', 'DP 2', 'Lunas + DP 1', 'Lunas + DP 2', 'DP Tidak Dilunasi', 'DP Tidak Dilunasi + Refund', 'DP Tidak Dilunasi + Reschedule'])->nullable();
             $table->timestamps();
         });
     }

@@ -44,6 +44,7 @@
                         <div class="col">
                             <select class="form-select w-100 mb-2" id="reservation_method_id"
                                 name="reservation_method_id" aria-label="State select example" disabled>
+                                <option selected value="">Pilih Jenis Tamu</option>
                                 @foreach ($reservationMethod as $methods)
                                     <option value="{{ $methods->id }}">
                                         {{ $methods->reservation_method }}
@@ -148,6 +149,7 @@
                         <div class="col">
                             <select class="form-select w-100 mb-2" id="reservation_method_id"
                                 name="reservation_method_id" aria-label="State select example">
+                                <option selected value="">Pilih Jenis Tamu</option>
                                 @foreach ($reservationMethod as $methods)
                                     <option value="{{ $methods->id }}">
                                         {{ $methods->reservation_method }}

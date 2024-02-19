@@ -36,10 +36,11 @@ class FinanceController extends Controller
         $pic = PicHotelBranch::where('user_id', $user->id)->first();
         $branchId = $pic->hotel_branch_id;
         $paymentMethod = PaymentMethod::all();
-        $query = Reservation::query();
+        $queryReservation = Reservation::query();
         $queryDP = Reservation::query();
+        $query = PaymentDetail::query();
 
-        $getReservation = $query->where('hotel_branch_id', $pic->hotel_branch_id)->get();
+        $getReservation = $queryReservation->where('hotel_branch_id', $pic->hotel_branch_id)->get();
         $reservationId = [];
         $paymentId = [];
 
@@ -56,93 +57,67 @@ class FinanceController extends Controller
         $totalDownPayment = DownPayment::whereIn('payment_id', $paymentId)->whereDate('created_at', $dateQuery)->sum('down_payment');
         $totalDownPayment = number_format($totalDownPayment, 0, ',', '.');
 
-        // Apply filters based on dropdown selections
-        if ($request->filled('payment_check')) {
-            $paymentCheck = $request['payment_check'];
-
-            $query->whereHas('payment', function ($query) use ($paymentCheck) {
-                $query->where('payment_check', $paymentCheck);
-            });
-        }
-        
-        if($request->filled('payment_method_id')){
-            $paymentMethodId = $request['payment_method_id'];
-
-            $query->whereHas('payment', function ($query) use ($paymentMethodId) {
-                $query->whereHas('paymentDetail', function ($query) use ($paymentMethodId) {
-                    $query->where('payment_method_id', $paymentMethodId);
+        if(!$request){
+            $roomIncome = $query->whereHas('payment', function ($query) use ($branchId, $dateQuery) {
+                $query->whereNotIn('payment_status', ['DP', 'DP 2']);
+                $query->whereHas('reservation', function ($query) use ($branchId, $dateQuery) {
+                    $query->where('hotel_branch_id', $branchId)->whereDate('reservation_start_date', $dateQuery);
                 });
-            });
-        }
+            })->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation')->paginate(10);
+        }else{
+            // Apply filters based on dropdown selections
+            if ($request->filled('payment_check')) {
+                $paymentCheck = $request['payment_check'];
 
-        // Apply filters based on dropdown selections
-        if ($request->filled('payment_date')) {
-            $paymentDate = $request['payment_date'];
-
-            $query->whereHas('payment', function ($query) use ($paymentDate) {
-                $query->whereDate('updated_at', $paymentDate);
-            });
-        }
-
-        if ($request->filled('checkin')) {
-            $checkin = $request['checkin'];
-
-            $query->whereDate('reservation_start_date', $checkin);
-        }
-
-        if ($request->filled('checkout')) {
-            $checkout = $request['checkout'];
-
-            $query->whereDate('reservation_end_date', $checkout);
-        }
-
-        // Apply filters based on dropdown selections
-        if ($request->filled('payment_check_dp')) {
-            $paymentCheck = $request['payment_check_dp'];
-
-            $queryDP->whereHas('payment', function ($queryDP) use ($paymentCheck) {
-                $queryDP->where('payment_check', $paymentCheck);
-            });
-        }
-        
-        if($request->filled('payment_method_id_dp')){
-            $paymentMethodId = $request['payment_method_id_dp'];
-
-            $queryDP->whereHas('payment', function ($queryDP) use ($paymentMethodId) {
-                $queryDP->whereHas('paymentDetail', function ($queryDP) use ($paymentMethodId) {
-                    $queryDP->where('payment_method_id', $paymentMethodId);
+                $query->whereHas('payment', function ($query) use ($paymentCheck) {
+                    $query->where('payment_check', $paymentCheck);
                 });
-            });
+            }
+            
+            if($request->filled('payment_method_id')){
+                $paymentMethodId = $request['payment_method_id'];
+
+                $query->whereHas('payment', function ($query) use ($paymentMethodId) {
+                    $query->whereHas('paymentDetail', function ($query) use ($paymentMethodId) {
+                        $query->where('payment_method_id', $paymentMethodId);
+                    });
+                });
+            }
+            
+            if ($request->filled('payment_date')) {
+                $paymentDate = $request['payment_date'];
+
+                $query->whereHas('payment', function ($query) use ($paymentDate) {
+                    $query->whereDate('updated_at', $paymentDate);
+                });
+            }
+
+            if ($request->filled('checkin')) {
+                $checkin = $request['checkin'];
+
+                $query->whereHas('payment', function ($query) use ($branchId, $checkin) {
+                    $query->whereNotIn('payment_status', ['DP', 'DP 2']);
+                    $query->whereHas('reservation', function ($query) use ($branchId, $checkin) {
+                        $query->where('hotel_branch_id', $branchId)->whereDate('reservation_start_date', $checkin);
+                    });
+                });
+            }
+
+            if ($request->filled('checkout')) {
+                $checkout = $request['checkout'];
+
+                $query->whereHas('payment', function ($query) use ($branchId, $checkout) {
+                    $query->whereNotIn('payment_status', ['DP', 'DP 2']);
+                    $query->whereHas('reservation', function ($query) use ($branchId, $checkout) {
+                        $query->where('hotel_branch_id', $branchId)->whereDate('reservation_end_date', $checkout);
+                    });
+                });
+            }
         }
 
-        // Apply filters based on dropdown selections
-        if ($request->filled('payment_date_dp')) {
-            $paymentDate = $request['payment_date_dp'];
+        $roomIncome = $query->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation')->paginate(10);
 
-            $queryDP->whereHas('payment', function ($queryDP) use ($paymentDate) {
-                $queryDP->whereDate('updated_at', $paymentDate);
-            });
-        }
-
-        if ($request->filled('checkin_dp')) {
-            $checkin = $request['checkin_dp'];
-
-            $queryDP->whereDate('reservation_start_date', $checkin);
-        }
-
-        if ($request->filled('checkout_dp')) {
-            $checkout = $request['checkout_dp'];
-
-            $queryDP->whereDate('reservation_end_date', $checkout);
-        }
-
-        $reservation = $query->where('hotel_branch_id', $pic->hotel_branch_id)->with('payment.paymentDetail.paymentMethod', 'customer', 'payment.downPayment', 'hotelRoomReserved', 'reservationMethod',)->paginate(10);
-
-        $downPayment = $queryDP->where('hotel_branch_id', $pic->hotel_branch_id)->whereHas('payment', function ($queryDP) {
-            $queryDP->where('payment_status', 'DP');
-        })->with('payment.paymentDetail.paymentMethod', 'customer', 'payment.downPayment', 'hotelRoomReserved', 'reservationMethod',)->paginate(10);
-
-        return view('admin.finance.index', compact('reservation', 'downPayment', 'paymentMethod', 'totalIncomeRoom', 'totalDownPayment', 'dateNow'));
+        return view('admin.finance.index', compact('paymentMethod', 'totalIncomeRoom', 'totalDownPayment', 'dateNow', 'roomIncome'));
     }
 
     public function reportFrontOffice(Request $request)

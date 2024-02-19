@@ -165,13 +165,13 @@
     <!-- Tabel Room Income Start -->
     <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">
         <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
-            <h3>Pemasukan Kamar</h3>
+            <h3>Laporan Pendapatan Harian</h3>
         </div>
         </br>
         <div class="table-responsive">
         <form action="{{ route('admin.finance.index') }}" method="GET">
         @csrf
-        <div class="d-flex mb-3" >
+        <div class="d-flex mb-4">
                 <p class=" me-1 pe-1 fmxw-200">Tanggal Pembayaran :</p>
                 <input type="date" class="form-control me-3 pe-5 fmxw-200" name="payment_date"></input>
                 <p class=" me-1 pe-1 fmxw-200">Check In :</p>
@@ -184,107 +184,229 @@
                     <option value="{{$method->id}}">{{ $method->payment_method }}</option>
                     @endforeach
                 </select>
-                <select class="form-select pe-5 fmxw-200" name="payment_check" aria-label="Message select example">
+                <!-- <select class="form-select pe-5 fmxw-100" name="payment_check" aria-label="Message select example">
                     <option selected value>Status</option>
                     <option value="Oncheck">Oncheck</option>
                     <option value="Valid">Valid</option>
                     <option value="Invalid">Invalid</option>
-                </select>   
+                </select>    -->
                 <button class="btn btn-sm px-3 btn-secondary ms-3">Apply</button>
+                <a href="{{ route('admin.finance.index') }}" class="btn btn-sm px-3 btn-secondary ms-3">Reset</a>
             </div>
             </form>
             <table style="text-align: center" class="table table-hover table-bordered">
                 <thead style="vertical-align: middle">
                 <tr>
-                        <th rowspan="2" class="border-gray-200">ID Bill</th>
-                        <th rowspan="2" class="border-gray-200">Tanggal Pembayaran</th>
-                        <th rowspan="2" class="border-gray-200">Status</th>
-                        <th rowspan="2" class="border-gray-200">Nama</th>
-                        <th rowspan="2" class="border-gray-200">Type Tamu</th>
-                        <th colspan="4" class="border-gray-200">Metode <br>Pembayaran</th>
-                        <th rowspan="2" class="border-gray-200">Harga <br>Total</th>
-                        <th rowspan="2" class="border-gray-200">No <br>Kamar</th>
-                        <th rowspan="2" class="border-gray-200">Type</th>
-                        {{-- <th colspan="2" class="border-gray-200">CheckIn</th>
-                        <th colspan="2" class="border-gray-200">CheckOut</th>
-                        <th rowspan="2" class="border-gray-200">Durasi</th>
-                        <th colspan="4" class="border-gray-200">Additional</th> --}}
+                        <th rowspan="3" class="border-gray-200">Tanggal Checkin</th>
+                        <th rowspan="3" class="border-gray-200">ID Bill</th>
+                        <th colspan="6" class="border-gray-200">Down <br>Payment</th>
+                        <th colspan="6" class="border-gray-200">Pelunasan</th>
+                        <th rowspan="3" class="border-gray-200">Tanggal Pembayaran DP</th>
+                        <th rowspan="3" class="border-gray-200">Metode Pembayaran</th>
+                        <th rowspan="3" class="border-gray-200">Catatan</th>
                     </tr>
                     <tr>
-                        <th>DP</th>
-                        <th>Nominal</th>
-                        <th>Lunas</th>
-                        <th>Nominal</th>
-                        {{-- <th>Tanggal</th>
-                        <th>Jam</th>
-                        <th>Tanggal</th>
-                        <th>Jam</th>
-                        <th>Breakfast</th>
-                        <th>Harga</th>
-                        <th>Extra-Bed</th>
-                        <th>Harga</th> --}}
+                        <th rowspan="2" class="border-gray-200">Cash</th>
+                        <th colspan="4" class="border-gray-200">Non Cash</th>
+                        <th rowspan="2" class="border-gray-200">OTA</th>
+                        <th rowspan="2">Cash</th>
+                        <th colspan="4" class="border-gray-200">Non Cash</th>
+                        <th rowspan="2" class="border-gray-200">OTA</th>
+                    </tr>
+                    <tr>
+                        <th class="border-gray-200">Transfer</th>
+                        <th class="border-gray-200">Card</th>
+                        <th class="border-gray-200">QRIS</th>
+                        <th class="border-gray-200">VA</th>
+                        <th class="border-gray-200">Transfer</th>
+                        <th class="border-gray-200">Card</th>
+                        <th class="border-gray-200">QRIS</th>
+                        <th class="border-gray-200">VA</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- Item -->
-                    @foreach($reservation as $reservationData)
+                    @foreach($roomIncome as $roomIncomes)
                     <tr>
                         {{-- <td><a
                                 href="#" data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
                         </td> --}}
-                        <td><span data-bs-toggle="modal"data-bs-target="#modal-detail"
-                                class="fw-normal">{{ $reservationData->payment->payment_code ?? '' }}</span></td>
-                        <td><span class="fw-normal">{{ \Carbon\Carbon::parse($reservationData->payment->updated_at ?? '')->timezone('Asia/Bangkok')->isoFormat('DD MMMM YYYY') }}</span></td>
-                        <td><span class="fw-bold text-warning">{{ $reservationData->payment->payment_check ?? '' }}</span></td>
-                        <td><span class="fw-normal">{{ $reservationData->customer->customer_name ?? '' }}</span></td>
-                        <td><span class="fw-normal">{{ $reservationData->reservationMethod->reservation_method ?? '' }}</span></td>
-
-                        @if($reservationData->payment->payment_status == 'Lunas')
-                        <td><span class="fw-normal">Tidak</span></td>
-                        <td><span class="fw-normal">Rp. 0</span></td>
-                        <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
-                        <td><span class="fw-normal">Rp. {{ number_format($reservationData->payment->total_payment ?? 0, 0, ',', '.') }}</span></td>
-                        <td><span class="fw-normal">Rp. {{ number_format(($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0), 0, ',', '.') }}</span></td>
-                        @elseif($reservationData->payment->payment_status == 'DP')
-                        <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
-                        <td><span class="fw-bold">Rp. {{ number_format($reservationData->payment->downPayment->down_payment ?? 0, 0, ',', '.')}}</span></td>
-                        <td><span class="fw-normal">Tidak</span></td>
-                        <td><span class="fw-normal">Rp. 0</span></td>
-                        <td><span class="fw-bold">Rp. {{ number_format(($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0), 0, ',', '.') }}</span></td>
+                        <td><span class="fw-normal">{{ \Carbon\Carbon::parse($roomIncomes->Payment->Reservation->reservation_start_date ?? '')   }}</span></td>
+                        <td><span data-bs-toggle="modal"data-bs-target="#modal-detail" class="fw-normal">{{ $roomIncomes->Payment->Reservation->reservation_code }}</span></td>
+                        @if($roomIncomes->Payment->payment_status !== 'Lunas')
+                            @if($roomIncomes->payment_method_id == 1)
+                                <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td> <!-- DP CASH Payment -->
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                            @endif
+                            @if($roomIncomes->payment_method_id >= 12 && $roomIncomes->payment_method_id <= 16) <!-- DP TRANSFER Payment -->
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                            @endif
+                            @if($roomIncomes->payment_method_id >= 2 && $roomIncomes->payment_method_id <= 11) <!-- DP CARD Payment -->
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                            @endif
+                            @if($roomIncomes->payment_method_id >= 17 && $roomIncomes->payment_method_id <= 21) <!-- DP QRIS Payment -->
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                            @endif
+                            @if($roomIncomes->payment_method_id >= 22 && $roomIncomes->payment_method_id <= 29) <!-- DP OTA Payment -->
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                            @endif
+                            @if($roomIncomes->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- DP VA Payment -->
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                            @endif
                         @else
-                        <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
-                        <td><span class="fw-bold">Rp. {{ $reservationData->payment->downPayment->down_payment ?? '' }}</span></td>
-                        <td><span class="fw-normal">{{ $reservationData->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
-                        <td><span class="fw-normal">Rp. {{ number_format($reservationData->payment->total_payment ?? 0, 0, ',', '.') }}</span></td>
-                        <td><span class="fw-bold">Rp. {{ number_format(($reservationData->payment->total_price ?? 0) + ($reservationData->payment->total_price_amenities ?? 0) - ($reservationData->payment->discount ?? 0), 0, ',', '.') }}</span></td>
+                        @if($roomIncomes->payment_method_id == 1)
+                                <td><span class="fw-normal">-</span></td> <!-- DP CASH Payment -->
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                            @endif
+                            @if($roomIncomes->payment_method_id >= 12 && $roomIncomes->payment_method_id <= 16) <!-- DP TRANSFER Payment -->
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                            @endif
+                            @if($roomIncomes->payment_method_id >= 2 && $roomIncomes->payment_method_id <= 11) <!-- DP CARD Payment -->
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                            @endif
+                            @if($roomIncomes->payment_method_id >= 17 && $roomIncomes->payment_method_id <= 21) <!-- DP QRIS Payment -->
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                            @endif
+                            @if($roomIncomes->payment_method_id >= 22 && $roomIncomes->payment_method_id <= 29) <!-- DP OTA Payment -->
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                            @endif
+                            @if($roomIncomes->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- DP VA Payment -->
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                                <td><span class="fw-normal">-</span></td>
+                            @endif
                         @endif
-                        
-                        <td><span class="fw-bold">
-                            @foreach($reservationData->hotelRoomReserved as $reservedRooms)
-                            @if($reservationData->hotelRoomReserved->count() > 1)
-                                @if ($loop->last)
-                                    {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }} 
-                                @else
-                                    {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }} &
-                                @endif
-                            @else
-                                {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }}
-                            @endif
-                            @endforeach
-                        </span></td>
-                        <td><span class="fw-bold">@foreach($reservationData->hotelRoomReserved as $reservedRooms)
-                            @if($reservationData->hotelRoomReserved->count() > 1)
-                                @if ($loop->last)
-                                    {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }}
-                                @else
-                                    {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }} &
-                                @endif
-                            @else
-                                {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }}
-                            @endif
-                            @endforeach
-                        </span></td>
-
+                        <td><span class="fw-normal">{{ \Carbon\Carbon::parse($roomIncomes->payment->updated_at ?? '')->timezone('Asia/Bangkok') }}</span></td>
+                        <td><span class="fw-normal">{{ $roomIncomes->PaymentMethod->payment_method }}</span></td>
+                        <td><span class="fw-normal">{{ $roomIncomes->Payment->payment_status }}</span></td>
                     </tr>
                     @endforeach
                     <!-- Item -->
@@ -295,134 +417,14 @@
         <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
             <nav aria-label="Page navigation example">
                 <ul class="pagination mb-0">
-                    {{ $reservation->links('vendor.pagination.default') }}
+                    {{ $roomIncome->links('vendor.pagination.default') }}
                 </ul>
             </nav>
             <!-- <div class="align-item-right"><b>Pendapatan Total Hari Ini : </b><b class="text-success">Rp 100.000.000</b></div> -->
         </div>
     </div>
     <!-- Tabel Room Income End -->
-
-    <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">
-        <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
-            <h3>Daftar DP</h3>
-        </div>
-        </br>
-        <div class="table-responsive">
-        <form action="{{ route('admin.finance.index') }}" method="GET">
-        @csrf
-        <div class="d-flex mb-3" >
-                <p class=" me-1 pe-1 fmxw-200">Tanggal Pembayaran :</p>
-                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="payment_date_dp"></input>
-                <p class=" me-1 pe-1 fmxw-200">Check In :</p>
-                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkin_dp"></input>
-                <p class=" me-1 pe-1 fmxw-200">Check Out :</p>
-                <input type="date" class="form-control me-3 pe-5 fmxw-200" name="checkout_dp"></input>
-                <select class="form-select me-3 pe-5 fmxw-200" name="payment_method_id_dp" aria-label="Message select example">
-                    <option selected value>Metode Pembayaran</option>
-                    @foreach($paymentMethod as $method)
-                    <option value="{{$method->id}}">{{ $method->payment_method }}</option>
-                    @endforeach
-                </select>
-                <select class="form-select pe-5 fmxw-200" name="payment_check_dp" aria-label="Message select example">
-                    <option selected value>Status</option>
-                    <option value="Oncheck">Oncheck</option>
-                    <option value="Valid">Valid</option>
-                    <option value="Invalid">Invalid</option>
-                </select>   
-                <button class="btn btn-sm px-3 btn-secondary ms-3">Apply</button>
-            </div>
-            </form>
-            <table style="text-align: center" class="table table-hover table-bordered">
-                <thead style="vertical-align: middle">
-                <tr>
-                        <th rowspan="2" class="border-gray-200">ID Bill</th>
-                        <th rowspan="2" class="border-gray-200">Tanggal Pembayaran</th>
-                        <th rowspan="2" class="border-gray-200">Status</th>
-                        <th rowspan="2" class="border-gray-200">Nama</th>
-                        <th rowspan="2" class="border-gray-200">Type Tamu</th>
-                        <th colspan="2" class="border-gray-200">Metode <br>Pembayaran</th>
-                        <th rowspan="2" class="border-gray-200">Harga <br>Total</th>
-                        <th rowspan="2" class="border-gray-200">No <br>Kamar</th>
-                        <th rowspan="2" class="border-gray-200">Type</th>
-                        {{-- <th colspan="2" class="border-gray-200">CheckIn</th>
-                        <th colspan="2" class="border-gray-200">CheckOut</th>
-                        <th rowspan="2" class="border-gray-200">Durasi</th>
-                        <th colspan="4" class="border-gray-200">Additional</th> --}}
-                    </tr>
-                    <tr>
-                        <th>DP</th>
-                        <th>Nominal</th>
-                        {{-- <th>Tanggal</th>
-                        <th>Jam</th>
-                        <th>Tanggal</th>
-                        <th>Jam</th>
-                        <th>Breakfast</th>
-                        <th>Harga</th>
-                        <th>Extra-Bed</th>
-                        <th>Harga</th> --}}
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Item -->
-                    @foreach($downPayment as $downPayments)
-                    <tr>
-                        {{-- <td><a
-                                href="#" data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
-                        </td> --}}
-                        <td><span data-bs-toggle="modal"data-bs-target="#modal-detail"
-                                class="fw-normal">{{ $downPayments->payment->payment_code ?? '' }}</span></td>
-                        <td><span class="fw-normal">{{ \Carbon\Carbon::parse($downPayments->payment->updated_at ?? '')->timezone('Asia/Bangkok')->isoFormat('DD MMMM YYYY') }}</span></td>
-                        <td><span class="fw-bold text-warning">{{ $downPayments->payment->payment_check ?? '' }}</span></td>
-                        <td><span class="fw-normal">{{ $downPayments->customer->customer_name ?? '' }}</span></td>
-                        <td><span class="fw-normal">{{ $downPayments->reservationMethod->reservation_method ?? '' }}</span></td>
-
-                        <td><span class="fw-normal">{{ $downPayments->payment->paymentDetail->paymentMethod->payment_method ?? '' }}</span></td>
-                        <td><span class="fw-bold">Rp. {{ number_format($downPayments->payment->downPayment->down_payment ?? 0 , 0, ',', '.') }}</span></td>
-                        <td><span class="fw-bold">Rp. {{ number_format(($downPayments->payment->total_price ?? 0) + ($downPayments->payment->total_price_amenities ?? 0) - ($downPayments->payment->discount ?? 0), 0, ',', '.') }}</span></td>
-                        
-                        <td><span class="fw-bold">
-                            @foreach($downPayments->hotelRoomReserved as $reservedRooms)
-                            @if($downPayments->hotelRoomReserved->count() > 1)
-                                @if ($loop->last)
-                                    {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }} 
-                                @else
-                                    {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }} &
-                                @endif
-                            @else
-                                {{ ($reservedRooms->hotelRoomNumber->room_number ?? 0) }}
-                            @endif
-                            @endforeach
-                        </span></td>
-                        <td><span class="fw-bold">@foreach($downPayments->hotelRoomReserved as $reservedRooms)
-                            @if($downPayments->hotelRoomReserved->count() > 1)
-                                @if ($loop->last)
-                                    {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }}
-                                @else
-                                    {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }} &
-                                @endif
-                            @else
-                                {{ ($reservedRooms->hotelRoomNumber->hotelRoom->room_type ?? '') }}
-                            @endif
-                            @endforeach
-                        </span></td>
-
-                    </tr>
-                    @endforeach
-                    <!-- Item -->
-                </tbody>
-            </table>
-        </div>
         
-        <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination mb-0">
-                    {{ $downPayment->links('vendor.pagination.default') }}
-                </ul>
-            </nav>
-            <!-- <div class="align-item-right"><b>Pendapatan Total Hari Ini : </b><b class="text-success">Rp 100.000.000</b></div> -->
-        </div>
-    </div>
 
     <!-- Tabel F&B Income Start -->
     <!-- <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">

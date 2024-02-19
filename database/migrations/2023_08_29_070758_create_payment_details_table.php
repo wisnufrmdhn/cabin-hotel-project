@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('payment_id')->constrained('payments');
             $table->foreignId('payment_method_id')->constrained('payment_methods');
             $table->string('bank_name')->nullable();
-            $table->integer('payment');
+            $table->integer('payment_detail_value');
             $table->integer('change')->nullable();
             $table->string('card_number')->nullable();
             $table->string('reference_number')->nullable();

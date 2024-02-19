@@ -55,6 +55,7 @@ class ReservationController extends Controller
         $paymentCard = PaymentMethod::where('payment_method', 'like', "%Card%")->get();
         $paymentTransfer = PaymentMethod::where('payment_method', 'like', "%Transfer%")->get();
         $paymentQris = PaymentMethod::where('payment_method', 'like', "%Qris%")->get();
+        $paymentVA = PaymentMethod::where('payment_method', 'like', "%VA%")->get();
         
         if($customerTmp){
             $reservationTmp = ReservationTmp::where('hotel_branch_id', $pic->hotel_branch_id)->where('customer_tmp_id', $customerTmp->id)->first();
@@ -82,7 +83,7 @@ class ReservationController extends Controller
             }
         }
 
-        return view('admin.reservation.index', compact('reservationMethod', 'hotelRooms', 'customerTmp', 'reservationTmp', 'reservationDetailTmp', 'hotelRoomReservedTmp', 'paymentOTA', 'paymentCard', 'paymentTransfer', 'paymentQris', 'totalPrice', 'amenitiesTmp', 'checkin', 'checkout', 'diffResult', 'dayCategory')); 
+        return view('admin.reservation.index', compact('reservationMethod', 'hotelRooms', 'customerTmp', 'reservationTmp', 'reservationDetailTmp', 'hotelRoomReservedTmp', 'paymentOTA', 'paymentCard', 'paymentTransfer', 'paymentQris', 'paymentVA', 'totalPrice', 'amenitiesTmp', 'checkin', 'checkout', 'diffResult', 'dayCategory')); 
     }
 
     public function store(Request $request)
