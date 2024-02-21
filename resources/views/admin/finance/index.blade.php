@@ -232,7 +232,7 @@
                                 href="#" data-bs-toggle="modal"data-bs-target="#modal-xl"class="fw-bold">31-Jul-23</a>
                         </td> --}}
                         <td><span class="fw-normal">{{ \Carbon\Carbon::parse($roomIncomes->Payment->Reservation->reservation_start_date ?? '')   }}</span></td>
-                        <td><span data-bs-toggle="modal"data-bs-target="#modal-detail" class="fw-normal">{{ $roomIncomes->Payment->Reservation->reservation_code }}</span></td>
+                        <td><span data-bs-toggle="modal"data-bs-target="#modal-detail" class="fw-normal">{{ $roomIncomes->Payment->Reservation->reservation_code ?? '' }}</span></td>
                         @if($roomIncomes->Payment->payment_status !== 'Lunas')
                             @if($roomIncomes->payment_method_id == 1)
                                 <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td> <!-- DP CASH Payment -->
