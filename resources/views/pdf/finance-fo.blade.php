@@ -81,41 +81,23 @@
         <div class="invoice-details">
             <table>
                 <tr>
-                    <th rowspan="2">ID Bill</th>
-                    <th rowspan="2">Tanggal Pembayaran</th>
-                    <th rowspan="2">Status</th>
-                    <th rowspan="2">Harga Total</th>
-                    <th colspan="4" class="border-gray-200"><center>Metode Pembayaran</center></th>
+                    <th rowspan="1">ID Bill</th>
+                    <th rowspan="1">Tgl Bayar</th>
+                    <th rowspan="1">Status</th>
+                    <th rowspan="1">Harga</th>
+                    <th rowspan="1">Bayar</th>
+                    <th rowspan="1">Sisa Bayar</th>
+                    
                 </tr>
-                <tr>
-                    <th>DP</th>
-                    <th>Nominal</th>
-                    <th>Lunas</th>
-                    <th>Nominal</th>
-                </tr>
+                
                 @foreach($payment as $payments)
                 <tr>
                     <td>{{ $payments->payment_code }}</td>
                     <td>{{ \Carbon\Carbon::parse($payments->created_at ?? '')->timezone('Asia/Bangkok')->isoFormat('DD MMMM YYYY') }}</td>
                     <td>{{ $payments->payment_status }}</td>
                     <td>Rp. {{ number_format($payments->total_price - $payments->discount + $payments->total_price_amenities ?? 0, 0, ',', '.') }}</td>
-                    @if($payments->payment_status == 'Lunas')
-                        <td>Tidak</td>
-                        <td>Rp. 0</td>
-                    @elseif($payments->payment_status == 'DP')
-                        <td>Ya</td>
-                        <td>Rp. {{ number_format($payments->downPayment->down_payment ?? 0, 0, ',', '.') }}</td>
-                    @endif
-                    @if($payments->payment_status == 'Lunas')
-                        <td>Ya</td>
-                        <td>Rp. {{ number_format($payments->total_payment ?? 0, 0, ',', '.') }}</td>
-                    @elseif($payments->payment_status == 'DP')
-                        <td>Tidak</td>
-                        <td>Rp. {{ number_format($payments->total_payment ?? 0, 0, ',', '.') }}</td>
-                    @else
-                        <td>Ya</td>
-                        <td>Rp. {{ number_format($payments->total_payment ?? 0, 0, ',', '.') }}</td>
-                    @endif
+                    <td>Rp. {{ number_format($payments->total_price - $payments->discount + $payments->total_price_amenities ?? 0, 0, ',', '.') }}</td>
+                    <td>Rp. {{ number_format($payments->total_price - $payments->discount - $payments->total_payment ?? 0, 0, ',', '.') }}</td>
                 </tr>
                 @endforeach
                 <tr>
