@@ -64,6 +64,8 @@ class FinanceController extends Controller
                     $query->where('hotel_branch_id', $branchId)->whereDate('reservation_start_date', $dateQuery);
                 });
             })->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation')->paginate(10);
+
+            return view('admin.finance.index', compact('paymentMethod', 'totalIncomeRoom', 'totalDownPayment', 'dateNow', 'roomIncome'));
         }else{
             // Apply filters based on dropdown selections
             if ($request->filled('payment_check')) {
@@ -113,11 +115,15 @@ class FinanceController extends Controller
                     });
                 });
             }
+
+            $query->whereHas('payment.reservation', function ($query) use ($branchId) {
+                    $query->where('hotel_branch_id', $branchId);
+            });
+            
+            $roomIncome = $query->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation')->paginate(10);
+
+            return view('admin.finance.index', compact('paymentMethod', 'totalIncomeRoom', 'totalDownPayment', 'dateNow', 'roomIncome'));
         }
-
-        $roomIncome = $query->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation')->paginate(10);
-
-        return view('admin.finance.index', compact('paymentMethod', 'totalIncomeRoom', 'totalDownPayment', 'dateNow', 'roomIncome'));
     }
 
     public function reportFrontOffice(Request $request)
