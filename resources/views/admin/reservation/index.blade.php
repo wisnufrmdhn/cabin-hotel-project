@@ -1171,6 +1171,7 @@
 <script>
     $(document).ready(function() {
         const customerCheck = $('#customer_check');
+        $('#reservation_method_id').attr('required', 'required');
         $('#customer_title').attr('required', 'required');
         $('#customer_name').attr('required', 'required');
         $('#customer_identity_type').attr('required', 'required');
