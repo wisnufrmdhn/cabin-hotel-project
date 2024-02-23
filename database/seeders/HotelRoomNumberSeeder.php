@@ -197,6 +197,7 @@ class HotelRoomNumberSeeder extends Seeder
                 'room_number' => 102,
                 'room_status_id' => 3
             ],
+            // ======================= 8
             [
                 'hotel_branch_id' => 9,
                 'hotel_room_id' => 1,
@@ -240,82 +241,7 @@ class HotelRoomNumberSeeder extends Seeder
                 'room_number' => 111,
                 'room_status_id' => 3
             ],
-            // =======================10
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 1,
-                'room_number' => 102,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 1,
-                'room_number' => 106,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 2,
-                'room_number' => 107,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 2,
-                'room_number' => 111,
-                'room_status_id' => 3
-            ],
-            // =======================1
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 1,
-                'room_number' => 102,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 1,
-                'room_number' => 106,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 2,
-                'room_number' => 107,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 2,
-                'room_number' => 111,
-                'room_status_id' => 3
-            ],
-            // =======================1
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 1,
-                'room_number' => 102,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 1,
-                'room_number' => 106,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 2,
-                'room_number' => 107,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 2,
-                'room_number' => 111,
-                'room_status_id' => 3
-            ],
-            // =======================11
+            // ======================= 10
             [
                 'hotel_branch_id' => 11,
                 'hotel_room_id' => 3,
