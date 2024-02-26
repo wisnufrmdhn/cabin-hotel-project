@@ -756,17 +756,6 @@
                                 @endif
                             </div>
                         </div>
-
-                        <hr color="black">
-                        <div class="col">
-                            <label>Tipe Pembayaran</label>
-                            <select class="form-select w-100 mb-0 " id="payment_category" name="payment_category"
-                                aria-label="payment_category">
-                                <option selected value="">Tipe Pembayaran</option>
-                                <option value="Down Payment">Down Payment</option>
-                                <option value="Lunas">Lunas</option>
-                            </select>
-                        </div>
                         <hr color="black">
                         <div class="col">
                             <div class="form-check form-switch">
@@ -907,17 +896,6 @@
                                         aria-describedby="total_price" disabled>
                                 @endif
                             </div>
-                        </div>
-
-                        <hr color="black">
-                        <div class="col">
-                            <label>Tipe Pembayaran</label>
-                            <select class="form-select w-100 mb-0 " id="payment_category" name="payment_category"
-                                aria-label="payment_category" disabled>
-                                <option selected value="">Tipe Pembayaran</option>
-                                <option value="Down Payment">Down Payment</option>
-                                <option value="Lunas">Lunas</option>
-                            </select>
                         </div>
                         <hr color="black">
                         <div class="col">
@@ -1482,7 +1460,6 @@
 </script>
 <script>
     $(document).ready(function() {
-            $('#payment_category').attr('required', 'required');
             $('#payment_method_ota').attr('required', 'required');
             $('#payment_method_cash').attr('required', 'required');
             $('#payment_method_non_cash').attr('required', 'required');
@@ -1493,7 +1470,6 @@
             $('#payment_method_ota').on('change', function() {
                 // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
                 if (this.checked) {
-                    $('#payment_category').prop('disabled', true);
                     $('#payment_method_cash').prop('disabled', true);
                     $('#payment_cash_value').prop('disabled', true);
                     $('#change').prop('disabled', true);
@@ -1504,7 +1480,6 @@
                     $('#payment_category_ota').attr('required', 'required');
                     $('#payment_ota_value').attr('required', 'required');
                 } else {
-                    $('#payment_category').prop('disabled', false);
                     $('#payment_method_cash').prop('disabled', false);
                     $('#payment_cash_value').prop('disabled', false);
                     $('#change').prop('disabled', false);

@@ -86,16 +86,17 @@ class ReservationService
         if($request['discount_type'] == 'Persen'){
             $request['discount'] = $request['discount'];
             $discountValue = $request['discount'] / 100;
-            $request['total_payment'] = $request['total_payment'] * (1 - $discountValue);
+            $request['discount'] = $totalPrice * $discountValue;
         }else if($request['discount_type'] == 'Nominal'){
             $request['discount'] = $request['discount'];
-            $request['total_payment'] = $request['total_payment'] - $request['discount'];
         }
 
-        $request['total_payment'] = $request['payment_cash_value'] +  $request['payment_card_value'] + $request['payment_qris_value'] + $request['payment_transfer_value'];
         $request['payment_code']  = 'INV-'.$branch->hotel_code.'-'.$today.'-'.$reservationCount;
 
-        if($request['payment_category'] == 'Down Payment')
+        $totalPriceToPay = intval($totalPrice + $amenitiesTotalPrice - $request['discount']);
+        $totalPaymentCust = intval($request['total_payment']);
+
+        if($totalPriceToPay > $totalPaymentCust)
         {
             $storePayment = Payment::create([
                 'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,

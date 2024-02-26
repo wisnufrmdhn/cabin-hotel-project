@@ -57,7 +57,7 @@ class FinanceController extends Controller
         $totalDownPayment = DownPayment::whereIn('payment_id', $paymentId)->whereDate('created_at', $dateQuery)->sum('down_payment');
         $totalDownPayment = number_format($totalDownPayment, 0, ',', '.');
 
-        if(!$request){
+        if(!$request->has('_token')){
             $roomIncome = $query->whereHas('payment', function ($query) use ($branchId, $dateQuery) {
                 $query->whereNotIn('payment_status', ['DP', 'DP 2']);
                 $query->whereHas('reservation', function ($query) use ($branchId, $dateQuery) {
@@ -67,6 +67,7 @@ class FinanceController extends Controller
 
             return view('admin.finance.index', compact('paymentMethod', 'totalIncomeRoom', 'totalDownPayment', 'dateNow', 'roomIncome'));
         }else{
+
             // Apply filters based on dropdown selections
             if ($request->filled('payment_check')) {
                 $paymentCheck = $request['payment_check'];
