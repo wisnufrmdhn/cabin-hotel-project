@@ -59,7 +59,7 @@ class FinanceController extends Controller
 
         if(!$request->has('_token')){
             $roomIncome = $query->whereHas('payment', function ($query) use ($branchId, $dateQuery) {
-                $query->whereNotIn('payment_status', ['DP', 'DP 2']);
+                //$query->whereNotIn('payment_status', ['DP', 'DP 2']);
                 $query->whereHas('reservation', function ($query) use ($branchId, $dateQuery) {
                     $query->where('hotel_branch_id', $branchId)->whereDate('reservation_start_date', $dateQuery);
                 });
@@ -99,7 +99,7 @@ class FinanceController extends Controller
                 $checkin = $request['checkin'];
 
                 $query->whereHas('payment', function ($query) use ($branchId, $checkin) {
-                    $query->whereNotIn('payment_status', ['DP', 'DP 2']);
+                    //$query->whereNotIn('payment_status', ['DP', 'DP 2']);
                     $query->whereHas('reservation', function ($query) use ($branchId, $checkin) {
                         $query->where('hotel_branch_id', $branchId)->whereDate('reservation_start_date', $checkin);
                     });
@@ -110,7 +110,7 @@ class FinanceController extends Controller
                 $checkout = $request['checkout'];
 
                 $query->whereHas('payment', function ($query) use ($branchId, $checkout) {
-                    $query->whereNotIn('payment_status', ['DP', 'DP 2']);
+                    //$query->whereNotIn('payment_status', ['DP', 'DP 2']);
                     $query->whereHas('reservation', function ($query) use ($branchId, $checkout) {
                         $query->where('hotel_branch_id', $branchId)->whereDate('reservation_end_date', $checkout);
                     });
