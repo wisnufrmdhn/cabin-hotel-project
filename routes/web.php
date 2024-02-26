@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth']], function () {
         });
         Route::group(['as' => 'bookinglist.', 'prefix' => 'bookinglist'], function () {
             Route::get('/', [BookingListController::class, 'index'])->name('index');
+            Route::get('/{reservationCode?}', [BookingListController::class, 'show'])->name('show');
         });
     });
     Route::get('/pdf/invoice/{invoiceId}', [PdfController::class, 'generateInvoice'])->name('pdf.invoices');

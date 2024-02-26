@@ -10,6 +10,7 @@ use App\Models\PaymentMethod;
 use App\Models\HotelRoomNumber;
 use App\Models\CustomerTmp;
 use App\Models\HotelRoomReservedTmp;
+use App\Models\Reservation;
 use App\Models\ReservationTmp;
 use App\Models\PaymentAmenitiesTmp;
 use App\Services\ReservationService;
@@ -28,58 +29,37 @@ class BookingListController extends Controller
     {
         $user = Auth::user();
         $pic = PicHotelBranch::where('user_id', $user->id)->first();
-        $reservationMethod = ReservationMethod::all();
-        $hotelRoomDetails = HotelRoomNumber::where('hotel_branch_id', $pic->hotel_branch_id)->where('room_status_id', 3)->get();
-        $roomId = [];
-        
-        foreach($hotelRoomDetails as $hotelRoomDetail){
-            $roomId[] = $hotelRoomDetail->hotel_room_id;
-        }
 
-        $roomId = array_values(array_unique($roomId));
-        $hotelRooms = HotelRoom::whereIn('id', $roomId)->get();
-        
-        $customerTmp = CustomerTmp::where('hotel_branch_id', $pic->hotel_branch_id)->first();
-        $reservationTmp = [];
-        $reservationDetailTmp = [];
-        $hotelRoomReservedTmp = [];
-        $amenitiesTmp = [];
-        $totalPrice = null;
-        $checkin = null;
-        $checkout = null;
-        $dayCategory = null;
-        $diffResult = null;
+        $dateNow = Carbon::now('Asia/Bangkok')->isoFormat('DD MMMM YYYY');
+        $dateQuery = Carbon::now('Asia/Bangkok')->toDateString();
+        $reservation = Reservation::query();
+        $countReservationToday = Reservation::where('reservation_start_date', $dateQuery)->count();
+        $countCheckInToday = Reservation::where('reservation_start_date', $dateQuery)->where('status', 'Checkin')->count();
+        $countCheckOutToday = Reservation::where('reservation_start_date', $dateQuery)->where('status', 'Checkout')->count();
+
+        $reservationData = $reservation->where('hotel_branch_id', $pic->hotel_branch_id)->orderBy('reservation_start_date', 'desc')->with('payment.paymentDetail', 'customer', 'reservationMethod')->paginate(10);
+
+        $paymentMethod = PaymentMethod::all();
         $paymentOTA = PaymentMethod::where('payment_method', 'like', "%OTA%")->get();
         $paymentCard = PaymentMethod::where('payment_method', 'like', "%Card%")->get();
         $paymentTransfer = PaymentMethod::where('payment_method', 'like', "%Transfer%")->get();
         $paymentQris = PaymentMethod::where('payment_method', 'like', "%Qris%")->get();
-        
-        if($customerTmp){
-            $reservationTmp = ReservationTmp::where('hotel_branch_id', $pic->hotel_branch_id)->where('customer_tmp_id', $customerTmp->id)->first();
-            if($reservationTmp){
+        $paymentVA = PaymentMethod::where('payment_method', 'like', "%VA%")->get();
 
-                $dayCategory = $reservationTmp->reservation_day_category;
-                $checkin = Carbon::parse($reservationTmp->reservation_start_date);
-                $checkout = Carbon::parse($reservationTmp->reservation_end_date);
-                $diff = $checkin->diffInHours($checkout);
+        return view('admin.bookinglist.index', compact('reservationData', 'paymentMethod', 'paymentOTA', 'paymentCard', 'paymentTransfer', 'paymentQris', 'paymentVA', 'countReservationToday', 'countCheckInToday', 'countCheckOutToday', 'dateNow')); 
+    }
 
-                $day = intval($diff / 24);
-                $hour = intval($diff % 24);
-                $diffResult = $day . ' Hari : ' . $hour . ' Jam';
-                
-                $hotelRoomReservedTmp = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationTmp', 'hotelRoomNumber.hotelRoom')->get();
+    public function show($reservationCode)
+    {
+        $paymentMethod = PaymentMethod::all();
+        $paymentOTA = PaymentMethod::where('payment_method', 'like', "%OTA%")->get();
+        $paymentCard = PaymentMethod::where('payment_method', 'like', "%Card%")->get();
+        $paymentTransfer = PaymentMethod::where('payment_method', 'like', "%Transfer%")->get();
+        $paymentQris = PaymentMethod::where('payment_method', 'like', "%Qris%")->get();
+        $paymentVA = PaymentMethod::where('payment_method', 'like', "%VA%")->get();
 
-                $totalPrice = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationTmp', 'hotelRoomNumber.hotelRoom')->sum('price');
+        $reservationDetail = Reservation::where('reservation_code', $reservationCode)->with('payment.paymentDetail.paymentMethod', 'customer', 'reservationMethod', 'hotelRoomReserved.hotelRoomNumber.hotelRoom')->first();
 
-                $amenitiesTmp = PaymentAmenitiesTmp::where('hotel_branch_id', $pic->hotel_branch_id)->with('amenities')->get();
-
-                if($amenitiesTmp){
-                    $amenitiesTotalPrice = PaymentAmenitiesTmp::where('hotel_branch_id', $pic->hotel_branch_id)->with('amenities')->sum('total_price');
-                    $totalPrice = $totalPrice + $amenitiesTotalPrice;
-                }
-            }
-        }
-
-        return view('admin.bookinglist.index', compact('reservationMethod', 'hotelRooms', 'customerTmp', 'reservationTmp', 'reservationDetailTmp', 'hotelRoomReservedTmp', 'paymentOTA', 'paymentCard', 'paymentTransfer', 'paymentQris', 'totalPrice', 'amenitiesTmp', 'checkin', 'checkout', 'diffResult', 'dayCategory')); 
+        return view('admin.bookinglist.detail', compact('reservationDetail', 'paymentOTA', 'paymentCard', 'paymentTransfer', 'paymentQris', 'paymentVA')); 
     }
 }

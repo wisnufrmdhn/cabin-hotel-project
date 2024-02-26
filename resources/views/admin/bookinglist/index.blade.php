@@ -24,26 +24,17 @@
                         </div>
                         <div class="d-sm-none">
                             <h2 class="h5">Reservasi</h2>
-                            <h3 class="fw-extrabold mb-1">10 Orang</h3>
+                            <h3 class="fw-extrabold mb-1">{{ $countReservationToday }}</h3>
                         </div>
                     </div>
                     <div class="col-12 col-xl-7 px-xl-0">
                         <div class="d-none d-sm-block">
                             <h2 class="h6 text-gray-400 mb-0">Reservasi</h2>
-                            <h3 class="fw-extrabold mb-2 fw-bold text-info">10 Orang</h3>
+                            <h3 class="fw-extrabold mb-2 fw-bold text-info">{{ $countReservationToday }} Reservasi</h3>
                         </div>
                         <small class="d-flex align-items-center text-gray-500">
-                            Feb 1 - Apr 1,
-                            <svg class="icon icon-xxs text-gray-500 ms-2 me-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"></path>
-                            </svg>
-                            USA
+                            Dalam {{ $dateNow }}
                         </small>
-                        <div class="small d-flex mt-1">
-                            <div>Since last month <svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd"></path>
-                                </svg><span class="text-success fw-bolder">22%</span></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -61,26 +52,17 @@
                         </div>
                         <div class="d-sm-none">
                             <h2 class="fw-extrabold h5">Check-In</h2>
-                            <h3 class="mb-1">15 Orang</h3>
+                            <h3 class="mb-1">{{ $countCheckInToday }}</h3>
                         </div>
                     </div>
                     <div class="col-12 col-xl-7 px-xl-0">
                         <div class="d-none d-sm-block">
                             <h2 class="h6 text-gray-400 mb-0">Check-in</h2>
-                            <h3 class="fw-extrabold mb-2 fw-bold text-success">15 Orang</h3>
+                            <h3 class="fw-extrabold mb-2 fw-bold text-success">{{ $countCheckInToday }} Reservasi</h3>
                         </div>
                         <small class="d-flex align-items-center text-gray-500">
-                            Feb 1 - Apr 1,
-                            <svg class="icon icon-xxs text-gray-500 ms-2 me-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"></path>
-                            </svg>
-                            GER
+                            Dalam {{ $dateNow }}
                         </small>
-                        <div class="small d-flex mt-1">
-                            <div>Since last month <svg class="icon icon-xs text-danger" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                                </svg><span class="text-danger fw-bolder">2%</span></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -98,22 +80,17 @@
                         </div>
                         <div class="d-sm-none">
                             <h2 class="fw-extrabold h5">Check-Out</h2>
-                            <h3 class="mb-1">5 Orang</h3>
+                            <h3 class="mb-1">{{ $countCheckOutToday }}</h3>
                         </div>
                     </div>
                     <div class="col-12 col-xl-7 px-xl-0">
                         <div class="d-none d-sm-block">
                             <h2 class="h6 text-gray-400 mb-0">Check-Out</h2>
-                            <h3 class="fw-extrabold mb-2 text-danger">5 Orang</h3>
+                            <h3 class="fw-extrabold mb-2 text-danger">{{ $countCheckOutToday }} Reservasi</h3>
                         </div>
-                        <small class="text-gray-500">
-                            Feb 1 - Apr 1
+                        <small class="d-flex align-items-center text-gray-500">
+                            Dalam {{ $dateNow }}
                         </small>
-                        <div class="small d-flex mt-1">
-                            <div>Since last month <svg class="icon icon-xs text-success" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd"></path>
-                                </svg><span class="text-success fw-bolder">4%</span></div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -122,119 +99,56 @@
 </div>
 <!-- Widget End -->
 
-<!-- Tabel User List Start -->
+<!-- Tabel Room Income Start -->
 <div class="card mb-4 card-body border-0 shadow table-wrapper table-responsive">
-    <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
-        <h3>Daftar Tamu</h3>
-        <!-- <div class="d-flex mb-3">
-            <select class="form-select me-3 pe-5 fmxw-200" aria-label="Message select example">
-                <option selected>Filter Date</option>
-                <option value="1">Send Email</option>
-                <option value="2">Change Group</option>
-                <option value="3">Delete User</option>
-            </select>
-            <select class="form-select me-3 pe-5 fmxw-200" aria-label="Message select example">
-                <option selected>Filter Payment</option>
-                <option value="1">Send Email</option>
-                <option value="2">Change Group</option>
-                <option value="3">Delete User</option>
-            </select>
-            <select class="form-select pe-5 fmxw-200" aria-label="Message select example">
-                <option selected>Filter Name</option>
-                <option value="1">Send Email</option>
-                <option value="2">Change Group</option>
-                <option value="3">Delete User</option>
-            </select>
-            <button class="btn btn-sm px-3 btn-secondary ms-3">Apply</button>
-        </div> -->
+        <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+            <h3>Data Reservasi</h3>
+        </div>
+        </br>
+        <div class="table-responsive">
+            <table style="text-align: center" class="table table-hover table-bordered">
+                <thead style="vertical-align: middle">
+                    <tr>
+                        <th rowspan="2" class="border-gray-200">ID Bill</th>
+                        <th rowspan="2" class="border-gray-200">Nama</th>
+                        <th colspan="2" class="border-gray-200">Tanggal</th>
+                        <th rowspan="2" class="border-gray-200">Type Tamu</th>
+                        <th rowspan="2" class="border-gray-200">Status Pembayaran</th>
+                        <th rowspan="2" class="border-gray-200">Status</th>
+                    </tr>
+                    <tr>
+                        <th>Check-In</th>
+                        <th>Check-Out</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Item -->
+                    @foreach($reservationData as $reservation)
+                    <tr>
+                        <td><span class="fw-bold"><a href="{{ route('admin.bookinglist.show', $reservation->reservation_code) }}" target="_blank" class="text-sm text-info">{{ $reservation->reservation_code }}</a></span></td>
+                        <td><span class="fw-normal">{{ $reservation->customer->customer_name }}</span></td>
+                        <td><span class="fw-normal">{{ $reservation->reservation_start_date }}</span></td>
+                        <td><span class="fw-normal">{{ $reservation->reservation_end_date }}</span></td>
+                        <td><span class="fw-normal">{{ $reservation->reservationMethod->reservation_method }}</span></td>
+                        <td><span class="fw-bold">{{ $reservation->payment->payment_status }}</span></td>
+                        <td><span class="fw-bold text-info">{{ $reservation->status }}</span></td>
+                    </tr>
+                    <!-- Item -->
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination mb-0">
+                    {{ $reservationData->links('vendor.pagination.default') }}
+                </ul>
+            </nav>
+            <!-- <div class="align-item-right"><b>Pendapatan Total Hari Ini : </b><b class="text-success">Rp 100.000.000</b></div> -->
+        </div>
     </div>
-    <div class="table-responsive">
-        <table style="text-align: center" class="table table-hover table-bordered">
-            <thead style="vertical-align: middle">
-                <tr>
-                    <th rowspan="2" class="border-gray-200">ID Bill</th>
-                    <th rowspan="2" class="border-gray-200">Nama</th>
-                    <th colspan="2" class="border-gray-200">Tanggal</th>
-                    <th rowspan="2" class="border-gray-200">Type Tamu</th>
-                    <th rowspan="2" class="border-gray-200">Type Kamar</th>
-                    <th rowspan="2" class="border-gray-200">No <br>Kamar</th>
-                    <th rowspan="2" class="border-gray-200">Type Pembayaran</th>
-                    <th rowspan="2" class="border-gray-200">Status</th>
-                </tr>
-                <tr>
-                    <th>Check-In</th>
-                    <th>Check-Out</th>
-                </tr>
-            </thead>
-            <tbody style="vertical-align: middle">
-                <!-- Item -->
-                <tr>
-                    <td><span class="fw-normal">Nota_00001223</span></td>
-                    <td><span class="fw-normal">Anang</span></td>
-                    <td><span class="fw-normal">27-Oct-23 7:05 AM</span></td>
-                    <td><span class="fw-normal">31-Oct-23 7:05 AM</span></td>
-                    <td><span class="fw-normal">Reservation Guest</span></td>
-                    <td><span class="fw-bold">Deluxe</span></td>
-                    <td><span class="fw-bold">110</span></td>
-                    <td><span class="fw-bold">Lunas</span></td>
-                    <td><span data-bs-toggle="modal" data-bs-target="#modal-detail" class="fw-bold text-info">Check-In</span></td>
-                </tr>
-                <tr>
-                    <td><span class="fw-normal">Nota_00001223</span></td>
-                    <td><span class="fw-normal">Anang</span></td>
-                    <td><span class="fw-normal">27-Oct-23 7:05 AM</span></td>
-                    <td><span class="fw-normal">31-Oct-23 7:05 AM</span></td>
-                    <td><span class="fw-normal">Reservation Guest</span></td>
-                    <td><span class="fw-bold">Deluxe</span></td>
-                    <td><span class="fw-bold">110</span></td>
-                    <td><span class="fw-bold">Lunas</span></td>
-                    <td><span data-bs-toggle="modal" data-bs-target="#modal-detail" class="fw-bold text-info">Check-In</span></td>
-                </tr>
-                <tr>
-                    <td><span class="fw-normal">Nota_00001223</span></td>
-                    <td><span class="fw-normal">Anang</span></td>
-                    <td><span class="fw-normal">27-Oct-23 7:05 AM</span></td>
-                    <td><span class="fw-normal">31-Oct-23 7:05 AM</span></td>
-                    <td><span class="fw-normal">Reservation Guest</span></td>
-                    <td><span class="fw-bold">Deluxe</span></td>
-                    <td><span class="fw-bold">110</span></td>
-                    <td><span class="fw-bold">Lunas</span></td>
-                    <td><span data-bs-toggle="tooltip" data-bs-placement="bottom" title="Tooltip on left class" class="fw-bold text-success">Reservasi</span></td>
-                                        </tr>
-                                        <!-- Item -->
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class=" card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination mb-0">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Previous</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">1</a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a class="page-link" href="#">2</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">3</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">4</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">5</a>
-                                    </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-    </div>
-</div>
-<!-- Tabel Room Income End -->
+    <!-- Tabel Room Income End -->
 
 <!-- Modal Content -->
 <div class="modal fade" id="modal-detail">

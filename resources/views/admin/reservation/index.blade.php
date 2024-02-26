@@ -1653,6 +1653,12 @@ $(document).ready(function() {
             var formattedVal = inputRupiah(inputVal);
             $(this).val(formattedVal);
         });
+
+        $('#payment_va_value').on('input', function() {
+            var inputVal = $(this).val();
+            var formattedVal = inputRupiah(inputVal);
+            $(this).val(formattedVal);
+        });
 });
 </script>
 <script>
