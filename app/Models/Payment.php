@@ -26,6 +26,6 @@ class Payment extends Model
     }
 
     public function paymentDetail(){
-        return $this->hasOne(PaymentDetail::class);
+        return $this->hasMany(PaymentDetail::class);
     }
 }
