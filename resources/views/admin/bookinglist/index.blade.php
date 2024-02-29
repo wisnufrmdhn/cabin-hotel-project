@@ -332,7 +332,7 @@
                                         </select>
                                     </div>
                                     <div class="mb-3 mt-2">
-                                                                                    <!-- Form select untuk cash -->
+                                    <!-- Form select untuk cash -->
                                     <div class="=col paymentOption" id="cashOptions" style="display: none">
                                         <div class="col">
                                             <div class="mb-2">
@@ -347,7 +347,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                            <!-- Form select untuk transfer -->
+                                    <!-- Form select untuk transfer -->
                                     <div class="col paymentOption" id="transferOptions" style="display: none;">
                                         <select class="form-select w-100 mb-2"  id="payment_category_transfer" name="payment_category_transfer" aria-label="transferBank" style="margin-bottom: 10px;">
                                             <option selected value="">Pilih Bank Transfer</option>
@@ -413,50 +413,5 @@
         function zoom() {
             document.body.style.zoom = "75%" 
         }
-</script>
-<script>
-    $(document).ready(function() {
-        $('#paymentMethod').change(function() {
-            $('.paymentOption').hide(); // Sembunyikan semua form select tambahan
-
-            // Tampilkan form select tambahan sesuai dengan metode pembayaran yang dipilih
-            if ($(this).val() === 'Transfer') {
-                $('#transferOptions').show();
-                $('#payment_category_transfer').attr('required', 'required');
-                $('#payment_transfer_value').attr('required', 'required');
-                $('#payment_method_transfer_reference').attr('required', 'required');
-                $('#payment_category_card').removeAttr('required');
-                $('#payment_card_value').removeAttr('required');
-                $('#payment_method_card_number').removeAttr('required');
-                $('#payment_category_qris').removeAttr('required');
-                $('#payment_qris_value').removeAttr('required');
-                $('#payment_method_qris_reference').removeAttr('required');
-            } else if ($(this).val() === 'Card') {
-                $('#cardOptions').show();
-                $('#payment_category_card').attr('required', 'required');
-                $('#payment_card_value').attr('required', 'required');
-                $('#payment_method_card_number').attr('required', 'required');
-                $('#payment_category_qris').removeAttr('required');
-                $('#payment_qris_value').removeAttr('required');
-                $('#payment_method_qris_reference').removeAttr('required');
-                $('#payment_category_transfer').removeAttr('required');
-                $('#payment_transfer_value').removeAttr('required');
-                $('#payment_method_transfer_reference').removeAttr('required');
-            } else if ($(this).val() === 'Qris') {
-                $('#qrisOptions').show();
-                $('#payment_category_qris').attr('required', 'required');
-                $('#payment_qris_value').attr('required', 'required');
-                $('#payment_method_qris_reference').attr('required', 'required');
-                $('#payment_category_transfer').removeAttr('required');
-                $('#payment_transfer_value').removeAttr('required');
-                $('#payment_method_transfer_reference').removeAttr('required');
-                $('#payment_category_card').removeAttr('required');
-                $('#payment_card_value').removeAttr('required');
-                $('#payment_method_card_number').removeAttr('required');
-            } else if ($(this).val() === 'Cash') {
-                $('#cashOptions').show();
-            }
-        });
-    });
 </script>
 @endpush

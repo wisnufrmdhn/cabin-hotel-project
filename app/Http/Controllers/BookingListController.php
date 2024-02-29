@@ -13,14 +13,14 @@ use App\Models\HotelRoomReservedTmp;
 use App\Models\Reservation;
 use App\Models\ReservationTmp;
 use App\Models\PaymentAmenitiesTmp;
-use App\Services\ReservationService;
+use App\Services\BookingListService;
 use Carbon\Carbon;
 
 class BookingListController extends Controller
 {
     private $service;
 
-    public function __construct(ReservationService $service)
+    public function __construct(BookingListService $service)
     {
         $this->service = $service;
     }
@@ -61,5 +61,14 @@ class BookingListController extends Controller
         $reservationDetail = Reservation::where('reservation_code', $reservationCode)->with('payment.paymentDetail.paymentMethod', 'customer', 'reservationMethod', 'hotelRoomReserved.hotelRoomNumber.hotelRoom')->first();
 
         return view('admin.bookinglist.detail', compact('reservationDetail', 'paymentOTA', 'paymentCard', 'paymentTransfer', 'paymentQris', 'paymentVA')); 
+    }
+
+    public function storeNewPayment(Request $request)
+    {
+        try{    
+            $store = $this->service->storeNewPayment($request);
+        }catch(\Throwable $th){
+            return $th;
+        }
     }
 }

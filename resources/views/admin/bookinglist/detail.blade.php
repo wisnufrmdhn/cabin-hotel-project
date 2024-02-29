@@ -89,6 +89,78 @@
                                 </br></br></br>
                                 <div class="col-lg-12 col-sm-12">
                                     <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+                                        <h4>Data Reservasi</h4>
+                                    </div>
+                                </div>
+                                </br></br></br>
+                                <div class="col-lg-3 col-sm-3">
+                                    <!-- Form -->
+                                    <div class="mb-4">
+                                        <label for="email">Metode Reservasi</label>
+                                        <input type="text" class="form-control" value="{{ $reservationDetail->reservationMethod->reservation_method }}" aria-describedby="emailHelp" disabled>
+                                    </div>
+                                    <!-- End of Form -->
+                                </div>
+                                <div class="col-lg-3 col-sm-3">
+                                    <!-- Form -->
+                                    <div class="mb-4">
+                                        <label for="email">Kode Reservasi</label>
+                                        <input type="text" class="form-control" value="{{ $reservationDetail->reservation_code }}" aria-describedby="emailHelp" disabled>
+                                    </div>
+                                    <!-- End of Form -->
+                                </div>
+                                <div class="col-lg-3 col-sm-3">
+                                    <!-- Form -->
+                                    <div class="mb-4">
+                                        <label for="email">Checkin</label>
+                                        <input type="text" class="form-control" value="{{ $reservationDetail->reservation_start_date }}" aria-describedby="emailHelp" disabled>
+                                    </div>
+                                    <!-- End of Form -->
+                                </div>
+                                <div class="col-lg-3 col-sm-3">
+                                    <!-- Form -->
+                                    <div class="mb-4">
+                                        <label for="email">Checkout</label>
+                                        <input type="text" class="form-control" value="{{ $reservationDetail->reservation_end_date }}" aria-describedby="emailHelp" disabled>
+                                    </div>
+                                    <!-- End of Form -->
+                                </div>
+
+                                <div class="col-lg-3 col-sm-3">
+                                    <!-- Form -->
+                                    <div class="mb-4">
+                                        <label for="email">Kategori Hari Reservasi</label>
+                                        <input type="text" class="form-control" value="{{ $reservationDetail->reservation_day_category }}" aria-describedby="emailHelp" disabled>
+                                    </div>
+                                    <!-- End of Form -->
+                                </div>
+                                <div class="col-lg-3 col-sm-3">
+                                    <!-- Form -->
+                                    <div class="mb-4">
+                                        <label for="email">Status</label>
+                                        <input type="text" class="form-control" value="{{ $reservationDetail->status }}" aria-describedby="emailHelp" disabled>
+                                    </div>
+                                    <!-- End of Form -->
+                                </div>
+                                <div class="col-lg-3 col-sm-3">
+                                    <!-- Form -->
+                                    <div class="mb-4">
+                                        <label for="email">Breakfast</label>
+                                        <input type="text" class="form-control" value="{{ $reservationDetail->breakfast_status }}" aria-describedby="emailHelp" disabled>
+                                    </div>
+                                    <!-- End of Form -->
+                                </div>
+                                <div class="col-lg-3 col-sm-3">
+                                    <!-- Form -->
+                                    <div class="mb-4">
+                                        <label for="email">Tanggal Reservasi</label>
+                                        <input type="text" class="form-control" value="{{ $reservationDetail->created_at }}" aria-describedby="emailHelp" disabled>
+                                    </div>
+                                    <!-- End of Form -->
+                                </div>
+                                </br></br></br>
+                                <div class="col-lg-12 col-sm-12">
+                                    <div class="d-flex px-0 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
                                         <h4>Rincian Kamar</h4>
                                     </div>
                                 </div>
@@ -218,15 +290,93 @@
 					<h2 class="h6 modal-title">Tambah Pembayaran</h2><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
 				</div>
 				<div class="modal-body">
-				    <label for="email">Nominal Pembayaran</label>
-                    <input type="text" class="form-control" value="" aria-describedby="emailHelp" disabled>
-                    </br>
-                    <label for="email">Metode Pembayaran</label>
-                    <input type="text" class="form-control" value="" aria-describedby="emailHelp" disabled>
+                <form method="POST" action="">
+                @csrf
+                <input type="hidden" id="payment_id" name="payment_id" class="form-control mb-2" value="{{ $reservationDetail->payment_id }}">
+                <div class="col">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="payment_method_cash" name="payment_method_cash">
+                                <p>Cash</p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
+                                <input type="text" name="payment_cash_value" class="form-control "
+                                    id="payment_cash_value" placeholder="Nominal Bayar" aria-describedby="emailHelp">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-4">
+                                <input type="text" name="change" id="change" class="form-control " id="email"
+                                    placeholder="Nominal Kembali" aria-describedby="emailHelp">
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="payment_method_non_cash" name="payment_method_non_cash">
+                                <p>Non Cash</p>
+                            </div>
+                        </div>
+                    <select class="form-select w-100 mb-2" id="paymentMethod" name="paymentMethod" aria-label="paymentMethod">
+                        <option selected value="">Metode Pembayaran</option>
+                        <option value="Card">Card</option>
+                        <option value="Qris">QRIS</option>
+                        <option value="Transfer">Transfer</option>
+                        <option value="VA">Virtual Account</option>
+                    </select>
+                    <!-- Form select untuk transfer -->
+                    <div class="col paymentOption" id="transferOptions" style="display: none;">
+                            <select class="form-select w-100 mb-2" id="payment_category_transfer" name="payment_category_transfer" aria-label="transferBank" style="margin-bottom: 10px;">
+                                <option selected value="">Pilih Bank Transfer</option>
+                                    @foreach($paymentTransfer as $transfer)
+                                        <option value="{{ $transfer->id }}">{{ $transfer->payment_method }}</option>
+                                    @endforeach
+                            </select>
+                            <input type="text" id="payment_transfer_value" name="payment_transfer_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                            <input type="text" id="payment_method_transfer_reference" name="payment_method_transfer_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Transfer">
+                        </div>
+
+                        <!-- Form select untuk virtual account -->
+                        <div class="col paymentOption" id="VAOptions" style="display: none;">
+                            <select class="form-select w-100 mb-2"  id="payment_category_va" name="payment_category_va" aria-label="virtualAccount" style="margin-bottom: 10px;">
+                                <option selected value="">Pilih Virtual Account</option>
+                                    @foreach($paymentVA as $va)
+                                        <option value="{{ $va->id }}">{{ $va->payment_method }}</option>
+                                    @endforeach
+                            </select>
+                            <input type="text" id="payment_va_value" name="payment_va_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                            <input type="text" id="payment_method_va_reference" name="payment_method_va_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Virtual Account">
+                        </div>
+
+                        <!-- Form select untuk card -->
+                        <div class="col paymentOption" id="cardOptions" style="display: none;">
+                            <select class="form-select w-100 mb-2" id="payment_category_card" name="payment_category_card" aria-label="cardType">
+                                <option selected value>Pilih Jenis Kartu</option>
+                                @foreach($paymentCard as $card)
+                                    <option value="{{ $card->id }}">{{ $card->payment_method }}</option>
+                                @endforeach
+                            </select>
+                            <input type="text" id="payment_card_value" name="payment_card_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                            <input type="text" id="payment_method_card_number" name="payment_method_card_number" class="form-control mb-2" placeholder="Nomor Kartu">
+                        </div>
+
+                        <!-- Form select untuk qris -->
+                        <div class="col paymentOption" id="qrisOptions" style="display: none;">
+                            <select class="form-select w-100 mb-2" id="payment_category_qris" name="payment_category_qris" aria-label="qrisType">
+                                <option selected value>Pilih Jenis QRIS</option>
+                                    @foreach($paymentQris as $qris)
+                                        <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
+                                    @endforeach
+                            </select>
+                            <input type="text" id="payment_qris_value" name="payment_qris_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                            <input type="text" id="payment_method_qris_reference" name="payment_method_qris_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi QRIS">
+                        </div>
 				</div>
 				<div class="modal-footer">
-                    <button class="btn btn-secondary" type="button">Submit</button>
+                    <button class="btn btn-secondary" type="submit">Submit</button>
 				</div>
+                </form>
 			</div>
 		</div>
 	</div><!-- End of Modal Content -->
@@ -284,4 +434,71 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function() {
+        $('#paymentMethod').change(function() {
+            $('.paymentOption').hide(); // Sembunyikan semua form select tambahan
+
+            // Tampilkan form select tambahan sesuai dengan metode pembayaran yang dipilih
+            if ($(this).val() === 'Transfer') {
+                $('#transferOptions').show();
+            } else if ($(this).val() === 'Card') {
+                $('#cardOptions').show();
+            } else if ($(this).val() === 'Qris') {
+                $('#qrisOptions').show();
+            }else if ($(this).val() === 'VA') {
+                $('#VAOptions').show();
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+            $('#payment_method_cash').attr('required', 'required');
+            $('#payment_method_non_cash').attr('required', 'required');
+        });
+</script>
+<script>
+    $(document).ready(function() {
+            $('#payment_method_cash').on('change', function() {
+                // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
+                if (this.checked) {
+                    $('#payment_method_non_cash').prop('disabled', true);
+                    $('#paymentMethod').prop('disabled', true);
+                    $('#payment_method_non_cash').removeAttr('required');
+                    $('#payment_cash_value').attr('required', 'required');
+                    $('#change').attr('required', 'required');
+                } else {
+                    $('#payment_method_non_cash').prop('disabled', false);
+                    $('#paymentMethod').prop('disabled', false);
+                    $('#payment_method_non_cash').attr('required', 'required');
+                    $('#payment_cash_value').removeAttr('required');
+                    $('#change').removeAttr('required');
+                }
+            });
+        });
+</script>
+<script>
+    $(document).ready(function() {
+            $('#payment_method_non_cash').on('change', function() {
+                // Tampilkan atau sembunyikan elemen-elemen tergantung pada nilai checkbox
+                if (this.checked) {
+                    $('#payment_method_cash').prop('disabled', true);
+                    $('#payment_cash_value').prop('disabled', true);
+                    $('#change').prop('disabled', true);
+                    $('#payment_method_cash').removeAttr('required');
+                    $('#paymentMethod').attr('required', 'required');
+                } else {
+                    $('#payment_method_cash').prop('disabled', false);
+                    $('#payment_cash_value').prop('disabled', false);
+                    $('#change').prop('disabled', false);
+                    $('#payment_method_cash').attr('required', 'required');
+                    $('#paymentMethod').removeAttr('required');
+                }
+            });
+        });
+</script>
+<!-- JavaScript to handle form submission -->
+<!-- <script> 
+
 @endpush
