@@ -365,8 +365,8 @@ class ReservationService
             $request['reservation_end_date'] = Carbon::parse($request['reservation_start_date_daily'])->addDays($request['mixed_day'])->addHours($request['mixed_hour']);
         }
 
-        $checkInDateTime = date('Y-m-d', strtotime($request['reservation_start_date'])); 
-        $checkOutDateTime = date('Y-m-d', strtotime($request['reservation_end_date'])); 
+        $checkInDateTime = $request['reservation_start_date']; 
+        $checkOutDateTime = $request['reservation_end_date'];
     
         // Check if there's any reservation data within the date range
         $hasReservationWithinRange = Reservation::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->whereNotIn('status', $excludedStatuses)->with('hotelRoomReserved')->where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
