@@ -67,8 +67,13 @@ class BookingListController extends Controller
     {
         try{    
             $store = $this->service->storeNewPayment($request);
+            // Flash success message to the session
+            session()->flash('success', 'Tambah Pembayaran Berhasil');
         }catch(\Throwable $th){
+            // Flash success message to the session
+            session()->flash('success', 'Tambah Pembayaran Gagal');
             return $th;
         }
+        return redirect()->route('admin.bookinglist.show', ['reservationCode' => $store]);
     }
 }

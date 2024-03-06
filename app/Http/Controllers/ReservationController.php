@@ -90,11 +90,13 @@ class ReservationController extends Controller
     {
         try{    
             $store = $this->service->store($request);
+            // Flash success message to the session
+            session()->flash('success', 'Tambah Data Reservasi Berhasil');
         }catch(\Throwable $th){
             return $th;
-            return redirect()->route('admin.reservation.index')->with('error', 'Reservation data final failed to add');
+            return redirect()->route('admin.reservation.index')->with('error', 'Tambah Data Reservasi Gagal');
         }
-        return redirect()->route('pdf.invoices', ['invoiceId' => $store]);
+    return redirect()->route('admin.bookinglist.index');
     }
 
     public function storeCustomer(Request $request)

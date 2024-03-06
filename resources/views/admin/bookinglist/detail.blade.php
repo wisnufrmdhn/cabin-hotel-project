@@ -8,6 +8,12 @@
         </div>
     </div>
 </div>
+@if(session('success'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <span class="fas fa-bullhorn me-1">{{ session('success') }}</span>
+    <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
 <!-- Header End -->
     <div class="row">
                 <div class="col-12 mb-4">
@@ -252,7 +258,9 @@
                                 </br>
                                 <div class="col-lg-12 col-sm-12">
                                     <!-- Button to open modal -->
-                                    <button type="button" class="btn btn-secondary"data-bs-toggle="modal" data-bs-target="#addModal">Tambah Pembayaran</button> 
+                                    @if($reservationDetail->payment->payment_status == 'DP' || $reservationDetail->payment->payment_status == 'DP 2')
+                                        <button type="button" class="btn btn-secondary"data-bs-toggle="modal" data-bs-target="#addModal">Tambah Pembayaran</button>
+                                    @endif 
                                     <table style="text-align: center" class="table table-hover table-bordered">
                                         <thead style="vertical-align: middle">
                                             <tr>
@@ -265,15 +273,15 @@
                                         </thead>
                                         <tbody>
                                             <!-- Item -->
+                                            @foreach($reservationDetail->payment->paymentDetail as $paymentDetail)
                                             <tr>
-                                                @foreach($reservationDetail->payment->paymentDetail as $paymentDetail)
                                                 <td><span class="fw-bold">{{ $paymentDetail->updated_at }}</span></td>
                                                 <td><span class="fw-normal">{{ $paymentDetail->paymentMethod->payment_method }}</span></td>
                                                 <td><span class="fw-normal">Rp. {{ $paymentDetail->payment_detail_value }}</span></td>
                                                 <td><span class="fw-normal">{{ $paymentDetail->card_number ?? '-' }}</span></td>
                                                 <td><span class="fw-bold">{{ $paymentDetail->reference_number ?? '-' }}</span></td>
-                                                @endforeach
                                             </tr>
+                                            @endforeach
                                             <!-- Item -->
                                         </tbody>
                                     </table>
@@ -290,7 +298,7 @@
 					<h2 class="h6 modal-title">Tambah Pembayaran</h2><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
 				</div>
 				<div class="modal-body">
-                <form method="POST" action="">
+                <form method="POST" action="{{ route('admin.bookinglist.store-new-payment') }}"">
                 @csrf
                 <input type="hidden" id="payment_id" name="payment_id" class="form-control mb-2" value="{{ $reservationDetail->payment_id }}">
                 <div class="col">

@@ -33,6 +33,8 @@ class BookingListService
     public function storeNewPayment($request)
     {
         $payment = Payment::where('id', $request['payment_id'])->first();
+        $reservation = Reservation::where('payment_id', $request['payment_id'])->first();
+        $reservationCode = $reservation->reservation_code;
         $currentPayment = $payment['total_payment'];
 
         $request['payment_ota_value'] = $request['payment_ota_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_ota_value']) : 0;
@@ -117,13 +119,32 @@ class BookingListService
                     'reference_number'      => $request['payment_method_va_reference'],
                 ]);
             }
-
-            $updatePayment = $payment->update([
-                'total_payment' => $currentPayment + $request['total_payment'],
-            ]);
-
-            return $updatePayment;
         }
+
+        $totalPayment = $currentPayment + $request['total_payment'];
+
+            if($payment->payment_status == 'DP'){
+                if($payment->total_price > $totalPayment){
+                    $updatePayment = $payment->update([
+                        'total_payment' => $totalPayment,
+                        'payment_status' => 'DP 2'
+                    ]);
+                }else{
+                    $updatePayment = $payment->update([
+                        'total_payment' => $totalPayment,
+                        'payment_status' => 'Lunas + DP 1'
+                    ]);
+                }
+            }else{
+                if($payment->total_price == $totalPayment){
+                    $updatePayment = $payment->update([
+                        'total_payment' => $totalPayment,
+                        'payment_status' => 'Lunas + DP 2'
+                    ]);
+                }
+            }
+
+            return $reservationCode;
     }
 }
 

@@ -105,6 +105,12 @@
             <h3>Data Reservasi</h3>
         </div>
         </br>
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <span class="fas fa-bullhorn me-1">{{ session('success') }}</span>
+            <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
         <div class="table-responsive">
             <table style="text-align: center" class="table table-hover table-bordered">
                 <thead style="vertical-align: middle">
@@ -115,6 +121,7 @@
                         <th rowspan="2" class="border-gray-200">Type Tamu</th>
                         <th rowspan="2" class="border-gray-200">Status Pembayaran</th>
                         <th rowspan="2" class="border-gray-200">Status</th>
+                        <th rowspan="2" class="border-gray-200">Invoice</th>
                     </tr>
                     <tr>
                         <th>Check-In</th>
@@ -132,6 +139,7 @@
                         <td><span class="fw-normal">{{ $reservation->reservationMethod->reservation_method }}</span></td>
                         <td><span class="fw-bold">{{ $reservation->payment->payment_status }}</span></td>
                         <td><span class="fw-bold text-info">{{ $reservation->status }}</span></td>
+                        <td><span class="fw-bold text-info"><a href="{{ route('pdf.invoices', $reservation->reservation_code) }}" target="_blank" class="btn btn-sm px-3 btn-danger ms-3">PDF</a></span></td>
                     </tr>
                     <!-- Item -->
                     @endforeach
@@ -149,262 +157,6 @@
         </div>
     </div>
     <!-- Tabel Room Income End -->
-
-<!-- Modal Content -->
-<div class="modal fade" id="modal-detail">
-    <div class="modal-dialog modal-xl" style="max-width: 70%;">
-        <div class="modal-content">
-            {{-- <div class="modal-header">
-                <h4 class="modal-title">Rincian Tamu</h4>
-            </div> --}}
-            <div class="card-body">
-                <div class="card mb-2 card-primary card-outline">
-                    <div class="modal-content">
-                        <div class="modal-header bg-warning">
-                            <h5 class="h5 modal-title">Data Diri Tamu</h5>
-                        </div>
-                        <div class="modal-body" style="vertical-align: middle">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="card card-body border-0 shadow mb-2 mt-4">
-                                        <h2 class="h5 mb-4">Profile Photo</h2>
-                                        <div class="d-flex align-items-center">
-                                            <!-- Avatar -->
-                                            <img class="rounded img-thumbnail" src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80" alt="change avatar">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">   
-                                    <div class="card card-body border-0 shadow mb-2 mt-4">
-                                        <h2 class="h5 mb-4">KTP Photo</h2>
-                                        <div class="d-flex align-items-center">
-                                            <!-- Avatar -->
-                                            <img class="rounded img-thumbnail" src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80" alt="change avatar">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="mb-4">
-                                        <label for="email">Nama</label>
-                                        <input class="form-control" id="email" type="email" placeholder="Wisnu Febri Ramadhan" disabled>
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="gender">Gender</label>
-                                        <select disabled class="form-select mb-0" id="gender" aria-label="Gender select example">
-                                            <option selected>Gender</option>
-                                            <option value="Female">Female</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-4">
-                                        <label for="email">Email</label>
-                                        <input class="form-control" id="email" type="email" placeholder="name@company.com" disabled>
-                                    </div>
-                                    <div class="mb-0">
-                                        <label for="email">No Handphone</label>
-                                        <input class="form-control" id="email" type="email" placeholder="081231214" disabled>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mb-4">
-                                <label for="email">Alamat</label>
-                                <input class="form-control" id="email" type="email" placeholder="Jl. Gandekan Lor No.2, Sosromenduran, Gedong Tengen, Kota Yogyakarta, Daerah Istimewa Yogyakarta 55271" disabled>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="card mb-2 mt-4 card-primary card-outline">
-                    <div class="modal-content">
-                        <div class="modal-header bg-warning">
-                            <h5 class="h5 modal-title">Rincian Kamar</h5>
-                            {{-- <button class="btn btn-sm px-3 btn-success ms-3" style="vertical-align: middle">Edit</button> --}}
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="mb-3 mt-4">
-                                        <label for="email">Tipe Kamar</label>
-                                        <input class="form-control" id="email" type="email" placeholder="Deluxe" disabled>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="gender">Check In</label>
-                                        <select disabled class="form-select mb-0" id="gender" aria-label="Gender select example">
-                                            <option selected>30-10-2023 05.00</option>
-                                            <option value="Female">Female</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="email">Breakfast</label>
-                                        <input class="form-control" id="email" type="email" placeholder="Include" disabled>
-                                    </div>
-                                    <div class="mb-3 mt-4">
-                                        <label for="status">Status</label>
-                                        <input class="form-control" id="email" type="email" placeholder="Reservation" disabled>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="mb-3 mt-4">
-                                        <label for="email">No Kamar</label>
-                                        <input class="form-control" id="email" type="email" placeholder="100" disabled>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="gender">Check Out</label>
-                                        <select disabled class="form-select mb-0" id="gender" aria-label="Gender select example">
-                                            <option selected>04-11-2023 05.00</option>
-                                            <option value="Female">Female</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Other">Other</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="email">Extra Person & Extra Bed</label>
-                                        <input class="form-control" id="email" type="email" placeholder="2 Orang" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Keterangan</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer justify-content-between" style="vertical-align: middle">
-                            <button type="button" class="btn btn-outline-info" data-dismiss="modal">Update</button>
-                            <button type="button" class="btn btn-outline-success">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mb-2 mt-4 card-primary">
-                    <div class="modal-content">
-                        <div class="modal-header bg-warning">
-                            <h5 class="h5 modal-title">Rincian Pembayaran</h5>
-                            {{-- <button class="btn btn-sm px-3 btn-success ms-3" style="vertical-align: middle">Update</button> --}}
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col">
-                                    <div class="mb-3 mt-4">
-                                        <label for="email">Diskon</label>
-                                        <input class="form-control" id="email" type="email" placeholder="Rp. 100.000" disabled>
-                                    </div>
-                                    
-                                    <div class="mb-3">
-                                        <label for="email">Total Harga</label>
-                                        <input class="form-control" id="email" type="email" placeholder="Rp. 200.000" disabled>
-                                    </div>
-                                    <div class="mb-3 mt-4">
-                                        <label for="status">Biaya Tambahan</label>
-                                        <input class="form-control" id="email" type="email" placeholder="Rp. 0" disabled>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="mb-3 mt-4">
-                                        <label for="email">Tipe Pembayaran</label>
-                                        <input class="form-control" id="email" type="email" placeholder="Lunas" disabled>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="email">Jenis Pembayaran</label>
-                                        <input class="form-control" id="email" type="email" placeholder="Cash" disabled>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleFormControlTextarea1">Keterangan</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" disabled></textarea>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="mb-3 mt-4">
-                                        <label for="email">Tipe Pembayaran</label>
-                                        <input class="form-control" id="email" type="email" placeholder="Lunas" disabled>
-                                    </div>
-                                    <div class="mb-3 mt-3">
-                                        <label for="email">Metode Pembayaran</label>
-                                        <select class="form-select w-100 mb-0" id="paymentMethod" name="paymentMethod" aria-label="paymentMethod">
-                                            <option selected value="">Metode Pembayaran</option>
-                                            <option value="Cash">Cash</option>
-                                            <option value="Card">Card</option>
-                                            <option value="Qris">QRIS</option>
-                                            <option value="Transfer">Transfer</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3 mt-2">
-                                    <!-- Form select untuk cash -->
-                                    <div class="=col paymentOption" id="cashOptions" style="display: none">
-                                        <div class="col">
-                                            <div class="mb-2">
-                                                <input type="text" name="payment_cash_value" class="form-control "
-                                                    id="payment_cash_value" placeholder="Nominal Bayar" aria-describedby="emailHelp" >
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="mb-4">
-                                                <input type="text" name="change" id="change" class="form-control " id="email"
-                                                    placeholder="Nominal Kembali" aria-describedby="emailHelp" >
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Form select untuk transfer -->
-                                    <div class="col paymentOption" id="transferOptions" style="display: none;">
-                                        <select class="form-select w-100 mb-2"  id="payment_category_transfer" name="payment_category_transfer" aria-label="transferBank" style="margin-bottom: 10px;">
-                                            <option selected value="">Pilih Bank Transfer</option>
-                                                @foreach($paymentTransfer as $transfer)
-                                                    <option value="{{ $transfer->id }}">{{ $transfer->payment_method }}</option>
-                                                @endforeach
-                                        </select>
-                                        <input type="text" id="payment_transfer_value" name="payment_transfer_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
-                                        <input type="text" id="payment_method_transfer_reference" name="payment_method_transfer_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Transfer">
-                                    </div>
-            
-                                    <!-- Form select untuk card -->
-                                    <div class="col paymentOption" id="cardOptions" style="display: none;">
-                                        <select class="form-select w-100 mb-2" id="payment_category_card" name="payment_category_card" aria-label="cardType">
-                                            <option selected value>Pilih Jenis Kartu</option>
-                                            @foreach($paymentCard as $card)
-                                                <option value="{{ $card->id }}">{{ $card->payment_method }}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="text" id="payment_card_value" name="payment_card_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
-                                        <input type="text" id="payment_method_card_number" name="payment_method_card_number" class="form-control mb-2" placeholder="Nomor Kartu">
-                                    </div>
-            
-                                    <!-- Form select untuk qris -->
-                                    <div class="col paymentOption" id="qrisOptions" style="display: none;">
-                                        <select class="form-select w-100 mb-2" id="payment_category_qris" name="payment_category_qris" aria-label="qrisType">
-                                            <option selected value>Pilih Jenis QRIS</option>
-                                                @foreach($paymentQris as $qris)
-                                                    <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
-                                                @endforeach
-                                        </select>
-                                        <input type="text" id="payment_qris_value" name="payment_qris_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
-                                        <input type="text" id="payment_method_qris_reference" name="payment_method_qris_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi QRIS">
-                                    </div>
-                                    {{-- @endif --}}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer justify-content-between" style="vertical-align: middle">
-                            <button type="button" class="btn btn-outline-info" data-dismiss="modal">Update</button>
-                            <button type="button" class="btn btn-outline-success">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{-- <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div> --}}
-        </div>
-    </div>
-    <!-- /.modal-content -->
-</div>
-<!-- /.modal-dialog -->
-</div>
-<!-- End of Modal Content -->
 @endsection
 
 @push('scripts')
