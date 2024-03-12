@@ -367,15 +367,14 @@ class ReservationService
 
         $checkInDateTime = $request['reservation_start_date']; 
         $checkOutDateTime = $request['reservation_end_date'];
-    
+        
         // Check if there's any reservation data within the date range
-        $hasReservationWithinRange = Reservation::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->whereNotIn('status', $excludedStatuses)->with('hotelRoomReserved')->where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
+        $hasReservationWithinRange = Reservation::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)
+        ->whereNotIn('status', $excludedStatuses)
+        ->where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
             $query->where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
-                $query->whereDate('reservation_start_date', '>=', $checkInDateTime)
-                    ->whereDate('reservation_start_date', '<=', $checkOutDateTime);
-                })->orWhere(function ($query) use ($checkInDateTime, $checkOutDateTime) {
-                    $query->whereDate('reservation_end_date', '>=', $checkInDateTime)
-                        ->whereDate('reservation_end_date', '<=', $checkOutDateTime);
+                $query->whereBetween('reservation_start_date', [$checkInDateTime, $checkOutDateTime])
+                    ->orWhereBetween('reservation_end_date', [$checkInDateTime, $checkOutDateTime]);
             });
         })->whereHas('hotelRoomReserved', function ($query) use ($request) {
             $query->where('hotel_room_number_id', $request['hotel_room_number_id']);
