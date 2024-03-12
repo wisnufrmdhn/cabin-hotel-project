@@ -124,8 +124,13 @@
                     <td> Rp. {{ number_format($invoice->payment->downPayment->down_payment ?? 0 ?? 0, 0, ',', '.') }}</td>
                 </tr>
                 <tr>
-                    <td colspan="3"><b>Total</b></td>
-                    <td> Rp. {{  number_format(($subtotal ?? 0) + $subtotalAmenities - $discount - ($invoice->payment->downPayment->down_payment ?? 0)  ?? 0 ?? 0, 0, ',', '.') }} </td>
+                    @if(isset($invoice->payment->downPayment->down_payment))
+                        <td colspan="3"><b>Sisa Pembayaran</b></td>
+                        <td> Rp. {{  number_format(($subtotal ?? 0) + $subtotalAmenities - $discount - ($invoice->payment->downPayment->down_payment ?? 0)  ?? 0 ?? 0, 0, ',', '.') }} </td>
+                    @else
+                        <td colspan="3"><b>Total Pembayaran</b></td>
+                        <td> Rp. {{  number_format(($subtotal ?? 0) + $subtotalAmenities - $discount - ($invoice->payment->downPayment->down_payment ?? 0)  ?? 0 ?? 0, 0, ',', '.') }} </td>
+                    @endif
                 </tr>
             </table>
         </div>
