@@ -86,6 +86,20 @@ class FinanceController extends Controller
                     });
                 });
             }
+
+            // Apply filters based on dropdown selections
+            if ($request->filled('payment_status')) {
+                $paymentStatus = $request['payment_status'];
+
+                if($paymentStatus == 'Lunas'){
+                    $paymentStatuses = ['DP Langsung Lunas', 'Lunas', 'Lunas + DP 1', 'Lunas + DP 2'];
+                    $query->whereHas('payment', function ($query) use ($paymentStatuses) {
+                        $query->whereHas('paymentDetail', function ($query) use ($paymentStatuses) {
+                            $query->whereIn('payment_status', $paymentStatuses);
+                        });
+                    });
+                }
+            }
             
             if ($request->filled('payment_date')) {
                 $paymentDate = $request['payment_date'];

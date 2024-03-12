@@ -135,6 +135,7 @@ class ReservationController extends Controller
                 // there's already duplicate reservation within the specified UTC date range
                 return redirect()->back()->withErrors(['error' => $store['error']]);
             }
+            return $store;
         }catch(\Throwable $th){
             return $th;
             return redirect()->back()->withErrors(['error' => $th]);
