@@ -119,19 +119,25 @@
                     <td colspan="3"><b>Diskon</b></td>
                     <td> Rp. {{ number_format($discount ?? 0, 0, ',', '.') }} </td>
                 </tr>
-                <tr>
-                    <td colspan="3"><b>DP & Extra</b></td>
-                    <td> Rp. {{ number_format($invoice->payment->downPayment->down_payment ?? 0 ?? 0, 0, ',', '.') }}</td>
-                </tr>
-                <tr>
-                    @if(isset($invoice->payment->downPayment->down_payment))
+                @if($invoice->payment->payment_status == 'DP' || $invoice->payment->payment_status == 'DP 2')
+                    <tr>
+                        <td colspan="3"><b>DP & Extra</b></td>
+                        <td> Rp. {{ number_format($invoice->payment->downPayment->down_payment ?? 0 ?? 0, 0, ',', '.') }}</td>
+                    </tr>
+                    <tr>
                         <td colspan="3"><b>Sisa Pembayaran</b></td>
                         <td> Rp. {{  number_format(($subtotal ?? 0) + $subtotalAmenities - $discount - ($invoice->payment->downPayment->down_payment ?? 0)  ?? 0 ?? 0, 0, ',', '.') }} </td>
-                    @else
+                    </tr>
+                @else
+                    <tr>
+                        <td colspan="3"><b>DP & Extra</b></td>
+                        <td> Rp. 0</td>
+                    </tr>
+                    <tr>
                         <td colspan="3"><b>Total Pembayaran</b></td>
                         <td> Rp. {{  number_format(($subtotal ?? 0) + $subtotalAmenities - $discount - ($invoice->payment->downPayment->down_payment ?? 0)  ?? 0 ?? 0, 0, ',', '.') }} </td>
-                    @endif
-                </tr>
+                    </tr>
+                @endif
             </table>
         </div>
         <div class="footer">
