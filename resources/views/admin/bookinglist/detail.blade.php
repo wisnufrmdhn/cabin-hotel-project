@@ -261,6 +261,7 @@
                                     @if($reservationDetail->payment->payment_status == 'DP' || $reservationDetail->payment->payment_status == 'DP 2')
                                         <button type="button" class="btn btn-secondary"data-bs-toggle="modal" data-bs-target="#addModal">Tambah Pembayaran</button>
                                     @endif 
+                                    <a href="{{ route('pdf.invoices.detail-payment', $reservationDetail->reservation_code) }}" target="_blank" class="btn btn btn-danger">Invoice PDF Rincian Pembayaran</a>
                                     <table style="text-align: center" class="table table-hover table-bordered">
                                         <thead style="vertical-align: middle">
                                             <tr>
@@ -275,7 +276,7 @@
                                             <!-- Item -->
                                             @foreach($reservationDetail->payment->paymentDetail as $paymentDetail)
                                             <tr>
-                                                <td><span class="fw-bold">{{ $paymentDetail->updated_at }}</span></td>
+                                                <td><span class="fw-bold">{{ \Carbon\Carbon::parse($paymentDetail->updated_at ?? '')->timezone('Asia/Bangkok') }}</span></td>
                                                 <td><span class="fw-normal">{{ $paymentDetail->paymentMethod->payment_method }}</span></td>
                                                 <td><span class="fw-normal">Rp. {{ $paymentDetail->payment_detail_value }}</span></td>
                                                 <td><span class="fw-normal">{{ $paymentDetail->card_number ?? '-' }}</span></td>
@@ -392,11 +393,6 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<!-- <script type="text/javascript">
-        function zoom() {
-            document.body.style.zoom = "75%" 
-        }
-</script> -->
 <script>
     $(document).ready(function() {
         $('#paymentMethod').change(function() {
@@ -506,6 +502,60 @@
             });
         });
 </script>
+<script>
+$(document).ready(function() {
+    // Function to format the input as currency
+    function inputRupiah(input) {
+        // Remove non-numeric characters
+        var number = input.replace(/\D/g, '');
+
+        // Add thousands separator (.,) and currency symbol (Rp) if it's a valid number
+        if (!isNaN(number)) {
+            var formatted = 'Rp ' + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            return formatted;
+        }
+
+        return input; // Return the original input if it's not a valid number
+    }
+
+    $('#payment_cash_value').on('input', function() {
+            var inputVal = $(this).val();
+            var formattedVal = inputRupiah(inputVal);
+            $(this).val(formattedVal);
+        });
+
+        $('#change').on('input', function() {
+            var inputVal = $(this).val();
+            var formattedVal = inputRupiah(inputVal);
+            $(this).val(formattedVal);
+        });
+
+        $('#payment_card_value').on('input', function() {
+            var inputVal = $(this).val();
+            var formattedVal = inputRupiah(inputVal);
+            $(this).val(formattedVal);
+        });
+
+        $('#payment_transfer_value').on('input', function() {
+            var inputVal = $(this).val();
+            var formattedVal = inputRupiah(inputVal);
+            $(this).val(formattedVal);
+        });
+
+        $('#payment_qris_value').on('input', function() {
+            var inputVal = $(this).val();
+            var formattedVal = inputRupiah(inputVal);
+            $(this).val(formattedVal);
+        });
+
+        $('#payment_va_value').on('input', function() {
+            var inputVal = $(this).val();
+            var formattedVal = inputRupiah(inputVal);
+            $(this).val(formattedVal);
+        });
+});
+</script>
+
 <!-- JavaScript to handle form submission -->
 <!-- <script> 
 

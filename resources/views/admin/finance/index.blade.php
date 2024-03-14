@@ -184,6 +184,11 @@
                     <option value="{{$method->id}}">{{ $method->payment_method }}</option>
                     @endforeach
                 </select>
+                <select class="form-select me-3 pe-5 fmxw-200" name="payment_status" aria-label="Message select example">
+                    <option selected value>Status Pembayaran</option>
+                        <option value="Semua">Semua Pembayaran</option>
+                        <option value="Lunas">Hanya Lunas</option>
+                </select>
                 <!-- <select class="form-select pe-5 fmxw-100" name="payment_check" aria-label="Message select example">
                     <option selected value>Status</option>
                     <option value="Oncheck">Oncheck</option>

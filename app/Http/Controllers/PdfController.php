@@ -50,6 +50,32 @@ class PdfController extends Controller
         return $pdf->stream('invoice.pdf');
     }
 
+    public function generateDetailPaymentInvoice($invoiceId)
+    {
+        $i = 1;
+        $invoice = Reservation::where('reservation_code', $invoiceId)->with('payment.DownPayment', 'customer', 'payment.PaymentDetail.PaymentMethod')->first();
+        $hotelRoomReserved = HotelRoomReserved::where('reservation_id', $invoice->id)->with('hotelRoomNumber.HotelRoom')->get();
+        $paymentAmenities = PaymentAmenities::where('payment_id', $invoice->payment->id)->where('total_price', '!=', 0)->with('amenities')->get();
+        $subtotal = HotelRoomReserved::where('reservation_id', $invoice->id)->with('hotelRoomNumber.HotelRoom')->sum('price');
+        $cashier = Auth::user()->name;
+
+        $discount = $invoice->payment->discount ?? 0; 
+
+        $subtotalAmenities = 0;
+
+        if(count($paymentAmenities) > 0){
+            $subtotalAmenities = PaymentAmenities::where('payment_id', $invoice->payment->id)->with('amenities')->sum('total_price') ?? 0;
+        }
+
+        if($invoice->payment->discount < 100){
+            $discount = ($subtotal + $subtotalAmenities) * ($invoice->payment->discount / 100);
+        }  
+
+        $pdf = PDF::loadView('pdf.invoice-detail-payment', compact('invoice', 'hotelRoomReserved', 'subtotal', 'cashier', 'discount', 'paymentAmenities', 'subtotalAmenities', 'i'));
+
+        return $pdf->stream('invoice-detail-payment.pdf');
+    }
+
     public function generateReportFinanceFO($from, $to)
     {
         $i = 1;
