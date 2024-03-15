@@ -69,7 +69,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://thecabinhoteljogja.com/logo.png" alt="Company Logo" class="logo">
+            <img src="{{ public_path('assets/img/logo cabin hotel.png') }}" alt="Company Logo" class="logo">
             <p>Yogyakarta, {{ \Carbon\Carbon::now()->timezone('Asia/Bangkok')->isoFormat('DD MMMM YYYY') }}</p>
         </div>
         <div class="invoice-info">

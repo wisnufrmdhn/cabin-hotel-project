@@ -69,7 +69,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://thecabinhoteljogja.com/logo.png" alt="Company Logo" class="logo">
+            <img src="{{ public_path('assets/img/logo cabin hotel.png') }}" alt="Company Logo" class="logo">
             <p>Yogyakarta, {{ isset($invoice->created_at) ? date('d/m/Y', strtotime($invoice->created_at)) : '' }}</p>
         </div>
         <div class="invoice-info">
