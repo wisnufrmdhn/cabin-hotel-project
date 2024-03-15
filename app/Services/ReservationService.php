@@ -373,15 +373,22 @@ class ReservationService
         ->whereNotIn('status', $excludedStatuses)
         ->where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
             $query->where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
-                $query->whereBetween('reservation_start_date', [$checkInDateTime, $checkOutDateTime])
-                    ->orWhereBetween('reservation_end_date', [$checkInDateTime, $checkOutDateTime]);
+                $query->where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
+                    $query->where('reservation_start_date', '>=', $checkInDateTime)
+                        ->where('reservation_start_date', '<=', $checkOutDateTime);
+                })->orWhere(function ($query) use ($checkInDateTime, $checkOutDateTime) {
+                    $query->where('reservation_end_date', '>=', $checkInDateTime)
+                        ->where('reservation_end_date', '<=', $checkOutDateTime);
+                });
             });
-        })->whereHas('hotelRoomReserved', function ($query) use ($request) {
+        })
+        ->whereHas('hotelRoomReserved', function ($query) use ($request) {
             $query->where('hotel_room_number_id', $request['hotel_room_number_id']);
-        })->exists();
+        })
+        ->exists();
 
         if ($hasReservationWithinRange) {
-            return ['error' => 'Tambah kamar gagal karena sudah ada reservasi kamar di tanggal dan nomor kamar yang dipilih'];
+        return ['error' => 'Tambah kamar gagal karena sudah ada reservasi kamar di tanggal dan nomor kamar yang dipilih'];
         }
 
         if(!$reservationTmp){
