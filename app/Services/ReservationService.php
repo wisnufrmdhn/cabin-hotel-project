@@ -373,13 +373,8 @@ class ReservationService
         ->whereNotIn('status', $excludedStatuses)
         ->where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
             $query->where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
-                $query->where(function ($query) use ($checkInDateTime, $checkOutDateTime) {
-                    $query->where('reservation_start_date', '>=', $checkInDateTime)
-                        ->where('reservation_start_date', '<=', $checkOutDateTime);
-                })->orWhere(function ($query) use ($checkInDateTime, $checkOutDateTime) {
-                    $query->where('reservation_end_date', '>=', $checkInDateTime)
-                        ->where('reservation_end_date', '<=', $checkOutDateTime);
-                });
+                $query->where('reservation_start_date', '<=', $checkOutDateTime)
+                    ->where('reservation_end_date', '>=', $checkInDateTime);
             });
         })
         ->whereHas('hotelRoomReserved', function ($query) use ($request) {
