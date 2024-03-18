@@ -33,9 +33,9 @@ class BookingListController extends Controller
         $dateNow = Carbon::now('Asia/Bangkok')->isoFormat('DD MMMM YYYY');
         $dateQuery = Carbon::now('Asia/Bangkok')->toDateString();
         $reservation = Reservation::query();
-        $countReservationToday = Reservation::where('reservation_start_date', $dateQuery)->count();
-        $countCheckInToday = Reservation::where('reservation_start_date', $dateQuery)->where('status', 'Checkin')->count();
-        $countCheckOutToday = Reservation::where('reservation_start_date', $dateQuery)->where('status', 'Checkout')->count();
+        $countReservationToday = Reservation::whereDate('reservation_start_date', $dateQuery)->count();
+        $countCheckInToday = Reservation::whereDate('reservation_start_date', $dateQuery)->where('status', 'Checkin')->count();
+        $countCheckOutToday = Reservation::whereDate('reservation_start_date', $dateQuery)->where('status', 'Checkout')->count();
 
         $reservationData = $reservation->where('hotel_branch_id', $pic->hotel_branch_id)->orderBy('reservation_start_date', 'desc')->with('payment.paymentDetail', 'customer', 'reservationMethod')->paginate(10);
 
