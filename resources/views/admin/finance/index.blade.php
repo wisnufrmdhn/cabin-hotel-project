@@ -409,7 +409,7 @@
                                 <td><span class="fw-normal">-</span></td>
                             @endif
                         @endif
-                        <td><span class="fw-normal">{{ \Carbon\Carbon::parse($roomIncomes->payment->updated_at ?? '')->timezone('Asia/Bangkok') }}</span></td>
+                        <td><span class="fw-normal">{{ \Carbon\Carbon::parse($roomIncomes->updated_at ?? '')->timezone('Asia/Bangkok') }}</span></td>
                         <td><span class="fw-normal">{{ $roomIncomes->PaymentMethod->payment_method }}</span></td>
                         <td><span class="fw-normal">{{ $roomIncomes->Payment->payment_status }}</span></td>
                     </tr>
