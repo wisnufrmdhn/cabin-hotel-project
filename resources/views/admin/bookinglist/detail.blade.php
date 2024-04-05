@@ -219,7 +219,7 @@
                                 <div class="col-lg-2 col-sm-2">
                                     <!-- Form -->
                                     <div class="mb-4">
-                                        <label for="email">Total Biaya Amenities</label>
+                                        <label for="email">Biaya Amenities</label>
                                         <input type="text" class="form-control" value="Rp. {{ $reservationDetail->payment->total_price_amenities }}" aria-describedby="emailHelp" disabled>
                                     </div>
                                     <!-- End of Form -->
@@ -311,7 +311,7 @@
                         <div class="col">
                             <div class="mb-2">
                                 <input type="text" name="payment_cash_value" class="form-control "
-                                    id="payment_cash_value" placeholder="Nominal Bayar" aria-describedby="emailHelp">
+                                    id="payment_cash_value" placeholder="Nominal Bayar" value="{{ $currentPayment }}" aria-describedby="emailHelp">
                             </div>
                         </div>
                         <div class="col">
@@ -342,19 +342,19 @@
                                         <option value="{{ $transfer->id }}">{{ $transfer->payment_method }}</option>
                                     @endforeach
                             </select>
-                            <input type="text" id="payment_transfer_value" name="payment_transfer_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                            <input type="text" id="payment_transfer_value" name="payment_transfer_value" value="{{ $currentPayment }}" class="form-control mb-2" placeholder="Nominal Pembayaran">
                             <input type="text" id="payment_method_transfer_reference" name="payment_method_transfer_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Transfer">
                         </div>
 
                         <!-- Form select untuk virtual account -->
                         <div class="col paymentOption" id="VAOptions" style="display: none;">
-                            <select class="form-select w-100 mb-2"  id="payment_category_va" name="payment_category_va" aria-label="virtualAccount" style="margin-bottom: 10px;">
+                            <select class="form-select w-100 mb-2"  id="payment_category_va" name="payment_category_va" value="{{ $currentPayment }}" aria-label="virtualAccount" style="margin-bottom: 10px;">
                                 <option selected value="">Pilih Virtual Account</option>
                                     @foreach($paymentVA as $va)
                                         <option value="{{ $va->id }}">{{ $va->payment_method }}</option>
                                     @endforeach
                             </select>
-                            <input type="text" id="payment_va_value" name="payment_va_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                            <input type="text" id="payment_va_value" name="payment_va_value" class="form-control mb-2" value="{{ $currentPayment }}" placeholder="Nominal Pembayaran">
                             <input type="text" id="payment_method_va_reference" name="payment_method_va_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi Virtual Account">
                         </div>
 
@@ -366,7 +366,7 @@
                                     <option value="{{ $card->id }}">{{ $card->payment_method }}</option>
                                 @endforeach
                             </select>
-                            <input type="text" id="payment_card_value" name="payment_card_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                            <input type="text" id="payment_card_value" name="payment_card_value" class="form-control mb-2" value="{{ $currentPayment }}" placeholder="Nominal Pembayaran">
                             <input type="text" id="payment_method_card_number" name="payment_method_card_number" class="form-control mb-2" placeholder="Nomor Kartu">
                         </div>
 
@@ -378,7 +378,7 @@
                                         <option value="{{ $qris->id }}">{{ $qris->payment_method }}</option>
                                     @endforeach
                             </select>
-                            <input type="text" id="payment_qris_value" name="payment_qris_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
+                            <input type="text" id="payment_qris_value" name="payment_qris_value" value="{{ $currentPayment }}" class="form-control mb-2" placeholder="Nominal Pembayaran">
                             <input type="text" id="payment_method_qris_reference" name="payment_method_qris_reference" class="form-control mb-2" placeholder="Nomor Referensi Transaksi QRIS">
                         </div>
 				</div>

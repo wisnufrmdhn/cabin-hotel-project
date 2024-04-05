@@ -59,8 +59,9 @@ class BookingListController extends Controller
         $paymentVA = PaymentMethod::where('payment_method', 'like', "%VA%")->get();
 
         $reservationDetail = Reservation::where('reservation_code', $reservationCode)->with('payment.paymentDetail.paymentMethod', 'customer', 'reservationMethod', 'hotelRoomReserved.hotelRoomNumber.hotelRoom')->first();
+        $currentPayment = $reservationDetail->payment->total_price + $reservationDetail->payment->total_price_amenities - $reservationDetail->discount - $reservationDetail->payment->total_payment;
 
-        return view('admin.bookinglist.detail', compact('reservationDetail', 'paymentOTA', 'paymentCard', 'paymentTransfer', 'paymentQris', 'paymentVA')); 
+        return view('admin.bookinglist.detail', compact('reservationDetail', 'paymentOTA', 'paymentCard', 'paymentTransfer', 'paymentQris', 'paymentVA', 'currentPayment')); 
     }
 
     public function storeNewPayment(Request $request)
