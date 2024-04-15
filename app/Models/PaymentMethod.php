@@ -19,4 +19,9 @@ class PaymentMethod extends Model
     {
         return $this->hasOne(PaymentDetail::class);
     }
+
+    public function paymentPaid()
+    {
+        return $this->hasOne(PaymentPaid::class);
+    }
 }

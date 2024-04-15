@@ -28,4 +28,8 @@ class Payment extends Model
     public function paymentDetail(){
         return $this->hasMany(PaymentDetail::class);
     }
+
+    public function paymentPaid(){
+        return $this->hasOne(PaymentPaid::class);
+    }
 }

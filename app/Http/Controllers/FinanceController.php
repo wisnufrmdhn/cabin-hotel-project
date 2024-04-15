@@ -95,7 +95,7 @@ class FinanceController extends Controller
                     $paymentStatuses = ['DP Langsung Lunas', 'Lunas', 'Lunas + DP 1', 'Lunas + DP 2'];
                     $query->whereHas('payment', function ($query) use ($paymentStatuses) {
                         $query->whereHas('paymentDetail', function ($query) use ($paymentStatuses) {
-                            $query->whereIn('payment_status', $paymentStatuses);
+                            $query->whereIn('payment_detail_status', $paymentStatuses);
                         });
                     });
                 }
@@ -135,7 +135,7 @@ class FinanceController extends Controller
                     $query->where('hotel_branch_id', $branchId);
             });
             
-            $roomIncome = $query->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation')->paginate(10);
+            $roomIncome = $query->with('payment', 'paymentMethod', 'payment.downPayment', 'payment.reservation', 'payment.paymentDetail')->paginate(10);
 
             return view('admin.finance.index', compact('paymentMethod', 'totalIncomeRoom', 'totalDownPayment', 'dateNow', 'roomIncome'));
         }

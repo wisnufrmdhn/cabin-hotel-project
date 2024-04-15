@@ -98,6 +98,7 @@ class ReservationService
 
         if($totalPriceToPay > $totalPaymentCust)
         {
+            $paymentDetailStatus = 'DP';
             $storePayment = Payment::create([
                 'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
                 'discount'              => $request['discount'],
@@ -121,6 +122,7 @@ class ReservationService
             ]);
         }else{
             if($customerTmp->reservation_method_id == 1){ //if customer type walk in
+                $paymentDetailStatus = 'Lunas';
                 $storePayment = Payment::create([
                     'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
                     'discount'              => $request['discount'],
@@ -133,6 +135,7 @@ class ReservationService
                     'payment_check'         => 'Oncheck'
                 ]);
             }else{
+                $paymentDetailStatus = 'DP Langsung Lunas';
                 $storePayment = Payment::create([
                     'hotel_branch_id'       => $picHotelBranch->hotel_branch_id,
                     'discount'              => $request['discount'],
@@ -153,6 +156,7 @@ class ReservationService
                 'payment_method_id'     => $request['payment_category_ota'],
                 'payment_detail_value'  => $request['payment_ota_value'],
                 'change'                => null,
+                'payment_detail_status' => $paymentDetailStatus,
                 'bank_name'             => null,
                 'card_number'           => null,
                 'reference_number'      => null,
@@ -165,6 +169,7 @@ class ReservationService
                 'payment_method_id'     => 1,
                 'payment_detail_value'  => $request['payment_cash_value'],
                 'change'                => $request['change'] ? (int) preg_replace("/[^0-9]/", "", $request['change']) : 0,
+                'payment_detail_status' => $paymentDetailStatus,
                 'bank_name'             => null,
                 'card_number'           => null,
                 'reference_number'      => null,
@@ -178,6 +183,7 @@ class ReservationService
                     'payment_method_id'     => $request['payment_category_card'],
                     'payment_detail_value'  => $request['payment_card_value'],
                     'change'                => null,
+                    'payment_detail_status' => $paymentDetailStatus,
                     'bank_name'             => null,
                     'card_number'           => $request['payment_method_card_number'],
                     'reference_number'      => null,
@@ -190,6 +196,7 @@ class ReservationService
                     'payment_method_id'     => $request['payment_category_qris'],
                     'payment_detail_value'  => $request['payment_qris_value'],
                     'change'                => null,
+                    'payment_detail_status' => $paymentDetailStatus,
                     'bank_name'             => null,
                     'card_number'           => null,
                     'reference_number'      => $request['payment_method_qris_reference'],
@@ -202,6 +209,7 @@ class ReservationService
                     'payment_method_id'     => $request['payment_category_transfer'],
                     'payment_detail_value'  => $request['payment_transfer_value'],
                     'change'                => null,
+                    'payment_detail_status' => $paymentDetailStatus,
                     'bank_name'             => null,
                     'card_number'           => null,
                     'reference_number'      => $request['payment_method_transfer_reference'],
@@ -214,6 +222,7 @@ class ReservationService
                     'payment_method_id'     => $request['payment_category_va'],
                     'payment_detail_value'  => $request['payment_va_value'],
                     'change'                => null,
+                    'payment_detail_status' => $paymentDetailStatus,
                     'bank_name'             => null,
                     'card_number'           => null,
                     'reference_number'      => $request['payment_method_va_reference'],

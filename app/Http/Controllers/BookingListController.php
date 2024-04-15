@@ -59,7 +59,7 @@ class BookingListController extends Controller
         $paymentVA = PaymentMethod::where('payment_method', 'like', "%VA%")->get();
 
         $reservationDetail = Reservation::where('reservation_code', $reservationCode)->with('payment.paymentDetail.paymentMethod', 'customer', 'reservationMethod', 'hotelRoomReserved.hotelRoomNumber.hotelRoom')->first();
-        $currentPayment = $reservationDetail->payment->total_price + $reservationDetail->payment->total_price_amenities - $reservationDetail->discount - $reservationDetail->payment->total_payment;
+        $currentPayment = $reservationDetail->payment->total_price + $reservationDetail->payment->total_price_amenities - $reservationDetail->payment->discount - $reservationDetail->payment->total_payment;
 
         return view('admin.bookinglist.detail', compact('reservationDetail', 'paymentOTA', 'paymentCard', 'paymentTransfer', 'paymentQris', 'paymentVA', 'currentPayment')); 
     }
@@ -68,6 +68,7 @@ class BookingListController extends Controller
     {
         try{    
             $store = $this->service->storeNewPayment($request);
+            return $store;
             // Flash success message to the session
             session()->flash('success', 'Tambah Pembayaran Berhasil');
         }catch(\Throwable $th){
