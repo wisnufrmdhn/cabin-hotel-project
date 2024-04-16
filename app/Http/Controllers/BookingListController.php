@@ -68,7 +68,6 @@ class BookingListController extends Controller
     {
         try{    
             $store = $this->service->storeNewPayment($request);
-            return $store;
             // Flash success message to the session
             session()->flash('success', 'Tambah Pembayaran Berhasil');
         }catch(\Throwable $th){
