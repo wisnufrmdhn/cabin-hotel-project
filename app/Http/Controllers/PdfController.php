@@ -53,7 +53,7 @@ class PdfController extends Controller
     public function generateDetailPaymentInvoice($invoiceId)
     {
         $i = 1;
-        $invoice = Reservation::where('reservation_code', $invoiceId)->with('payment.DownPayment', 'customer', 'payment.PaymentDetail.PaymentMethod')->first();
+        $invoice = Reservation::where('reservation_code', $invoiceId)->with('payment.DownPayment', 'customer', 'payment.PaymentDetail.PaymentMethod', 'payment.PaymentPaid')->first();
         $hotelRoomReserved = HotelRoomReserved::where('reservation_id', $invoice->id)->with('hotelRoomNumber.HotelRoom')->get();
         $paymentAmenities = PaymentAmenities::where('payment_id', $invoice->payment->id)->where('total_price', '!=', 0)->with('amenities')->get();
         $subtotal = HotelRoomReserved::where('reservation_id', $invoice->id)->with('hotelRoomNumber.HotelRoom')->sum('price');

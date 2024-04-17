@@ -143,6 +143,13 @@
                     <td>Rp. {{ number_format($paymentDetails->payment_detail_value ?? 0, 0, ',', '.') }}</td>
                 </tr>
                 @endforeach
+                @if($invoice->Payment->PaymentPaid)
+                    <tr>
+                        <td>{{ \Carbon\Carbon::parse($invoice->Payment->PaymentPaid->updated_at ?? '')->timezone('Asia/Bangkok') }}</td>
+                        <td>{{ $invoice->Payment->PaymentPaid->paymentMethod->payment_method ?? '' }}</td>
+                        <td>Rp. {{ number_format($invoice->Payment->PaymentPaid->payment_paid_value ?? 0, 0, ',', '.') }}</td>
+                    </tr>
+                @endif
             </table>
         </div>
     </div>
