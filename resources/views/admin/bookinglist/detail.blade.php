@@ -283,6 +283,15 @@
                                                 <td><span class="fw-bold">{{ $paymentDetail->reference_number ?? '-' }}</span></td>
                                             </tr>
                                             @endforeach
+                                            @if($reservationDetail->payment->paymentPaid)
+                                            <tr>
+                                                <td><span class="fw-bold">{{ \Carbon\Carbon::parse($reservationDetail->payment->paymentPaid->updated_at ?? '')->timezone('Asia/Bangkok') }}</span></td>
+                                                <td><span class="fw-normal">{{ $reservationDetail->payment->paymentPaid->paymentMethod->payment_method }}</span></td>
+                                                <td><span class="fw-normal">Rp. {{ $reservationDetail->payment->paymentPaid->payment_paid_value }}</span></td>
+                                                <td><span class="fw-normal">{{ $reservationDetail->payment->paymentPaid->card_number ?? '-' }}</span></td>
+                                                <td><span class="fw-bold">{{ $reservationDetail->payment->paymentPaid->reference_number ?? '-' }}</span></td>
+                                            </tr>
+                                            @endif
                                             <!-- Item -->
                                         </tbody>
                                     </table>

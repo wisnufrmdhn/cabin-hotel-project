@@ -286,7 +286,7 @@
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 30 && $roomIncomes->payment->paymentPaid->payment_method_id <= 38) <!-- Lunas OTA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 22 && $roomIncomes->payment->paymentPaid->payment_method_id <= 29) <!-- Lunas OTA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -344,7 +344,7 @@
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 30 && $roomIncomes->payment->paymentPaid->payment_method_id <= 38) <!-- Lunas OTA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 22 && $roomIncomes->payment->paymentPaid->payment_method_id <= 29) <!-- Lunas OTA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -369,7 +369,7 @@
                                     <td><span class="fw-normal">-</span></td>
                                 @endif
                             @endif
-                            @if($roomIncomes->payment_method_id >= 12 && $roomIncomes->payment_method_id <= 16) <!-- DP TRANSFER Payment -->
+                        @if($roomIncomes->payment_method_id >= 12 && $roomIncomes->payment_method_id <= 16) <!-- DP TRANSFER Payment -->
                                 <td><span class="fw-normal">-</span></td>
                                 <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td>
                                 <td><span class="fw-normal">-</span></td>
@@ -386,7 +386,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 12 && $roomIncomes->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 12 && $roomIncomes->payment->paymentPaid->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -394,7 +394,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 2 && $roomIncomes->payment_method_id <= 11) <!-- Lunas Card !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 2 && $roomIncomes->payment->paymentPaid->payment_method_id <= 11) <!-- Lunas Card !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
@@ -402,7 +402,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 17 && $roomIncomes->payment_method_id <= 21) <!-- Lunas Qris !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 17 && $roomIncomes->payment->paymentPaid->payment_method_id <= 21) <!-- Lunas Qris !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -410,7 +410,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas VA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 30 && $roomIncomes->payment->paymentPaid->payment_method_id <= 38) <!-- Lunas VA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -418,7 +418,7 @@
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas OTA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 22 && $roomIncomes->payment->paymentPaid->payment_method_id <= 29) <!-- Lunas OTA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -444,7 +444,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 12 && $roomIncomes->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 12 && $roomIncomes->payment->paymentPaid->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -452,7 +452,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 2 && $roomIncomes->payment_method_id <= 11) <!-- Lunas Card !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 2 && $roomIncomes->payment->paymentPaid->payment_method_id <= 11) <!-- Lunas Card !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
@@ -460,7 +460,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 17 && $roomIncomes->payment_method_id <= 21) <!-- Lunas Qris !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 17 && $roomIncomes->payment->paymentPaid->payment_method_id <= 21) <!-- Lunas Qris !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -468,7 +468,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas VA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 30 && $roomIncomes->payment->paymentPaid->payment_method_id <= 38) <!-- Lunas VA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -476,7 +476,7 @@
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas OTA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 22 && $roomIncomes->payment->paymentPaid->payment_method_id <= 29) <!-- Lunas OTA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -501,7 +501,7 @@
                                     <td><span class="fw-normal">-</span></td>
                                 @endif
                             @endif
-                            @if($roomIncomes->payment_method_id >= 2 && $roomIncomes->payment_method_id <= 11) <!-- DP CARD Payment -->
+                        @if($roomIncomes->payment_method_id >= 2 && $roomIncomes->payment_method_id <= 11) <!-- DP CARD Payment -->
                                 <td><span class="fw-normal">-</span></td>
                                 <td><span class="fw-normal">-</span></td>
                                 <td><span class="fw-normal">Rp. {{ $roomIncomes->payment_detail_value }}</span></td>
@@ -518,7 +518,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 12 && $roomIncomes->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 12 && $roomIncomes->payment->paymentPaid->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -526,7 +526,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 2 && $roomIncomes->payment_method_id <= 11) <!-- Lunas Card !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 2 && $roomIncomes->payment->paymentPaid->payment_method_id <= 11) <!-- Lunas Card !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
@@ -534,7 +534,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 17 && $roomIncomes->payment_method_id <= 21) <!-- Lunas Qris !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 17 && $roomIncomes->payment->paymentPaid->payment_method_id <= 21) <!-- Lunas Qris !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -542,7 +542,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas VA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 30 && $roomIncomes->payment->paymentPaid->payment_method_id <= 38) <!-- Lunas VA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -550,7 +550,7 @@
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas OTA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 22 && $roomIncomes->payment->paymentPaid->payment_method_id <= 29) <!-- Lunas OTA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -576,7 +576,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 12 && $roomIncomes->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 12 && $roomIncomes->payment->paymentPaid->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -584,7 +584,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 2 && $roomIncomes->payment_method_id <= 11) <!-- Lunas Card !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 2 && $roomIncomes->payment->paymentPaid->payment_method_id <= 11) <!-- Lunas Card !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
@@ -592,7 +592,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 17 && $roomIncomes->payment_method_id <= 21) <!-- Lunas Qris !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 17 && $roomIncomes->payment->paymentPaid->payment_method_id <= 21) <!-- Lunas Qris !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -600,7 +600,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas VA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 30 && $roomIncomes->payment->paymentPaid->payment_method_id <= 38) <!-- Lunas VA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -608,7 +608,7 @@
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas OTA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 22 && $roomIncomes->payment->paymentPaid->payment_method_id <= 29) <!-- Lunas OTA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -633,7 +633,7 @@
                                     <td><span class="fw-normal">-</span></td>
                                 @endif
                             @endif
-                            @if($roomIncomes->payment_method_id >= 17 && $roomIncomes->payment_method_id <= 21) <!-- DP QRIS Payment -->
+                        @if($roomIncomes->payment_method_id >= 17 && $roomIncomes->payment_method_id <= 21) <!-- DP QRIS Payment -->
                                 <td><span class="fw-normal">-</span></td>
                                 <td><span class="fw-normal">-</span></td>
                                 <td><span class="fw-normal">-</span></td>
@@ -650,7 +650,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 12 && $roomIncomes->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 12 && $roomIncomes->payment->paymentPaid->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -658,7 +658,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 2 && $roomIncomes->payment_method_id <= 11) <!-- Lunas Card !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 2 && $roomIncomes->payment->paymentPaid->payment_method_id <= 11) <!-- Lunas Card !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
@@ -666,7 +666,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 17 && $roomIncomes->payment_method_id <= 21) <!-- Lunas Qris !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 17 && $roomIncomes->payment->paymentPaid->payment_method_id <= 21) <!-- Lunas Qris !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -674,7 +674,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas VA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 30 && $roomIncomes->payment->paymentPaid->payment_method_id <= 38) <!-- Lunas VA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -682,7 +682,7 @@
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas OTA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 22 && $roomIncomes->payment->paymentPaid->payment_method_id <= 29) <!-- Lunas OTA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -708,7 +708,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 12 && $roomIncomes->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 12 && $roomIncomes->payment->paymentPaid->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -716,7 +716,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 2 && $roomIncomes->payment_method_id <= 11) <!-- Lunas Card !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 2 && $roomIncomes->payment->paymentPaid->payment_method_id <= 11) <!-- Lunas Card !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
@@ -724,7 +724,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 17 && $roomIncomes->payment_method_id <= 21) <!-- Lunas Qris !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 17 && $roomIncomes->payment->paymentPaid->payment_method_id <= 21) <!-- Lunas Qris !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -732,7 +732,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas VA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 30 && $roomIncomes->payment->paymentPaid->payment_method_id <= 38) <!-- Lunas VA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -740,7 +740,7 @@
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas OTA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 22 && $roomIncomes->payment->paymentPaid->payment_method_id <= 29) <!-- Lunas OTA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -765,7 +765,7 @@
                                     <td><span class="fw-normal">-</span></td>
                                 @endif
                             @endif
-                            @if($roomIncomes->payment_method_id >= 22 && $roomIncomes->payment_method_id <= 29) <!-- DP OTA Payment -->
+                        @if($roomIncomes->payment_method_id >= 22 && $roomIncomes->payment_method_id <= 29) <!-- DP OTA Payment -->
                                 <td><span class="fw-normal">-</span></td>
                                 <td><span class="fw-normal">-</span></td>
                                 <td><span class="fw-normal">-</span></td>
@@ -782,7 +782,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 12 && $roomIncomes->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 12 && $roomIncomes->payment->paymentPaid->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -790,7 +790,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 2 && $roomIncomes->payment_method_id <= 11) <!-- Lunas Card !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 2 && $roomIncomes->payment->paymentPaid->payment_method_id <= 11) <!-- Lunas Card !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
@@ -798,7 +798,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 17 && $roomIncomes->payment_method_id <= 21) <!-- Lunas Qris !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 17 && $roomIncomes->payment->paymentPaid->payment_method_id <= 21) <!-- Lunas Qris !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -806,7 +806,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas VA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 30 && $roomIncomes->payment->paymentPaid->payment_method_id <= 38) <!-- Lunas VA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -814,7 +814,7 @@
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas OTA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 22 && $roomIncomes->payment->paymentPaid->payment_method_id <= 29) <!-- Lunas OTA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -840,7 +840,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 12 && $roomIncomes->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 12 && $roomIncomes->payment->paymentPaid->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -848,7 +848,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 2 && $roomIncomes->payment_method_id <= 11) <!-- Lunas Card !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 2 && $roomIncomes->payment->paymentPaid->payment_method_id <= 11) <!-- Lunas Card !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
@@ -856,7 +856,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 17 && $roomIncomes->payment_method_id <= 21) <!-- Lunas Qris !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 17 && $roomIncomes->payment->paymentPaid->payment_method_id <= 21) <!-- Lunas Qris !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -864,7 +864,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas VA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 30 && $roomIncomes->payment->paymentPaid->payment_method_id <= 38) <!-- Lunas VA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -872,7 +872,7 @@
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas OTA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 22 && $roomIncomes->payment->paymentPaid->payment_method_id <= 29) <!-- Lunas OTA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -914,7 +914,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 12 && $roomIncomes->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 12 && $roomIncomes->payment->paymentPaid->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -922,7 +922,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 2 && $roomIncomes->payment_method_id <= 11) <!-- Lunas Card !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 2 && $roomIncomes->payment->paymentPaid->payment_method_id <= 11) <!-- Lunas Card !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
@@ -930,7 +930,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 17 && $roomIncomes->payment_method_id <= 21) <!-- Lunas Qris !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 17 && $roomIncomes->payment->paymentPaid->payment_method_id <= 21) <!-- Lunas Qris !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -938,7 +938,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas VA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 30 && $roomIncomes->payment->paymentPaid->payment_method_id <= 38) <!-- Lunas VA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -946,7 +946,7 @@
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas OTA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 22 && $roomIncomes->payment->paymentPaid->payment_method_id <= 29) <!-- Lunas OTA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -972,7 +972,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 12 && $roomIncomes->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 12 && $roomIncomes->payment->paymentPaid->payment_method_id <= 16) <!-- Lunas Trasnfer !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -980,7 +980,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 2 && $roomIncomes->payment_method_id <= 11) <!-- Lunas Card !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 2 && $roomIncomes->payment->paymentPaid->payment_method_id <= 11) <!-- Lunas Card !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
@@ -988,7 +988,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 17 && $roomIncomes->payment_method_id <= 21) <!-- Lunas Qris !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 17 && $roomIncomes->payment->paymentPaid->payment_method_id <= 21) <!-- Lunas Qris !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -996,7 +996,7 @@
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas VA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 30 && $roomIncomes->payment->paymentPaid->payment_method_id <= 38) <!-- Lunas VA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
@@ -1004,7 +1004,7 @@
                                             <td><span class="fw-normal">Rp. {{ $roomIncomes->payment->paymentPaid->payment_paid_value }}</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                         @endif
-                                        @if($roomIncomes->payment->payment_method_id >= 30 && $roomIncomes->payment_method_id <= 38) <!-- Lunas OTA !-->
+                                        @if($roomIncomes->payment->paymentPaid->payment_method_id >= 22 && $roomIncomes->payment->paymentPaid->payment_method_id <= 29) <!-- Lunas OTA !-->
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
                                             <td><span class="fw-normal">-</span></td>
