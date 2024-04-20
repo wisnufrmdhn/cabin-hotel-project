@@ -135,7 +135,7 @@
                     </tr>
                     <tr>
                         <td colspan="3"><b>Total Pembayaran</b></td>
-                        <td> Rp. {{  number_format(($subtotal ?? 0) + $subtotalAmenities - $discount - ($invoice->payment->downPayment->down_payment ?? 0)  ?? 0 ?? 0, 0, ',', '.') }} </td>
+                        <td> Rp. {{  number_format(($subtotal ?? 0) + $subtotalAmenities + $discount ?? 0 ?? 0, 0, ',', '.') }} </td>
                     </tr>
                 @endif
             </table>
