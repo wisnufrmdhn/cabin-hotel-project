@@ -69,6 +69,10 @@ class BookingListController extends Controller
     {
         try{    
             $store = $this->service->storeNewPayment($request);
+            if (isset($store['error'])) {
+                // there's already duplicate reservation within the specified UTC date range
+                return redirect()->back()->withErrors(['error' => $store['error']]);
+            }
             // Flash success message to the session
             session()->flash('success', 'Tambah Pembayaran Berhasil');
         }catch(\Throwable $th){

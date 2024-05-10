@@ -90,6 +90,10 @@ class ReservationController extends Controller
     {
         try{    
             $store = $this->service->store($request);
+            if (isset($store['error'])) {
+                // there's already duplicate reservation within the specified UTC date range
+                return redirect()->back()->withErrors(['error' => $store['error']]);
+            }
             // Flash success message to the session
             session()->flash('success', 'Tambah Data Reservasi Berhasil');
         }catch(\Throwable $th){

@@ -40,6 +40,23 @@ class ReservationService
         $reservationCheck = Reservation::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->count();
         $reservationCount = str_pad($reservationCheck + 1, 4, '0', STR_PAD_LEFT);
 
+        $request['payment_ota_value'] = $request['payment_ota_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_ota_value']) : 0;
+        $request['payment_cash_value'] = $request['payment_cash_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_cash_value']) : 0;
+        $request['payment_card_value'] = $request['payment_card_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_card_value']) : 0;
+        $request['payment_qris_value'] = $request['payment_qris_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_qris_value']) : 0;
+        $request['payment_transfer_value'] = $request['payment_transfer_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_transfer_value']) : 0;
+        $request['payment_va_value'] = $request['payment_va_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_va_value']) : 0;
+
+        if($request['payment_method_ota']){
+            $request['total_payment'] = $request['payment_ota_value'];
+        }else{
+            $request['total_payment'] = $request['payment_cash_value'] +  $request['payment_card_value'] + $request['payment_qris_value'] + $request['payment_transfer_value'] + $request['payment_va_value'];
+        }
+
+        if($request['total_payment'] < 1) {
+            return ['error' => 'Tambah reservasi gagal karena nominal pembayaran harus lebih dari 0'];
+        }
+
         if($customerTmp->customer_tmp_id){
             $customerId = $customerTmp->customer_tmp_id;
         }else{
@@ -67,19 +84,6 @@ class ReservationService
         $amenitiesTotalPrice = $amenitiesTotalPrice ? $amenitiesTotalPrice : 0;
 
         $totalPrice = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationDetailTmp', 'hotelRoomNumber.hotelRoom')->sum('price');
-
-        $request['payment_ota_value'] = $request['payment_ota_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_ota_value']) : 0;
-        $request['payment_cash_value'] = $request['payment_cash_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_cash_value']) : 0;
-        $request['payment_card_value'] = $request['payment_card_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_card_value']) : 0;
-        $request['payment_qris_value'] = $request['payment_qris_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_qris_value']) : 0;
-        $request['payment_transfer_value'] = $request['payment_transfer_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_transfer_value']) : 0;
-        $request['payment_va_value'] = $request['payment_va_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_va_value']) : 0;
-
-        if($request['payment_method_ota']){
-            $request['total_payment'] = $request['payment_ota_value'];
-        }else{
-            $request['total_payment'] = $request['payment_cash_value'] +  $request['payment_card_value'] + $request['payment_qris_value'] + $request['payment_transfer_value'] + $request['payment_va_value'];
-        }
 
         $request['discount'] = $request['discount'] ? (int) preg_replace("/[^0-9]/", "", $request['discount']) : 0;
 

@@ -775,7 +775,7 @@
                         </div>
                         <div class="col">
                             <div class="mb-2">
-                                <input type="text" class="form-control " id="payment_ota_value"
+                                <input type="text" class="form-control" id="payment_ota_value"
                                     name="payment_ota_value" placeholder="Nominal Bayar" aria-describedby="emailHelp">
                             </div>
                         </div>
@@ -788,7 +788,7 @@
                         </div>
                         <div class="col">
                             <div class="mb-2">
-                                <input type="text" name="payment_cash_value" class="form-control "
+                                <input type="text" name="payment_cash_value" class="form-control"
                                     id="payment_cash_value" placeholder="Nominal Bayar" aria-describedby="emailHelp">
                             </div>
                         </div>

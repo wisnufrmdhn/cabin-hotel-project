@@ -14,6 +14,13 @@
     <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
+@if($errors->has('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span class="fas fa-bullhorn me-1"></span>
+            <strong>{{ $errors->first('error') }}</strong>
+            <button type="button" class="btn-close btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+@endif
 <!-- Header End -->
     <div class="row">
                 <div class="col-12 mb-4">

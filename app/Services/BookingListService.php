@@ -47,7 +47,20 @@ class BookingListService
         $request['payment_va_value'] = $request['payment_va_value'] ? (int) preg_replace("/[^0-9]/", "", $request['payment_va_value']) : 0;
 
         $request['total_payment'] = $request['payment_cash_value'] +  $request['payment_card_value'] + $request['payment_qris_value'] + $request['payment_transfer_value'] + $request['payment_va_value'] + $request['payment_ota_value'];
+        
+        //nominal pembayaran tidak boleh 0 atau kurang dari 1
+        if($request['total_payment'] < 1) {
+            return ['error' => 'Tambah pembayaran gagal karena nominal pembayaran harus lebih dari 0'];
+        }
+
         $totalPayment = $currentPayment + $request['total_payment'];
+
+        //nominal pembayaran setelah DP 2 harus dilunasi tidak boleh kurang
+        if($payment->payment_status == 'DP 2'){
+            if($totalPrice !== $totalPayment){
+                return ['error' => 'Nominal pembayaran harus sesuai dengan selisih total pembayaran saat ini'];
+            }
+        }
 
             if($payment->payment_status == 'DP'){
                 if($totalPrice > $totalPayment){
