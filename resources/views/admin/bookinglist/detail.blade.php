@@ -326,6 +326,13 @@
                         </div>
                         <div class="col">
                             <div class="mb-2">
+                            <label for="gender">Sisa Pembayaran</label>
+                                <input type="text" name="remaining_payment" class="form-control "
+                                    id="remaining_payment" placeholder=" Rp. {{ $reservationDetail->payment->total_price + $reservationDetail->payment->total_price_amenities - $reservationDetail->payment->discount - $currentPayment }}" disabled>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="mb-2">
                             <label for="gender">Nominal Bayar</label>
                                 <input type="text" name="payment_cash_value" class="form-control "
                                     id="payment_cash_value" placeholder="{{ $currentPayment }}" aria-describedby="emailHelp">
@@ -524,6 +531,19 @@
                     $('#change').prop('disabled', false);
                     $('#payment_method_cash').attr('required', 'required');
                     $('#paymentMethod').removeAttr('required');
+                    $('#payment_category_va').removeAttr('required', 'required');
+                    $('#payment_va_value').removeAttr('required', 'required');
+                    $('#payment_method_va_reference').removeAttr('required', 'required');
+                    $('#payment_category_transfer').removeAttr('required');
+                    $('#payment_transfer_value').removeAttr('required');
+                    $('#payment_method_transfer_reference').removeAttr('required');
+                    $('#payment_category_card').removeAttr('required');
+                    $('#payment_card_value').removeAttr('required');
+                    $('#payment_method_card_number').removeAttr('required');
+                    $('#payment_category_qris').removeAttr('required');
+                    $('#payment_qris_value').removeAttr('required');
+                    $('#payment_method_qris_reference').removeAttr('required');
+                    $('.paymentOption').hide();
                 }
             });
         });

@@ -1545,6 +1545,19 @@
                     $('#payment_method_ota').attr('required', 'required');
                     $('#payment_method_cash').attr('required', 'required');
                     $('#paymentMethod').removeAttr('required');
+                    $('#payment_category_va').removeAttr('required', 'required');
+                    $('#payment_va_value').removeAttr('required', 'required');
+                    $('#payment_method_va_reference').removeAttr('required', 'required');
+                    $('#payment_category_transfer').removeAttr('required');
+                    $('#payment_transfer_value').removeAttr('required');
+                    $('#payment_method_transfer_reference').removeAttr('required');
+                    $('#payment_category_card').removeAttr('required');
+                    $('#payment_card_value').removeAttr('required');
+                    $('#payment_method_card_number').removeAttr('required');
+                    $('#payment_category_qris').removeAttr('required');
+                    $('#payment_qris_value').removeAttr('required');
+                    $('#payment_method_qris_reference').removeAttr('required');
+                    $('.paymentOption').hide();
                 }
             });
         });
