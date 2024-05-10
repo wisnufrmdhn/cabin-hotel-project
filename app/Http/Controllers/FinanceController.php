@@ -20,8 +20,8 @@ use App\Models\HotelRoomReserved;
 use App\Models\PaymentDetail;
 use App\Models\HotelBranch;
 use Carbon\Carbon;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\FinanceExport;
+// use Maatwebsite\Excel\Facades\Excel;
+// use App\Exports\FinanceExport;
 
 class FinanceController extends Controller
 {
@@ -161,14 +161,14 @@ class FinanceController extends Controller
         return redirect()->route('excel.report.finance-fo', ['from' => $from, 'to' => $to]);
     }
 
-    public function reportExcelFinance(Request $request)
-    {
-        $paymentMethodId = $request->input('payment_method_id');
-        $paymentStatus = $request->input('payment_status');
-        $paymentDate = $request->input('payment_date');
-        $checkin = $request->input('checkin');
-        $checkout = $request->input('checkout');
+    // public function reportExcelFinance(Request $request)
+    // {
+    //     $paymentMethodId = $request->input('payment_method_id');
+    //     $paymentStatus = $request->input('payment_status');
+    //     $paymentDate = $request->input('payment_date');
+    //     $checkin = $request->input('checkin');
+    //     $checkout = $request->input('checkout');
 
-        return Excel::download(new FinanceExport($paymentMethodId, $paymentStatus, $paymentDate, $checkin, $checkout), 'finance-fo.xlsx');
-    }
+    //     return Excel::download(new FinanceExport($paymentMethodId, $paymentStatus, $paymentDate, $checkin, $checkout), 'finance-fo.xlsx');
+    // }
 }
