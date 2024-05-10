@@ -207,6 +207,7 @@
                         <th colspan="6" class="border-gray-200">Down <br>Payment</th>
                         <th colspan="6" class="border-gray-200">Pelunasan</th>
                         <th rowspan="3" class="border-gray-200">Tanggal Pembayaran DP</th>
+                        <th rowspan="3" class="border-gray-200">Tanggal Lunas</th>
                         <th rowspan="3" class="border-gray-200">Catatan</th>
                     </tr>
                     <tr>
@@ -1030,6 +1031,20 @@
                                 @endif
                             @endif
                         <td><span class="fw-normal">{{ \Carbon\Carbon::parse($roomIncomes->updated_at ?? '')->timezone('Asia/Bangkok') }}</span></td>
+                        @if($roomIncomes->payment->payment_status == 'Lunas + DP 1')
+                            @if($roomIncomes->payment_detail_status == 'DP')
+                                <td><span class="fw-normal">{{ \Carbon\Carbon::parse($roomIncomes->payment->paymentPaid->updated_at ?? '')->timezone('Asia/Bangkok') }}</span></td>
+                            @else
+                                <td><span class="fw-normal">-</span></td>
+                            @endif
+                        @endif
+                        @if($roomIncomes->payment->payment_status == 'Lunas + DP 2')
+                            @if($roomIncomes->payment_detail_status == 'DP 2')
+                                <td><span class="fw-normal">{{ \Carbon\Carbon::parse($roomIncomes->payment->paymentPaid->updated_at ?? '')->timezone('Asia/Bangkok') }}</span></td>
+                            @else
+                                <td><span class="fw-normal">-</span></td>
+                            @endif
+                        @endif
                         <td><span class="fw-normal">-</span></td>
                     </tr>
                     @endforeach
