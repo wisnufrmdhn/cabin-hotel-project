@@ -20,6 +20,8 @@ use App\Models\HotelRoomReserved;
 use App\Models\PaymentDetail;
 use App\Models\HotelBranch;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\FinanceExport;
 
 class FinanceController extends Controller
 {
@@ -94,9 +96,7 @@ class FinanceController extends Controller
                 if($paymentStatus == 'Lunas'){
                     $paymentStatuses = ['DP Langsung Lunas', 'Lunas', 'Lunas + DP 1', 'Lunas + DP 2'];
                     $query->whereHas('payment', function ($query) use ($paymentStatuses) {
-                        $query->whereHas('paymentDetail', function ($query) use ($paymentStatuses) {
-                            $query->whereIn('payment_detail_status', $paymentStatuses);
-                        });
+                        $query->whereIn('payment_status', $paymentStatuses);
                     });
                 }
             }
@@ -111,11 +111,17 @@ class FinanceController extends Controller
 
             if ($request->filled('checkin')) {
                 $checkin = $request['checkin'];
+                // Get the current date and time in GMT+7 timezone
+                $computerTime = Carbon::now();
+                // Add 7 hours to the current time
+                $computerTime = $computerTime->addHours(7);
+                // Extract only the time part from the computer datetime
+                $computerTime = $computerTime->format('H:i:s');
 
-                $query->whereHas('payment', function ($query) use ($branchId, $checkin) {
-                    //$query->whereNotIn('payment_status', ['DP', 'DP 2']);
-                    $query->whereHas('reservation', function ($query) use ($branchId, $checkin) {
-                        $query->where('hotel_branch_id', $branchId)->whereDate('reservation_start_date', $checkin);
+                $query->whereHas('payment', function ($query) use ($branchId, $checkin, $computerTime) {
+                    $query->whereNotIn('payment_status', ['DP', 'DP 2']);
+                    $query->whereHas('reservation', function ($query) use ($branchId, $checkin, $computerTime) {
+                        $query->where('hotel_branch_id', $branchId)->whereDate('reservation_start_date', $checkin)->whereTime('reservation_start_date', '<', $computerTime);
                     });
                 });
             }
@@ -153,5 +159,16 @@ class FinanceController extends Controller
         $from = $request['excel_from'];
         $to = $request['excel_to'];
         return redirect()->route('excel.report.finance-fo', ['from' => $from, 'to' => $to]);
+    }
+
+    public function reportExcelFinance(Request $request)
+    {
+        $paymentMethodId = $request->input('payment_method_id');
+        $paymentStatus = $request->input('payment_status');
+        $paymentDate = $request->input('payment_date');
+        $checkin = $request->input('checkin');
+        $checkout = $request->input('checkout');
+
+        return Excel::download(new FinanceExport($paymentMethodId, $paymentStatus, $paymentDate, $checkin, $checkout), 'finance-fo.xlsx');
     }
 }
