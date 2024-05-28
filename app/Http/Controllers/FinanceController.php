@@ -119,12 +119,13 @@ class FinanceController extends Controller
                 $computerTime = $computerTime->format('H:i:s');
 
                 $query->whereHas('payment', function ($query) use ($branchId, $checkin, $computerTime, $dateQuery) {
-                    $query->whereNotIn('payment_status', ['DP', 'DP 2']);
                     if($dateQuery < $checkin){
+                            $query->whereNotIn('payment_status', ['DP', 'DP 2']);
                             $query->whereHas('reservation', function ($query) use ($branchId, $checkin, $computerTime) {
                             $query->where('hotel_branch_id', $branchId)->whereDate('reservation_start_date', $checkin)->whereTime('reservation_start_date', '<', $computerTime);
                         });
                     }else{
+                            $query->whereNotIn('payment_status', ['DP', 'DP 2']);
                             $query->whereHas('reservation', function ($query) use ($branchId, $checkin, $computerTime) {
                             $query->where('hotel_branch_id', $branchId)->whereDate('reservation_start_date', $checkin);
                         });
