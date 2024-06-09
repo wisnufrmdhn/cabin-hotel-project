@@ -83,8 +83,13 @@ class ReservationService
         $amenitiesTotalPrice = PaymentAmenitiesTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->with('amenities')->sum('total_price');
         $amenitiesTotalPrice = $amenitiesTotalPrice ? $amenitiesTotalPrice : 0;
 
-        $totalPrice = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationDetailTmp', 'hotelRoomNumber.hotelRoom')->sum('price');
-
+        if(!in_array($customerTmp->reservation_method_id, [1,2] )){
+            $totalPrice = $request['total_price'];
+            $totalPrice = $totalPrice ? (int) preg_replace("/[^0-9]/", "", $totalPrice) : 0;
+        }else{
+            $totalPrice = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationDetailTmp', 'hotelRoomNumber.hotelRoom')->sum('price');
+        }
+        
         $request['discount'] = $request['discount'] ? (int) preg_replace("/[^0-9]/", "", $request['discount']) : 0;
 
         if($request['discount_type'] == 'Persen'){
@@ -273,7 +278,7 @@ class ReservationService
             'customer_id'                 => $customerId,
             'reservation_method_id'       => $customerTmp->reservation_method_id,
             'payment_id'                  => $storePayment->id,
-            'booking_number'              => $request['booking_number'] ? $request['booking_number'] : null,
+            'booking_number'              => $customerTmp->booking_number ? $customerTmp->booking_number : null,
             'reservation_start_date'      => $reservationTmp->reservation_start_date,
             'reservation_end_date'        => $reservationTmp->reservation_end_date,
             'reservation_day_category'    => $reservationTmp->reservation_day_category,
@@ -282,13 +287,24 @@ class ReservationService
             'breakfast_status'            => $request['breakfast_status']
         ]);
 
-        foreach($hotelRoomReservedTmp as $index => $roomReserved){
-            $storeHotelRoomReserved = HotelRoomReserved::create([
-                'reservation_id'              => $storeReservation->id,
-                'hotel_room_number_id'        => $roomReserved->hotel_room_number_id,
-                'total_guest'                 => $roomReserved->total_guest,
-                'price'                       => $roomReserved->price,
-            ]);
+        if(!in_array($customerTmp->reservation_method_id, [1,2] )){
+            foreach($hotelRoomReservedTmp as $index => $roomReserved){
+                $storeHotelRoomReserved = HotelRoomReserved::create([
+                    'reservation_id'              => $storeReservation->id,
+                    'hotel_room_number_id'        => $roomReserved->hotel_room_number_id,
+                    'total_guest'                 => $roomReserved->total_guest,
+                    'price'                       => 0,
+                ]);
+            }
+        }else{
+            foreach($hotelRoomReservedTmp as $index => $roomReserved){
+                $storeHotelRoomReserved = HotelRoomReserved::create([
+                    'reservation_id'              => $storeReservation->id,
+                    'hotel_room_number_id'        => $roomReserved->hotel_room_number_id,
+                    'total_guest'                 => $roomReserved->total_guest,
+                    'price'                       => $roomReserved->price,
+                ]);
+            }
         }
 
         $deleteCustomerTmp = CustomerTmp::where('hotel_branch_id', $picHotelBranch->hotel_branch_id)->delete();

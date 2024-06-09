@@ -746,13 +746,13 @@
                         </div>
                         <div class="col">
                             <div class="mb-4">
-                                @if ($totalPrice)
+                                @if ($totalPrice && !$isOta)
                                     <input type="text" name="total_price" class="form-control " id="total_price"
                                         value="{{ number_format($totalPrice, 0, ',', '.') }}"
                                         aria-describedby="total_price" disabled>
                                 @else
                                     <input type="text" name="total_price" class="form-control " id="total_price"
-                                        aria-describedby="total_price" disabled>
+                                        aria-describedby="total_price">
                                 @endif
                             </div>
                         </div>
@@ -792,12 +792,13 @@
                                     id="payment_cash_value" placeholder="Nominal Bayar" aria-describedby="emailHelp">
                             </div>
                         </div>
-                        <div class="col">
+                        </br>
+                        <!-- <div class="col">
                             <div class="mb-4">
                                 <input type="text" name="change" id="change" class="form-control " id="email"
                                     placeholder="Nominal Kembali" aria-describedby="emailHelp">
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col">
                             <div class="form-check form-switch">
@@ -850,7 +851,7 @@
                                 @endforeach
                             </select>
                             <input type="text" id="payment_card_value" name="payment_card_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
-                            <input type="text" id="payment_method_card_number" name="payment_method_card_number" class="form-control mb-2" placeholder="Nomor Kartu">
+                            <input type="text" id="payment_method_card_number" name="payment_method_card_number" class="form-control mb-2" placeholder="Nomor Transaksi">
                         </div>
 
                         <!-- Form select untuk qris -->
@@ -887,7 +888,7 @@
                         </div>
                         <div class="col">
                             <div class="mb-4">
-                                @if ($totalPrice)
+                                @if ($totalPrice && !$isOta)
                                     <input type="text" name="total_price" class="form-control " id="total_price"
                                         value="{{ number_format($totalPrice, 0, ',', '.') }}"
                                         aria-describedby="total_price" disabled>
@@ -933,12 +934,13 @@
                                     id="payment_cash_value" placeholder="Nominal Bayar" aria-describedby="emailHelp" disabled>
                             </div>
                         </div>
-                        <div class="col">
+                        </br>
+                        <!-- <div class="col">
                             <div class="mb-4">
                                 <input type="text" name="change" id="change" class="form-control " id="email"
                                     placeholder="Nominal Kembali" aria-describedby="emailHelp" disabled>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="col">
                             <div class="form-check form-switch">
@@ -991,7 +993,7 @@
                                 @endforeach
                             </select>
                             <input type="text" id="payment_card_value" name="payment_card_value" class="form-control mb-2" placeholder="Nominal Pembayaran">
-                            <input type="text" id="payment_method_card_number" name="payment_method_card_number" class="form-control mb-2" placeholder="Nomor Kartu">
+                            <input type="text" id="payment_method_card_number" name="payment_method_card_number" class="form-control mb-2" placeholder="Nomor Transaksi">
                         </div>
 
                         <!-- Form select untuk qris -->
@@ -1563,48 +1565,6 @@
         });
 </script>
 <script>
-    $('#discount').prop('disabled', true);
-    var input2Value = $('#total_price').val() || 0;
-
-    function formatRupiah(amount) {
-        var formatter = new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR'
-        });
-        
-        return formatter.format(amount);
-    }
-
-    function calculateResult() {
-        var discountCategory = $('#discount_type').val()
-        var input1Value = parseFloat($('#discount').val().replace(/[^0-9]/g, '')) || 0;
-        var totalPrice = parseInt(input2Value.replace(/\./g, ''), 10);
-
-        if(discountCategory == 'Nominal'){
-            var result = totalPrice - input1Value;
-        }else{
-            var result = totalPrice * (1 - (input1Value / 100));
-        }
-            var formattedResult = formatRupiah(result.toFixed(2)); // Format with 2 decimal places
-            $('#total_price').val(formattedResult);
-        }
-    
-    $(document).ready(function () {
-        $('#discount_type').on('change', function() {
-            if ($(this).val() === 'Nominal' || $(this).val() === 'Persen') {
-                $('#discount').attr('required', 'required');
-                $('#discount').prop('disabled', false);
-            } else {
-                $('#discount').removeAttr('required');
-                $('#discount').prop('disabled', true);
-            }
-        });
-        $('#discount').on('input', function () {
-            calculateResult();
-        });
-    });
-</script>
-<script>
 $(document).ready(function() {
     // Function to format the input as currency
     function inputRupiah(input) {
@@ -1673,6 +1633,73 @@ $(document).ready(function() {
             $(this).val(formattedVal);
         });
 });
+</script>
+<script>
+    $('#discount').prop('disabled', true);
+    var isOTA = "{{ $isOta }}"
+
+    function formatRupiah(amount) {
+        var formatter = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR'
+        });
+        
+        return formatter.format(amount);
+    }
+
+    var input2Value = $('#total_price').val() || 0;
+
+    if(isOTA){
+        function inputRupiah(input) {
+        // Remove non-numeric characters
+        var number = input.replace(/\D/g, '');
+
+        // Add thousands separator (.,) and currency symbol (Rp) if it's a valid number
+        if (!isNaN(number)) {
+            var formatted = 'Rp ' + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            return formatted;
+        }
+
+        return input; // Return the original input if it's not a valid number
+        }
+        
+        $('#total_price').on('input', function() {
+            var inputVal = $(this).val();
+            var formattedVal = inputRupiah(inputVal);
+            $(this).val(formattedVal);
+        });
+    }
+
+    function calculateResult() {
+        var discountCategory = $('#discount_type').val()
+        var input1Value = parseFloat($('#discount').val().replace(/[^0-9]/g, '')) || 0;
+        var totalPrice = parseInt(input2Value.replace(/\./g, '') || '0', 10);
+
+        if(discountCategory == 'Nominal'){
+            var result = totalPrice - input1Value;
+        }else{
+            var result = totalPrice * (1 - (input1Value / 100));
+        }
+            var formattedResult = formatRupiah(result.toFixed(2)); // Format with 2 decimal places
+            $('#total_price').val(formattedResult);
+        }
+    
+    $(document).ready(function () {
+        $('#discount_type').on('change', function() {
+            if ($(this).val() === 'Nominal' || $(this).val() === 'Persen') {
+                $('#discount').attr('required', 'required');
+                $('#discount').prop('disabled', false);
+            } else {
+                $('#discount').removeAttr('required');
+                $('#discount').prop('disabled', true);
+            }
+        });
+        if(!isOTA){
+            $('#discount').on('input', function () {
+                calculateResult();
+            });
+        }
+    });
 </script>
 <script>
         $(document).ready(function() {

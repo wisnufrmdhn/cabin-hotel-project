@@ -106,7 +106,7 @@
                                     </div>
                                 </div>
                                 </br></br></br>
-                                <div class="col-lg-3 col-sm-3">
+                                <div class="col-lg-2 col-sm-2">
                                     <!-- Form -->
                                     <div class="mb-4">
                                         <label for="email">Metode Reservasi</label>
@@ -114,7 +114,15 @@
                                     </div>
                                     <!-- End of Form -->
                                 </div>
-                                <div class="col-lg-3 col-sm-3">
+                                <div class="col-lg-2 col-sm-2">
+                                    <!-- Form -->
+                                    <div class="mb-4">
+                                        <label for="email">Kode Booking OTA</label>
+                                        <input type="text" class="form-control" value="{{ $reservationDetail->booking_number ?? '-' }}" aria-describedby="emailHelp" disabled>
+                                    </div>
+                                    <!-- End of Form -->
+                                </div>
+                                <div class="col-lg-2 col-sm-2">
                                     <!-- Form -->
                                     <div class="mb-4">
                                         <label for="email">Kode Reservasi</label>
@@ -241,12 +249,10 @@
                                 </div>
 
                                 <div class="col-lg-2 col-sm-2">
-                                    <!-- Form -->
                                     <div class="mb-4">
                                         <label for="email">Kembalian</label>
                                         <input type="text" class="form-control" value="Rp. {{ $reservationDetail->payment->change }}" aria-describedby="emailHelp" disabled>
                                     </div>
-                                    <!-- End of Form -->
                                 </div>
                                 <div class="col-lg-2 col-sm-2">
                                     <!-- Form -->
@@ -275,7 +281,7 @@
                                                 <th rowspan="1" class="border-gray-200">Tanggal Pembayaran</th>
                                                 <th rowspan="1" class="border-gray-200">Metode Pembayaran</th>
                                                 <th colspan="1" class="border-gray-200">Pembayaran</th>
-                                                <th rowspan="1" class="border-gray-200">No Kartu</th>
+                                                <th rowspan="1" class="border-gray-200">No Transaksi</th>
                                                 <th rowspan="1" class="border-gray-200">No Referensi</th>
                                             </tr>
                                         </thead>
@@ -328,7 +334,7 @@
                             <div class="mb-2">
                             <label for="gender">Sisa Pembayaran</label>
                                 <input type="text" name="remaining_payment" class="form-control "
-                                    id="remaining_payment" placeholder=" Rp. {{ $reservationDetail->payment->total_price + $reservationDetail->payment->total_price_amenities - $reservationDetail->payment->discount - $currentPayment }}" disabled>
+                                    id="remaining_payment" placeholder=" Rp. {{ $currentPayment }}" disabled>
                             </div>
                         </div>
                         <div class="col">
@@ -397,8 +403,8 @@
                             </select>
                             <label for="gender">Nominal Bayar</label>
                             <input type="text" id="payment_card_value" name="payment_card_value" class="form-control mb-2"ih  placeholder="{{ $currentPayment }}">
-                            <label for="gender">No Kartu</label>
-                            <input type="text" id="payment_method_card_number" name="payment_method_card_number" class="form-control mb-2" placeholder="Nomor Kartu">
+                            <label for="gender">No Transaksi</label>
+                            <input type="text" id="payment_method_card_number" name="payment_method_card_number" class="form-control mb-2" placeholder="Nomor Transaksi">
                         </div>
 
                         <!-- Form select untuk qris -->

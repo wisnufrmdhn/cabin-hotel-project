@@ -51,6 +51,7 @@ class ReservationController extends Controller
         $checkout = null;
         $dayCategory = null;
         $diffResult = null;
+        $isOta = false;
         $paymentOTA = PaymentMethod::where('payment_method', 'like', "%OTA%")->get();
         $paymentCard = PaymentMethod::where('payment_method', 'like', "%Card%")->get();
         $paymentTransfer = PaymentMethod::where('payment_method', 'like', "%Transfer%")->get();
@@ -69,6 +70,10 @@ class ReservationController extends Controller
                 $day = intval($diff / 24);
                 $hour = intval($diff % 24);
                 $diffResult = $day . ' Hari : ' . $hour . ' Jam';
+
+                if(!in_array($customerTmp->reservation_method_id, [1,2] )){
+                    $isOta = true;
+                }
                 
                 $hotelRoomReservedTmp = HotelRoomReservedTmp::where('reservation_tmp_id', $reservationTmp->id)->with('reservationTmp', 'hotelRoomNumber.hotelRoom')->get();
 
@@ -83,7 +88,7 @@ class ReservationController extends Controller
             }
         }
 
-        return view('admin.reservation.index', compact('reservationMethod', 'hotelRooms', 'customerTmp', 'reservationTmp', 'reservationDetailTmp', 'hotelRoomReservedTmp', 'paymentOTA', 'paymentCard', 'paymentTransfer', 'paymentQris', 'paymentVA', 'totalPrice', 'amenitiesTmp', 'checkin', 'checkout', 'diffResult', 'dayCategory')); 
+        return view('admin.reservation.index', compact('reservationMethod', 'hotelRooms', 'customerTmp', 'reservationTmp', 'reservationDetailTmp', 'hotelRoomReservedTmp', 'paymentOTA', 'paymentCard', 'paymentTransfer', 'paymentQris', 'paymentVA', 'totalPrice', 'amenitiesTmp', 'checkin', 'checkout', 'diffResult', 'dayCategory', 'isOta')); 
     }
 
     public function store(Request $request)
