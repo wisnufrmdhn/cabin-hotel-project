@@ -29,71 +29,23 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('123456'),
             ],
             [
-                'name' => 'admin-gandekan',
-                'email' => 'admin.gandekan@gmail.com',
+                'name' => 'admin.sutomo',
+                'email' => 'duta.tugu@cabin.com',
                 'role_id' => '2',
                 'password' => bcrypt('123456'),
             ],
             [
-                'name' => 'admin-ambassador',
-                'email' => 'admin.ambassador@gmail.com',
+                'name' => 'admin.sutomo',
+                'email' => 'nada.tugu@cabin.com',
                 'role_id' => '2',
                 'password' => bcrypt('123456'),
             ],
             [
-                'name' => 'admin-bhayangkara',
-                'email' => 'admin.bhayangkara@gmail.com',
+                'name' => 'admin.tugu',
+                'email' => 'admin.tugu@gmail.com',
                 'role_id' => '2',
                 'password' => bcrypt('123456'),
-            ],
-            [
-                'name' => 'admin-grand',
-                'email' => 'admin.grand@gmail.com',
-                'role_id' => '2',
-                'password' => bcrypt('123456'),
-            ],
-            [
-                'name' => 'admin-mantrijeron',
-                'email' => 'admin.mantrijeron@gmail.com',
-                'role_id' => '2',
-                'password' => bcrypt('123456'),
-            ],
-            [
-                'name' => 'admin-rru',
-                'email' => 'admin.rru@gmail.com',
-                'role_id' => '2',
-                'password' => bcrypt('123456'),
-            ],
-            [
-                'name' => 'admin-sagan',
-                'email' => 'admin.sagan@gmail.com',
-                'role_id' => '2',
-                'password' => bcrypt('123456'),
-            ],
-            [
-                'name' => 'admin-sutomo',
-                'email' => 'admin.sutomo@gmail.com',
-                'role_id' => '2',
-                'password' => bcrypt('123456'),
-            ],
-            [
-                'name' => 'admin-tanjung',
-                'email' => 'admin.tanjung@gmail.com',
-                'role_id' => '2',
-                'password' => bcrypt('123456'),
-            ],
-            [
-                'name' => 'admin-ngupasan',
-                'email' => 'admin.ngupasan@gmail.com',
-                'role_id' => '2',
-                'password' => bcrypt('123456'),
-            ],
-            [
-                'name' => 'finance HO',
-                'email' => 'financeHO@gmail.com',
-                'role_id' => '3',
-                'password' => bcrypt('123456'),
-            ],
+            ]
         ];
 
         foreach ($user as $key => $value) {

@@ -332,10 +332,10 @@
                         </br>
                         <div class="col">
                             <select class="form-select w-100 mb-0" id="reservation_day_category" name="reservation_day_category" aria-label="reservation_day_category" disabled>
-                                <option value="Weekday" {{ $dayCategory === "Weekday" ? 'selected' : '' }}>Weekday</option>
-                                <option value="Weekend" {{ $dayCategory === "Weekend" ? 'selected' : '' }}>Weekend</option>
-                                <option value="Weekend" {{ $dayCategory === "Middle Day" ? 'selected' : '' }}>Middle Day</option>
-                                <option value="High Season" {{ $dayCategory === "High Season" ? 'selected' : '' }}>High Season</option>
+                                <option value="weekdays" {{ $dayCategory === "weekdays" ? 'selected' : '' }}>Weekday</option>
+                                <option value="weekend" {{ $dayCategory === "weekend" ? 'selected' : '' }}>Weekend</option>
+                                <option value="middledays" {{ $dayCategory === "middledays" ? 'selected' : '' }}>Middle Day</option>
+                                <option value="highseason" {{ $dayCategory === "highseason" ? 'selected' : '' }}>High Season</option>
                             </select>
                         </div>
                         </br>

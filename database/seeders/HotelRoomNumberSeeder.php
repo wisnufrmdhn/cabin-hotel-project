@@ -18,290 +18,80 @@ class HotelRoomNumberSeeder extends Seeder
         $hotelRoomNumber = [
             [
                 'hotel_branch_id' => 1,
-                'hotel_room_id' => 1,
-                'room_number' => 102,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 1,
-                'hotel_room_id' => 1,
-                'room_number' => 106,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 1,
-                'hotel_room_id' => 2,
-                'room_number' => 107,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 1,
-                'hotel_room_id' => 2,
-                'room_number' => 111,
-                'room_status_id' => 3
-            ],
-            // =======================1
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 1,
-                'room_number' => 102,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 1,
-                'room_number' => 106,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 2,
-                'room_number' => 107,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 2,
-                'hotel_room_id' => 2,
-                'room_number' => 111,
-                'room_status_id' => 3
-            ],
-            // =======================2
-            [
-                'hotel_branch_id' => 3,
-                'hotel_room_id' => 1,
-                'room_number' => 102,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 3,
-                'hotel_room_id' => 1,
-                'room_number' => 106,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 3,
-                'hotel_room_id' => 2,
-                'room_number' => 107,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 3,
-                'hotel_room_id' => 2,
-                'room_number' => 111,
-                'room_status_id' => 3
-            ],
-            // =======================3
-            [
-                'hotel_branch_id' => 4,
-                'hotel_room_id' => 1,
-                'room_number' => 102,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 4,
-                'hotel_room_id' => 1,
-                'room_number' => 106,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 4,
-                'hotel_room_id' => 2,
-                'room_number' => 107,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 4,
-                'hotel_room_id' => 2,
-                'room_number' => 111,
-                'room_status_id' => 3
-            ],
-            // =======================4
-            [
-                'hotel_branch_id' => 5,
-                'hotel_room_id' => 1,
-                'room_number' => 102,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 5,
-                'hotel_room_id' => 1,
-                'room_number' => 106,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 5,
-                'hotel_room_id' => 2,
-                'room_number' => 107,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 5,
-                'hotel_room_id' => 2,
-                'room_number' => 111,
-                'room_status_id' => 3
-            ],
-            // =======================5
-            [
-                'hotel_branch_id' => 6,
-                'hotel_room_id' => 1,
-                'room_number' => 102,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 6,
-                'hotel_room_id' => 1,
-                'room_number' => 106,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 6,
-                'hotel_room_id' => 2,
-                'room_number' => 107,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 6,
-                'hotel_room_id' => 2,
-                'room_number' => 111,
-                'room_status_id' => 3
-            ],
-            // =======================6
-            [
-                'hotel_branch_id' => 7,
-                'hotel_room_id' => 1,
-                'room_number' => 102,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 7,
-                'hotel_room_id' => 1,
-                'room_number' => 106,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 7,
-                'hotel_room_id' => 2,
-                'room_number' => 107,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 7,
-                'hotel_room_id' => 2,
-                'room_number' => 111,
-                'room_status_id' => 3
-            ],
-            // =======================7
-            [
-                'hotel_branch_id' => 8,
-                'hotel_room_id' => 1,
-                'room_number' => 102,
-                'room_status_id' => 3
-            ],
-            // ======================= 8
-            [
-                'hotel_branch_id' => 9,
-                'hotel_room_id' => 1,
-                'room_number' => 106,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 9,
-                'hotel_room_id' => 2,
-                'room_number' => 107,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 9,
-                'hotel_room_id' => 2,
-                'room_number' => 111,
-                'room_status_id' => 3
-            ],
-            // =======================9
-            [
-                'hotel_branch_id' => 10,
-                'hotel_room_id' => 1,
-                'room_number' => 102,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 10,
-                'hotel_room_id' => 1,
-                'room_number' => 106,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 10,
-                'hotel_room_id' => 2,
-                'room_number' => 107,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 10,
-                'hotel_room_id' => 2,
-                'room_number' => 111,
-                'room_status_id' => 3
-            ],
-            // ======================= 10
-            [
-                'hotel_branch_id' => 11,
                 'hotel_room_id' => 3,
-                'room_number' => 102,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 11,
-                'hotel_room_id' => 3,
-                'room_number' => 103,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 11,
-                'hotel_room_id' => 3,
-                'room_number' => 301,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 11,
-                'hotel_room_id' => 3,
-                'room_number' => 302,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 11,
-                'hotel_room_id' => 2,
-                'room_number' => 101,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 11,
-                'hotel_room_id' => 2,
-                'room_number' => 105,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 11,
-                'hotel_room_id' => 2,
-                'room_number' => 201,
-                'room_status_id' => 3
-            ],
-            [
-                'hotel_branch_id' => 11,
-                'hotel_room_id' => 2,
                 'room_number' => 202,
                 'room_status_id' => 3
             ],
             [
-                'hotel_branch_id' => 11,
-                'hotel_room_id' => 1,
-                'room_number' => 203,
+                'hotel_branch_id' => 1,
+                'hotel_room_id' => 3,
+                'room_number' => 205,
                 'room_status_id' => 3
             ],
             [
-                'hotel_branch_id' => 11,
-                'hotel_room_id' => 1,
-                'room_number' => 303,
+                'hotel_branch_id' => 1,
+                'hotel_room_id' => 3,
+                'room_number' => 206,
                 'room_status_id' => 3
             ],
+            [
+                'hotel_branch_id' => 1,
+                'hotel_room_id' => 3,
+                'room_number' => 207,
+                'room_status_id' => 3
+            ],
+            [
+                'hotel_branch_id' => 1,
+                'hotel_room_id' => 3,
+                'room_number' => 208,
+                'room_status_id' => 3
+            ],
+            [
+                'hotel_branch_id' => 1,
+                'hotel_room_id' => 3,
+                'room_number' => 209,
+                'room_status_id' => 3
+            ],
+            // =======================BIG SHARED
+            [
+                'hotel_branch_id' => 1,
+                'hotel_room_id' => 4,
+                'room_number' => 102,
+                'room_status_id' => 3
+            ],
+            [
+                'hotel_branch_id' => 1,
+                'hotel_room_id' => 4,
+                'room_number' => 103,
+                'room_status_id' => 3
+            ],
+            [
+                'hotel_branch_id' => 1,
+                'hotel_room_id' => 4,
+                'room_number' => 105,
+                'room_status_id' => 3
+            ],
+            [
+                'hotel_branch_id' => 1,
+                'hotel_room_id' => 4,
+                'room_number' => 203,
+                'room_status_id' => 3
+            ],
+            // =======================BIG PRIVATE
+            [
+                'hotel_branch_id' => 1,
+                'hotel_room_id' => 7,
+                'room_number' => 201,
+                'room_status_id' => 3
+            ],
+            // =======================FAMILY SHARED BATHROOM
+            [
+                'hotel_branch_id' => 1,
+                'hotel_room_id' => 8,
+                'room_number' => 101,
+                'room_status_id' => 3
+            ],
+            // =======================FAMILY PRIVATE BATHROOM
         ];
 
         foreach ($hotelRoomNumber as $key => $value) {
