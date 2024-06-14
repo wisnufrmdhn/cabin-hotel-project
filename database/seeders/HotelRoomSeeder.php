@@ -17,14 +17,30 @@ class HotelRoomSeeder extends Seeder
     {
         $hotelRooms = [
             [
-                'room_type' => 'Deluxe',
+                'room_type' => 'Small Shared',
             ],
             [
-                'room_type' => 'Big',
+                'room_type' => 'Small Private',
             ],
             [
-                'room_type' => 'Small',
+                'room_type' => 'Big Shared',
             ],
+            [
+                'room_type' => 'Big Private',
+            ],
+            [
+                'room_type' => 'Family Shared',
+            ],
+            [
+                'room_type' => 'Family Private',
+            ],
+            [
+                'room_type' => 'Family Shared Bathroom',
+            ],
+            [
+                'room_type' => 'Family Private Bathroom',
+            ],
+           
         ];
 
         foreach ($hotelRooms as $key => $value) {
